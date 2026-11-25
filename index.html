@@ -14,7 +14,6 @@
       --bg-gradient: radial-gradient(circle at 15% 10%, #f4f4f5 0%, #e4e4e7 45%, #d4d4d8 100%);
       --glass: rgba(255, 255, 255, 0.58);
       --glass-strong: rgba(255, 255, 255, 0.78);
-      --glass-dark: rgba(39, 39, 42, 0.82);
       --border-glass: rgba(255, 255, 255, 0.72);
       --border-subtle: rgba(113, 113, 122, 0.22);
       --text-main: #18181b;
@@ -62,7 +61,6 @@
       box-shadow: var(--shadow-soft);
     }
 
-    /* Header in stile Apple minimale */
     .topbar {
       position: sticky;
       top: 0;
@@ -148,7 +146,6 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* Animazione scorrimento verso destra quando si apre una sezione di Casa */
     .slide-right-panel {
       display: none;
     }
@@ -169,7 +166,6 @@
       }
     }
 
-    /* Ovale / ellisse per sezioni Casa */
     .oval-grid {
       display: flex;
       flex-direction: column;
@@ -233,7 +229,6 @@
       font-weight: 700;
     }
 
-    /* Form a bolle / pillole */
     .bubble-box {
       border-radius: var(--oval);
       padding: 16px;
@@ -308,6 +303,18 @@
       margin-top: 2px;
     }
 
+    .qty-badge-inline {
+      display: inline-block;
+      margin-left: 6px;
+      padding: 2px 9px;
+      border-radius: var(--pill);
+      background: rgba(63, 63, 70, 0.11);
+      color: var(--text-main);
+      font-size: 0.75rem;
+      font-weight: 700;
+      vertical-align: middle;
+    }
+
     .qty-controls {
       display: flex;
       align-items: center;
@@ -340,14 +347,36 @@
       font-size: 0.9rem;
     }
 
-    /* Scadenze per ogni singola unità */
     .units-row {
       display: flex;
       flex-wrap: wrap;
+      align-items: center;
       gap: 8px;
       margin-top: 12px;
       padding-top: 10px;
       border-top: 1px solid var(--border-subtle);
+    }
+
+    .amount-editor {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255, 255, 255, 0.78);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--pill);
+      padding: 4px 10px;
+      font-size: 0.76rem;
+    }
+
+    .amount-editor input {
+      border: none;
+      background: transparent;
+      width: 82px;
+      font-size: 0.76rem;
+      font-weight: 600;
+      color: var(--text-main);
+      outline: none;
+      font-family: inherit;
     }
 
     .unit-chip {
@@ -406,7 +435,6 @@
       font-size: 0.88rem;
     }
 
-    /* Dock in basso a bolle / pillole stile Apple */
     .dock-wrap {
       position: fixed;
       left: 0;
@@ -447,7 +475,6 @@
       box-shadow: 0 4px 12px rgba(24, 24, 27, 0.2);
     }
 
-    /* Modale Casa */
     .modal-bg {
       position: fixed;
       inset: 0;
@@ -517,8 +544,9 @@
       <div class="bubble-box glass">
         <form id="shoppingForm">
           <div class="form-row">
-            <input type="text" id="shopName" class="pill-input" placeholder="Cosa comprare? (es. Uova, Latte...)" required />
-            <input type="number" id="shopQty" class="pill-input" style="max-width: 96px;" min="1" value="1" aria-label="Quantità" />
+            <input type="text" id="shopName" class="pill-input" placeholder="Cosa comprare? (es. Uova, Latte, Pasta...)" required />
+            <input type="text" id="shopAmount" class="pill-input" style="max-width: 120px;" placeholder="Quantità (es. 500g, 1L)" />
+            <input type="number" id="shopQty" class="pill-input" style="max-width: 78px;" min="1" value="1" aria-label="Unità" title="Numero unità" />
           </div>
           <div class="form-row">
             <select id="shopTargetSection" class="pill-select">
@@ -534,7 +562,7 @@
       <div id="shoppingListContainer" class="item-stack"></div>
     </section>
 
-    <!-- MACRO SEZIONE 2: CASA (3 ovali + pannello con animazione verso destra) -->
+    <!-- MACRO SEZIONE 2: CASA -->
     <section id="view-casa" class="view">
       <div id="casaMenu">
         <div class="oval-grid">
@@ -543,7 +571,7 @@
               <span class="bubble-icon" aria-hidden="true">🫙</span>
               <div>
                 <div class="oval-title">Dispensa</div>
-                <div class="oval-desc">Pasta, farina, cioccolata, conserve</div>
+                <div class="oval-desc">Pasta, farina, cioccolata, legumi, conserve</div>
               </div>
             </div>
             <span class="count-pill" id="count-dispensa">0</span>
@@ -554,7 +582,7 @@
               <span class="bubble-icon" aria-hidden="true">🥛</span>
               <div>
                 <div class="oval-title">Frigorifero</div>
-                <div class="oval-desc">Uova, latte, formaggi, verdure</div>
+                <div class="oval-desc">Uova, latte, formaggi, affettati, verdure</div>
               </div>
             </div>
             <span class="count-pill" id="count-frigorifero">0</span>
@@ -565,7 +593,7 @@
               <span class="bubble-icon" aria-hidden="true">🧊</span>
               <div>
                 <div class="oval-title">Congelatore</div>
-                <div class="oval-desc">Carni, surgelati, gelati, pane</div>
+                <div class="oval-desc">Carni, pesce, surgelati, gelati, pane</div>
               </div>
             </div>
             <span class="count-pill" id="count-congelatore">0</span>
@@ -573,7 +601,6 @@
         </div>
       </div>
 
-      <!-- Schermata dettaglio sezione con animazione verso destra -->
       <div id="storageDetailPanel" class="slide-right-panel">
         <div class="form-row" style="align-items: center; margin-bottom: 12px;">
           <button type="button" class="pill-btn" id="backToCasaBtn">← Casa</button>
@@ -584,12 +611,13 @@
           <form id="pantryForm">
             <div class="form-row">
               <select id="foodPresetSelect" class="pill-select">
-                <option value="">Scegli alimento italiano o scrivi...</option>
+                <option value="">Catalogo alimenti italiani...</option>
               </select>
-              <input type="text" id="foodCustomName" class="pill-input" placeholder="Alimento (es. Uova, Cioccolata)" />
+              <input type="text" id="foodCustomName" class="pill-input" placeholder="Oppure scrivi alimento..." />
             </div>
             <div class="form-row">
-              <input type="number" id="foodInitialQty" class="pill-input" style="max-width: 110px;" min="1" value="1" aria-label="Quantità iniziale" />
+              <input type="text" id="foodAmountLabel" class="pill-input" style="max-width: 130px;" placeholder="Quantità (es. 500 g, 1 L)" />
+              <input type="number" id="foodInitialQty" class="pill-input" style="max-width: 82px;" min="1" value="1" aria-label="Unità" title="Numero unità" />
               <input type="date" id="foodInitialExpiry" class="pill-input" aria-label="Scadenza iniziale" />
               <button type="submit" class="pill-btn dark">+ Inserisci</button>
             </div>
@@ -605,689 +633,4 @@
       <div class="total-bubble glass-strong">
         <div>
           <div style="font-size: 0.78rem; color: var(--text-muted);">Totale speso</div>
-          <div style="font-size: 0.75rem; color: var(--text-muted);" id="expensesCountLabel">0 voci registrate</div>
-        </div>
-        <div class="total-amount" id="totalExpensesAmount">0,00 €</div>
-      </div>
-
-      <div class="bubble-box glass">
-        <form id="expenseForm">
-          <div class="form-row">
-            <input type="text" id="expenseTitle" class="pill-input" placeholder="Elemento comprato (es. Spesa supermercato, Uova)" required />
-            <input type="number" id="expenseAmount" class="pill-input" style="max-width: 130px;" step="0.01" min="0.01" placeholder="Euro (€)" required />
-          </div>
-          <div class="form-row">
-            <button type="submit" class="pill-btn dark" style="width: 100%; justify-content: center;">Registra spesa</button>
-          </div>
-        </form>
-      </div>
-
-      <div id="expensesListContainer" class="item-stack"></div>
-    </section>
-  </main>
-
-  <!-- Dock inferiore a bolle -->
-  <nav class="dock-wrap" aria-label="Navigazione principale">
-    <div class="dock glass-strong">
-      <button type="button" class="dock-btn active" data-nav="spesa">🛒 Lista Spesa</button>
-      <button type="button" class="dock-btn" data-nav="casa">🏠 Casa</button>
-      <button type="button" class="dock-btn" data-nav="spese">💳 Spese</button>
-    </div>
-  </nav>
-
-  <!-- Modale gestione Casa / Codice -->
-  <div class="modal-bg" id="roomModal">
-    <div class="modal-card glass-strong">
-      <h2>La tua Casa condivisa</h2>
-      <p>Crea una nuova Casa per te e la tua famiglia oppure inserisci un codice condiviso per sincronizzare tutto in tempo reale.</p>
-
-      <div id="activeRoomBox" class="hidden">
-        <div class="code-pill" id="activeRoomCode"></div>
-        <button type="button" class="pill-btn" id="copyRoomCodeBtn" style="width: 100%; justify-content: center; margin-bottom: 12px;">Copia codice Casa</button>
-      </div>
-
-      <div style="display: flex; flex-direction: column; gap: 10px;">
-        <button type="button" class="pill-btn dark" id="createRoomBtn" style="width: 100%; justify-content: center; padding: 12px 16px;">+ Crea nuova Casa</button>
-
-        <div style="display: flex; gap: 8px;">
-          <input type="text" id="joinRoomInput" class="pill-input" placeholder="Codice (es. CASA-4920)" style="text-transform: uppercase;" />
-          <button type="button" class="pill-btn" id="joinRoomBtn">Entra</button>
-        </div>
-
-        <button type="button" class="pill-btn hidden" id="closeRoomModalBtn" style="width: 100%; justify-content: center; margin-top: 4px;">Chiudi</button>
-      </div>
-    </div>
-  </div>
-
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-app.js";
-    import {
-      getAuth,
-      signInAnonymously,
-      onAuthStateChanged
-    } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-auth.js";
-    import {
-      initializeFirestore,
-      getFirestore,
-      persistentLocalCache,
-      persistentMultipleTabManager,
-      collection,
-      doc,
-      getDoc,
-      setDoc,
-      addDoc,
-      updateDoc,
-      deleteDoc,
-      deleteField,
-      writeBatch,
-      runTransaction,
-      onSnapshot,
-      query,
-      where,
-      orderBy,
-      limit,
-      serverTimestamp
-    } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-firestore.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyC3dKtKUA23mlFGYI-aBoYtdJt2gJgLXco",
-      authDomain: "dispensa-spesa.firebaseapp.com",
-      projectId: "dispensa-spesa",
-      storageBucket: "dispensa-spesa.firebasestorage.app",
-      messagingSenderId: "988990942142",
-      appId: "1:988990942142:web:cfdbd3344783b8dfb4e7ef",
-      measurementId: "G-RP36RHS7SV"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = initializeFirestore(app, {
-      localCache: persistentLocalCache({
-        tabManager: persistentMultipleTabManager()
-      })
-    });
-
-    // Catalogo alimenti generici italiani con icona stilizzata
-    const ITALIAN_FOOD_CATALOG = [
-      { name: "Uova", icon: "🥚" },
-      { name: "Latte", icon: "🥛" },
-      { name: "Cioccolata", icon: "🍫" },
-      { name: "Pasta", icon: "🍝" },
-      { name: "Riso", icon: "🍚" },
-      { name: "Farina", icon: "🌾" },
-      { name: "Pane", icon: "🍞" },
-      { name: "Formaggio", icon: "🧀" },
-      { name: "Burro", icon: "🧈" },
-      { name: "Yogurt", icon: "🥣" },
-      { name: "Pollo", icon: "🍗" },
-      { name: "Carne", icon: "🥩" },
-      { name: "Pesce", icon: "🐟" },
-      { name: "Verdura", icon: "🥦" },
-      { name: "Frutta", icon: "🍎" },
-      { name: "Pomodori", icon: "🍅" },
-      { name: "Patate", icon: "🥔" },
-      { name: "Olio", icon: "🫗" },
-      { name: "Caffè", icon: "☕" },
-      { name: "Acqua", icon: "💧" },
-      { name: "Gelato", icon: "🍨" },
-      { name: "Surgelati", icon: "❄️" }
-    ];
-
-    function getFoodIcon(name = "") {
-      const lower = name.toLowerCase().trim();
-      const found = ITALIAN_FOOD_CATALOG.find((item) => lower.includes(item.name.toLowerCase()));
-      if (found) return found.icon;
-      if (lower.includes("biscott") || lower.includes("dolc") || lower.includes("torta")) return "🍪";
-      if (lower.includes("prosciutt") || lower.includes("salum")) return "🥓";
-      if (lower.includes("succo") || lower.includes("bevanda")) return "🧃";
-      return "🍽️";
-    }
-
-    const ROOM_STORAGE_KEY = "casa_spesa_room_code";
-    let currentRoom = (localStorage.getItem(ROOM_STORAGE_KEY) || "").trim().toUpperCase();
-    let activeNav = "spesa";
-    let activeStorageSection = null; // 'dispensa' | 'frigorifero' | 'congelatore' | null
-    let pantryItems = [];
-    let shoppingItems = [];
-    let expenseItems = [];
-    let unsubPantry = null;
-    let unsubShopping = null;
-    let unsubExpenses = null;
-
-    // Popola select alimenti italiani
-    const foodPresetSelect = document.getElementById("foodPresetSelect");
-    ITALIAN_FOOD_CATALOG.forEach((f) => {
-      const opt = document.createElement("option");
-      opt.value = f.name;
-      opt.textContent = `${f.icon} ${f.name}`;
-      foodPresetSelect.appendChild(opt);
-    });
-
-    const statusLabel = document.getElementById("statusLabel");
-    const roomBtn = document.getElementById("roomBtn");
-    const roomModal = document.getElementById("roomModal");
-    const activeRoomBox = document.getElementById("activeRoomBox");
-    const activeRoomCode = document.getElementById("activeRoomCode");
-    const copyRoomCodeBtn = document.getElementById("copyRoomCodeBtn");
-    const createRoomBtn = document.getElementById("createRoomBtn");
-    const joinRoomBtn = document.getElementById("joinRoomBtn");
-    const joinRoomInput = document.getElementById("joinRoomInput");
-    const closeRoomModalBtn = document.getElementById("closeRoomModalBtn");
-
-    function updateRoomBadge() {
-      if (currentRoom) {
-        roomBtn.textContent = `🏠 ${currentRoom}`;
-        activeRoomBox.classList.remove("hidden");
-        activeRoomCode.textContent = currentRoom;
-        closeRoomModalBtn.classList.remove("hidden");
-      } else {
-        roomBtn.textContent = "🏠 Scegli Casa";
-        activeRoomBox.classList.add("hidden");
-        closeRoomModalBtn.classList.add("hidden");
-      }
-    }
-
-    function setActiveRoom(code) {
-      const clean = (code || "").trim().toUpperCase();
-      if (!clean) return;
-      currentRoom = clean;
-      localStorage.setItem(ROOM_STORAGE_KEY, currentRoom);
-      updateRoomBadge();
-      roomModal.classList.remove("open");
-      startListeners();
-    }
-
-    function clearListeners() {
-      [unsubPantry, unsubShopping, unsubExpenses].forEach((fn) => {
-        if (typeof fn === "function") fn();
-      });
-      unsubPantry = null;
-      unsubShopping = null;
-      unsubExpenses = null;
-    }
-
-    function startListeners() {
-      clearListeners();
-      if (!currentRoom) {
-        statusLabel.textContent = "Seleziona o crea una Casa per sincronizzare";
-        renderAll();
-        return;
-      }
-
-      statusLabel.textContent = `Sincronizzato • ${currentRoom}`;
-
-      const qPantry = query(collection(db, "pantryItems"), where("roomCode", "==", currentRoom));
-      unsubPantry = onSnapshot(qPantry, (snap) => {
-        pantryItems = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
-        pantryItems.sort((a, b) => (a.name || "").localeCompare(b.name || "", "it"));
-        renderCasaCounts();
-        renderStorageDetail();
-      }, () => {
-        statusLabel.textContent = "Controlla le regole Firestore su Firebase";
-      });
-
-      const qShopping = query(collection(db, "shoppingItems"), where("roomCode", "==", currentRoom));
-      unsubShopping = onSnapshot(qShopping, (snap) => {
-        shoppingItems = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
-        renderShopping();
-      });
-
-      const qExpenses = query(collection(db, "expenses"), where("roomCode", "==", currentRoom));
-      unsubExpenses = onSnapshot(qExpenses, (snap) => {
-        expenseItems = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
-        renderExpenses();
-      });
-    }
-
-    // Navigazione tra le 3 macro sezioni
-    document.querySelectorAll(".dock-btn").forEach((btn) => {
-      btn.addEventListener("click", () => {
-        activeNav = btn.dataset.nav;
-        document.querySelectorAll(".dock-btn").forEach((b) => b.classList.toggle("active", b === btn));
-        document.querySelectorAll(".view").forEach((v) => v.classList.remove("active"));
-        document.getElementById(`view-${activeNav}`).classList.add("active");
-        if (activeNav !== "casa") {
-          activeStorageSection = null;
-          document.getElementById("storageDetailPanel").classList.remove("open");
-          document.getElementById("casaMenu").classList.remove("hidden");
-        }
-      });
-    });
-
-    // Apertura sezione Dispensa / Frigorifero / Congelatore con animazione verso destra
-    const storageNames = {
-      dispensa: "🫙 Dispensa",
-      frigorifero: "🥛 Frigorifero",
-      congelatore: "🧊 Congelatore"
-    };
-
-    document.querySelectorAll("[data-open-storage]").forEach((card) => {
-      card.addEventListener("click", () => {
-        activeStorageSection = card.dataset.openStorage;
-        document.getElementById("currentStorageTitle").textContent = storageNames[activeStorageSection];
-        document.getElementById("casaMenu").classList.add("hidden");
-        const panel = document.getElementById("storageDetailPanel");
-        panel.classList.remove("open");
-        void panel.offsetWidth; // riavvia animazione di scorrimento a destra
-        panel.classList.add("open");
-        renderStorageDetail();
-      });
-    });
-
-    document.getElementById("backToCasaBtn").addEventListener("click", () => {
-      activeStorageSection = null;
-      document.getElementById("storageDetailPanel").classList.remove("open");
-      document.getElementById("casaMenu").classList.remove("hidden");
-    });
-
-    function renderCasaCounts() {
-      ["dispensa", "frigorifero", "congelatore"].forEach((sec) => {
-        const totalUnits = pantryItems
-          .filter((i) => i.section === sec)
-          .reduce((acc, i) => acc + (Array.isArray(i.units) ? i.units.length : (i.qty || 1)), 0);
-        const el = document.getElementById(`count-${sec}`);
-        if (el) el.textContent = totalUnits;
-      });
-    }
-
-    function getExpiryClass(dateStr) {
-      if (!dateStr) return "";
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
-      const exp = new Date(`${dateStr}T00:00:00`);
-      const diffDays = Math.round((exp - today) / 86400000);
-      if (diffDays < 0) return "expired";
-      if (diffDays <= 3) return "soon";
-      return "";
-    }
-
-    function renderStorageDetail() {
-      const container = document.getElementById("storageItemsContainer");
-      if (!activeStorageSection) return;
-      if (!currentRoom) {
-        container.innerHTML = `<div class="empty-bubble glass">Crea o entra in una Casa per aggiungere alimenti.</div>`;
-        return;
-      }
-
-      const list = pantryItems.filter((i) => i.section === activeStorageSection);
-      if (!list.length) {
-        container.innerHTML = `<div class="empty-bubble glass">Nessun alimento presente qui. Aggiungine uno sopra!</div>`;
-        return;
-      }
-
-      container.innerHTML = "";
-      list.forEach((item) => {
-        const units = Array.isArray(item.units) && item.units.length
-          ? item.units
-          : Array.from({ length: Math.max(1, item.qty || 1) }, () => ({ expiry: "" }));
-
-        const card = document.createElement("div");
-        card.className = "food-bubble glass";
-
-        const top = document.createElement("div");
-        top.className = "food-top";
-
-        const main = document.createElement("div");
-        main.className = "food-main";
-        main.innerHTML = `
-          <span class="bubble-icon" style="width:42px;height:42px;font-size:1.15rem;">${escapeHtml(getFoodIcon(item.name))}</span>
-          <div>
-            <div class="food-name">${escapeHtml(item.name)}</div>
-            <div class="food-sub">${units.length} ${units.length === 1 ? "unità" : "unità"} • scadenza per unità</div>
-          </div>
-        `;
-
-        const qtyBox = document.createElement("div");
-        qtyBox.className = "qty-controls";
-
-        const minusBtn = document.createElement("button");
-        minusBtn.type = "button";
-        minusBtn.className = "circle-btn";
-        minusBtn.textContent = "−";
-        minusBtn.onclick = () => changeUnitCount(item, -1);
-
-        const numSpan = document.createElement("span");
-        numSpan.className = "qty-num";
-        numSpan.textContent = units.length;
-
-        const plusBtn = document.createElement("button");
-        plusBtn.type = "button";
-        plusBtn.className = "circle-btn";
-        plusBtn.textContent = "+";
-        plusBtn.onclick = () => changeUnitCount(item, +1);
-
-        const shopBtn = document.createElement("button");
-        shopBtn.type = "button";
-        shopBtn.className = "pill-btn";
-        shopBtn.textContent = "🛒";
-        shopBtn.title = "Aggiungi alla Lista Spesa";
-        shopBtn.onclick = () => addToShoppingFromPantry(item.name);
-
-        qtyBox.append(minusBtn, numSpan, plusBtn, shopBtn);
-        top.append(main, qtyBox);
-        card.appendChild(top);
-
-        // Una pillola di scadenza per ogni singola unità/quantità
-        const unitsRow = document.createElement("div");
-        unitsRow.className = "units-row";
-        units.forEach((u, idx) => {
-          const chip = document.createElement("div");
-          chip.className = `unit-chip ${getExpiryClass(u.expiry)}`;
-
-          const label = document.createElement("span");
-          label.style.fontWeight = "600";
-          label.textContent = `#${idx + 1}`;
-
-          const dateInput = document.createElement("input");
-          dateInput.type = "date";
-          dateInput.value = u.expiry || "";
-          dateInput.title = `Scadenza unità ${idx + 1}`;
-          dateInput.onchange = () => updateUnitExpiry(item, idx, dateInput.value);
-
-          chip.append(label, dateInput);
-          unitsRow.appendChild(chip);
-        });
-
-        card.appendChild(unitsRow);
-        container.appendChild(card);
-      });
-    }
-
-    // Aggiungi alimento nella sezione attiva
-    document.getElementById("pantryForm").addEventListener("submit", async (e) => {
-      e.preventDefault();
-      if (!currentRoom) return roomModal.classList.add("open");
-      if (!activeStorageSection) return;
-
-      const typed = document.getElementById("foodCustomName").value.trim();
-      const selected = foodPresetSelect.value.trim();
-      const name = typed || selected;
-      if (!name) return;
-
-      const qty = Math.max(1, parseInt(document.getElementById("foodInitialQty").value, 10) || 1);
-      const expiry = document.getElementById("foodInitialExpiry").value || "";
-      const units = Array.from({ length: qty }, () => ({ expiry }));
-
-      document.getElementById("foodCustomName").value = "";
-      foodPresetSelect.value = "";
-      document.getElementById("foodInitialQty").value = "1";
-      document.getElementById("foodInitialExpiry").value = "";
-
-      await addDoc(collection(db, "pantryItems"), {
-        roomCode: currentRoom,
-        section: activeStorageSection,
-        name,
-        qty,
-        units,
-        updatedAt: serverTimestamp()
-      });
-    });
-
-    async function changeUnitCount(item, delta) {
-      const currentUnits = Array.isArray(item.units) && item.units.length
-        ? [...item.units]
-        : Array.from({ length: Math.max(1, item.qty || 1) }, () => ({ expiry: "" }));
-
-      if (delta > 0) {
-        currentUnits.push({ expiry: "" });
-      } else {
-        currentUnits.pop();
-      }
-
-      if (currentUnits.length <= 0) {
-        await deleteDoc(doc(db, "pantryItems", item.id));
-        return;
-      }
-
-      await updateDoc(doc(db, "pantryItems", item.id), {
-        qty: currentUnits.length,
-        units: currentUnits,
-        updatedAt: serverTimestamp()
-      });
-    }
-
-    async function updateUnitExpiry(item, index, newExpiry) {
-      const currentUnits = Array.isArray(item.units) && item.units.length
-        ? item.units.map((u) => ({ expiry: u.expiry || "" }))
-        : Array.from({ length: Math.max(1, item.qty || 1) }, () => ({ expiry: "" }));
-
-      if (!currentUnits[index]) return;
-      currentUnits[index].expiry = newExpiry || "";
-
-      await updateDoc(doc(db, "pantryItems", item.id), {
-        units: currentUnits,
-        updatedAt: serverTimestamp()
-      });
-    }
-
-    async function addToShoppingFromPantry(name) {
-      if (!currentRoom) return;
-      await addDoc(collection(db, "shoppingItems"), {
-        roomCode: currentRoom,
-        name,
-        qty: 1,
-        targetSection: activeStorageSection || "dispensa",
-        createdAt: serverTimestamp()
-      });
-    }
-
-    // LISTA DELLA SPESA
-    document.getElementById("shoppingForm").addEventListener("submit", async (e) => {
-      e.preventDefault();
-      if (!currentRoom) return roomModal.classList.add("open");
-
-      const name = document.getElementById("shopName").value.trim();
-      if (!name) return;
-      const qty = Math.max(1, parseInt(document.getElementById("shopQty").value, 10) || 1);
-      const targetSection = document.getElementById("shopTargetSection").value;
-
-      document.getElementById("shopName").value = "";
-      document.getElementById("shopQty").value = "1";
-
-      await addDoc(collection(db, "shoppingItems"), {
-        roomCode: currentRoom,
-        name,
-        qty,
-        targetSection,
-        createdAt: serverTimestamp()
-      });
-    });
-
-    function renderShopping() {
-      const container = document.getElementById("shoppingListContainer");
-      if (!currentRoom) {
-        container.innerHTML = `<div class="empty-bubble glass">Crea o entra in una Casa per gestire la Lista della Spesa.</div>`;
-        return;
-      }
-      if (!shoppingItems.length) {
-        container.innerHTML = `<div class="empty-bubble glass">La lista della spesa è vuota.</div>`;
-        return;
-      }
-
-      container.innerHTML = "";
-      shoppingItems.forEach((item) => {
-        const card = document.createElement("div");
-        card.className = "food-bubble glass";
-
-        const top = document.createElement("div");
-        top.className = "food-top";
-
-        const main = document.createElement("div");
-        main.className = "food-main";
-        main.innerHTML = `
-          <span class="bubble-icon" style="width:42px;height:42px;font-size:1.15rem;">${escapeHtml(getFoodIcon(item.name))}</span>
-          <div>
-            <div class="food-name">${escapeHtml(item.name)}</div>
-            <div class="food-sub">Qtà: ${item.qty || 1} • Va in ${escapeHtml(item.targetSection || "dispensa")}</div>
-          </div>
-        `;
-
-        const actions = document.createElement("div");
-        actions.className = "qty-controls";
-
-        const boughtBtn = document.createElement("button");
-        boughtBtn.type = "button";
-        boughtBtn.className = "pill-btn dark";
-        boughtBtn.textContent = "Comprato";
-        boughtBtn.onclick = () => markBoughtAndMoveToCasa(item);
-
-        const delBtn = document.createElement("button");
-        delBtn.type = "button";
-        delBtn.className = "circle-btn";
-        delBtn.textContent = "✕";
-        delBtn.onclick = () => deleteDoc(doc(db, "shoppingItems", item.id));
-
-        actions.append(boughtBtn, delBtn);
-        top.append(main, actions);
-        card.appendChild(top);
-        container.appendChild(card);
-      });
-    }
-
-    async function markBoughtAndMoveToCasa(shopItem) {
-      const qty = Math.max(1, shopItem.qty || 1);
-      const section = shopItem.targetSection || "dispensa";
-      const units = Array.from({ length: qty }, () => ({ expiry: "" }));
-
-      await addDoc(collection(db, "pantryItems"), {
-        roomCode: currentRoom,
-        section,
-        name: shopItem.name,
-        qty,
-        units,
-        updatedAt: serverTimestamp()
-      });
-
-      await deleteDoc(doc(db, "shoppingItems", shopItem.id));
-    }
-
-    // SPESE & TOTALE SPESO
-    document.getElementById("expenseForm").addEventListener("submit", async (e) => {
-      e.preventDefault();
-      if (!currentRoom) return roomModal.classList.add("open");
-
-      const title = document.getElementById("expenseTitle").value.trim();
-      const amount = parseFloat(document.getElementById("expenseAmount").value);
-      if (!title || Number.isNaN(amount) || amount <= 0) return;
-
-      document.getElementById("expenseTitle").value = "";
-      document.getElementById("expenseAmount").value = "";
-
-      await addDoc(collection(db, "expenses"), {
-        roomCode: currentRoom,
-        title,
-        amount,
-        createdAt: serverTimestamp()
-      });
-    });
-
-    function renderExpenses() {
-      const container = document.getElementById("expensesListContainer");
-      const totalEl = document.getElementById("totalExpensesAmount");
-      const countEl = document.getElementById("expensesCountLabel");
-
-      const sum = expenseItems.reduce((acc, item) => acc + (Number(item.amount) || 0), 0);
-      totalEl.textContent = `${sum.toFixed(2).replace(".", ",")} €`;
-      countEl.textContent = `${expenseItems.length} ${expenseItems.length === 1 ? "voce registrata" : "voci registrate"}`;
-
-      if (!currentRoom) {
-        container.innerHTML = `<div class="empty-bubble glass">Crea o entra in una Casa per vedere le spese.</div>`;
-        return;
-      }
-      if (!expenseItems.length) {
-        container.innerHTML = `<div class="empty-bubble glass">Nessuna spesa registrata finora.</div>`;
-        return;
-      }
-
-      container.innerHTML = "";
-      expenseItems.forEach((item) => {
-        const card = document.createElement("div");
-        card.className = "food-bubble glass";
-
-        const top = document.createElement("div");
-        top.className = "food-top";
-
-        const main = document.createElement("div");
-        main.className = "food-main";
-        main.innerHTML = `
-          <span class="bubble-icon" style="width:42px;height:42px;font-size:1.1rem;">💶</span>
-          <div>
-            <div class="food-name">${escapeHtml(item.title)}</div>
-            <div class="food-sub">${(Number(item.amount) || 0).toFixed(2).replace(".", ",")} €</div>
-          </div>
-        `;
-
-        const delBtn = document.createElement("button");
-        delBtn.type = "button";
-        delBtn.className = "circle-btn";
-        delBtn.textContent = "✕";
-        delBtn.onclick = () => deleteDoc(doc(db, "expenses", item.id));
-
-        top.append(main, delBtn);
-        card.appendChild(top);
-        container.appendChild(card);
-      });
-    }
-
-    function renderAll() {
-      renderCasaCounts();
-      renderStorageDetail();
-      renderShopping();
-      renderExpenses();
-    }
-
-    // Gestione Modale Casa
-    roomBtn.addEventListener("click", () => {
-      updateRoomBadge();
-      roomModal.classList.add("open");
-    });
-
-    closeRoomModalBtn.addEventListener("click", () => {
-      roomModal.classList.remove("open");
-    });
-
-    createRoomBtn.addEventListener("click", () => {
-      const code = `CASA-${Math.floor(1000 + Math.random() * 9000)}`;
-      setActiveRoom(code);
-    });
-
-    joinRoomBtn.addEventListener("click", () => {
-      const val = joinRoomInput.value.trim();
-      if (!val) return;
-      joinRoomInput.value = "";
-      setActiveRoom(val);
-    });
-
-    copyRoomCodeBtn.addEventListener("click", async () => {
-      if (!currentRoom) return;
-      try {
-        await navigator.clipboard.writeText(currentRoom);
-        copyRoomCodeBtn.textContent = "Codice copiato ✓";
-        setTimeout(() => (copyRoomCodeBtn.textContent = "Copia codice Casa"), 1500);
-      } catch {
-        alert(`Codice Casa: ${currentRoom}`);
-      }
-    });
-
-    function escapeHtml(str) {
-      return String(str)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;");
-    }
-
-    // Auth anonima + avvio app
-    signInAnonymously(auth).catch(() => {});
-    onAuthStateChanged(auth, () => {
-      updateRoomBadge();
-      if (!currentRoom) {
-        roomModal.classList.add("open");
-        renderAll();
-      } else {
-        startListeners();
-      }
-    });
-  </script>
-</body>
-</html>
+          <div style="font-size: 0.75rem; color: var(--text-
