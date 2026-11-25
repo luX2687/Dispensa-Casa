@@ -39,6 +39,7 @@
       --shadow-soft: 0 10px 24px rgba(24, 24, 27, 0.07), inset 0 1px 0 rgba(255, 255, 255, 0.88);
       --shadow-float: 0 18px 38px rgba(24, 24, 27, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.9);
       --ease-immersive: cubic-bezier(0.19, 1, 0.22, 1);
+      --ease-apple-sheet: cubic-bezier(0.32, 0.72, 0, 1);
     }
 
     * {
@@ -307,7 +308,6 @@
       padding: 14px;
       position: relative;
       z-index: 1;
-      perspective: 1100px;
     }
 
     .view {
@@ -316,14 +316,13 @@
 
     .view.active {
       display: block;
-      animation: zoomInSection 0.52s var(--ease-immersive) both;
-      transform-origin: center center;
+      animation: zoomInSection 0.46s var(--ease-apple-sheet) both;
     }
 
     @keyframes zoomInSection {
       0% {
         opacity: 0;
-        transform: scale(0.92) translateY(14px);
+        transform: scale(0.95) translateY(10px);
       }
       100% {
         opacity: 1;
@@ -342,30 +341,59 @@
       }
     }
 
+    /* PANNELLO ESPANSIONE IN STILE APPLE SHARED-ELEMENT */
     .slide-right-panel {
       display: none;
+      will-change: transform, opacity, border-radius;
     }
 
     .slide-right-panel.open {
       display: block;
-      animation: zoomInImmersive 0.56s var(--ease-immersive) both;
-      transform-origin: center 35%;
+      animation: zoomInImmersive 0.48s var(--ease-apple-sheet) both;
+    }
+
+    .slide-right-panel.expanding-from-card {
+      display: block;
+      animation: cardExpandToScreen 0.54s var(--ease-apple-sheet) both;
+    }
+
+    .slide-right-panel.expanding-from-card > * {
+      animation: innerContentFadeIn 0.42s var(--ease-apple-sheet) 0.08s both;
+    }
+
+    @keyframes cardExpandToScreen {
+      0% {
+        opacity: 0.72;
+        transform: translate3d(var(--expand-tx, 0px), var(--expand-ty, 0px), 0)
+                   scale(var(--expand-sx, 0.92), var(--expand-sy, 0.22));
+        border-radius: 44px;
+      }
+      100% {
+        opacity: 1;
+        transform: translate3d(0, 0, 0) scale(1, 1);
+        border-radius: 0px;
+      }
+    }
+
+    @keyframes innerContentFadeIn {
+      0% {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     @keyframes zoomInImmersive {
       0% {
         opacity: 0;
-        transform: scale(0.88) translateY(18px);
-        filter: blur(4px);
-      }
-      65% {
-        opacity: 1;
-        filter: blur(0);
+        transform: scale(0.92) translateY(14px);
       }
       100% {
         opacity: 1;
         transform: scale(1) translateY(0);
-        filter: blur(0);
       }
     }
 
@@ -438,7 +466,7 @@
       border-radius: 30px;
       padding: 16px;
       margin-top: 14px;
-      animation: zoomInImmersive 0.48s var(--ease-immersive) both;
+      animation: zoomInImmersive 0.44s var(--ease-apple-sheet) both;
     }
 
     .oval-grid {
@@ -458,11 +486,11 @@
       gap: 12px;
       cursor: pointer;
       text-align: left;
-      transition: transform 0.28s var(--ease-immersive), background 0.2s ease, box-shadow 0.2s ease;
+      transition: transform 0.34s var(--ease-apple-sheet), background 0.2s ease, box-shadow 0.25s ease;
     }
 
     .oval-card:active {
-      transform: scale(0.975);
+      transform: scale(0.965);
     }
 
     .oval-left {
@@ -951,7 +979,7 @@
       max-width: 410px;
       border-radius: 34px;
       padding: 22px;
-      animation: zoomInImmersive 0.44s var(--ease-immersive) both;
+      animation: zoomInImmersive 0.44s var(--ease-apple-sheet) both;
     }
 
     .modal-card h2 {
@@ -1691,11 +1719,12 @@
     function resetCasaToRoot() {
       activeStorageSection = null;
       storageFilterInput.value = "";
-      document.getElementById("storageDetailPanel").classList.remove("open");
+      const panel = document.getElementById("storageDetailPanel");
+      panel.classList.remove("open", "expanding-from-card");
       const menu = document.getElementById("casaMenu");
       menu.classList.remove("hidden");
       void menu.offsetWidth;
-      menu.style.animation = "zoomInSection 0.44s var(--ease-immersive) both";
+      menu.style.animation = "zoomInSection 0.44s var(--ease-apple-sheet) both";
     }
 
     document.querySelectorAll(".dock-btn").forEach((btn) => {
@@ -1716,7 +1745,7 @@
           }
         } else {
           activeStorageSection = null;
-          document.getElementById("storageDetailPanel").classList.remove("open");
+          document.getElementById("storageDetailPanel").classList.remove("open", "expanding-from-card");
           document.getElementById("casaMenu").classList.remove("hidden");
         }
 
@@ -1748,7 +1777,7 @@
       spesaLivePanel.classList.remove("open");
       spesaMainPanel.classList.remove("hidden");
       void spesaMainPanel.offsetWidth;
-      spesaMainPanel.style.animation = "zoomInSection 0.44s var(--ease-immersive) both";
+      spesaMainPanel.style.animation = "zoomInSection 0.44s var(--ease-apple-sheet) both";
     });
 
     const storageNames = {
@@ -1762,11 +1791,35 @@
         activeStorageSection = card.dataset.openStorage;
         storageFilterInput.value = "";
         document.getElementById("currentStorageTitle").textContent = storageNames[activeStorageSection];
-        document.getElementById("casaMenu").classList.add("hidden");
+
         const panel = document.getElementById("storageDetailPanel");
-        panel.classList.remove("open");
+        const cardRect = card.getBoundingClientRect();
+
+        document.getElementById("casaMenu").classList.add("hidden");
+        panel.classList.remove("open", "expanding-from-card");
         void panel.offsetWidth;
-        panel.classList.add("open");
+
+        const panelRect = panel.getBoundingClientRect();
+        if (cardRect.width > 0 && panelRect.width > 0 && panelRect.height > 0) {
+          const cardCenterX = cardRect.left + cardRect.width / 2;
+          const cardCenterY = cardRect.top + cardRect.height / 2;
+          const panelCenterX = panelRect.left + panelRect.width / 2;
+          const panelCenterY = panelRect.top + Math.min(panelRect.height, window.innerHeight * 0.65) / 2;
+
+          const tx = Math.round(cardCenterX - panelCenterX);
+          const ty = Math.round(cardCenterY - panelCenterY);
+          const sx = Math.max(0.75, Math.min(1, cardRect.width / panelRect.width));
+          const sy = Math.max(0.14, Math.min(0.9, cardRect.height / Math.max(panelRect.height, 260)));
+
+          panel.style.setProperty("--expand-tx", `${tx}px`);
+          panel.style.setProperty("--expand-ty", `${ty}px`);
+          panel.style.setProperty("--expand-sx", sx.toFixed(3));
+          panel.style.setProperty("--expand-sy", sy.toFixed(3));
+          panel.classList.add("expanding-from-card");
+        } else {
+          panel.classList.add("open");
+        }
+
         renderStorageDetail();
       });
     });
