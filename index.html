@@ -35,8 +35,8 @@
       --ok-border: rgba(22, 163, 74, 0.26);
       --ok-text: #166534;
       --pill: 9999px;
-      --oval: 36px;
-      --shadow-soft: 0 12px 28px rgba(24, 24, 27, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.85);
+      --oval: 32px;
+      --shadow-soft: 0 10px 24px rgba(24, 24, 27, 0.07), inset 0 1px 0 rgba(255, 255, 255, 0.85);
       --shadow-float: 0 18px 38px rgba(24, 24, 27, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.85);
       --ease-immersive: cubic-bezier(0.19, 1, 0.22, 1);
     }
@@ -59,7 +59,7 @@
       font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", sans-serif;
       background: var(--bg-gradient);
       color: var(--text-main);
-      padding-bottom: calc(114px + env(safe-area-inset-bottom));
+      padding-bottom: calc(108px + env(safe-area-inset-bottom));
     }
 
     button, .dock, .oval-card, .pill-btn, .circle-btn {
@@ -88,8 +88,8 @@
       position: sticky;
       top: 0;
       z-index: 30;
-      padding: calc(12px + env(safe-area-inset-top)) 16px 12px;
-      background: rgba(244, 244, 245, 0.74);
+      padding: calc(10px + env(safe-area-inset-top)) 16px 10px;
+      background: rgba(244, 244, 245, 0.76);
       backdrop-filter: blur(26px) saturate(175%);
       -webkit-backdrop-filter: blur(26px) saturate(175%);
       border-bottom: 1px solid var(--border-subtle);
@@ -106,33 +106,34 @@
 
     .brand-title {
       margin: 0;
-      font-size: 1.25rem;
+      font-size: 1.2rem;
       font-weight: 700;
       letter-spacing: -0.02em;
     }
 
     .brand-sub {
-      font-size: 0.75rem;
+      font-size: 0.74rem;
       color: var(--text-muted);
       margin-top: 1px;
     }
 
     .pill-btn {
       border: 1px solid var(--border-glass);
-      background: rgba(255, 255, 255, 0.8);
+      background: rgba(255, 255, 255, 0.82);
       backdrop-filter: blur(18px);
       -webkit-backdrop-filter: blur(18px);
       color: var(--text-main);
       border-radius: var(--pill);
-      padding: 8px 14px;
-      font-size: 0.85rem;
+      padding: 7px 13px;
+      font-size: 0.82rem;
       font-weight: 600;
       cursor: pointer;
+      white-space: nowrap;
       transition: transform 0.2s var(--ease-immersive), background 0.2s ease, box-shadow 0.2s ease;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      box-shadow: 0 4px 12px rgba(24, 24, 27, 0.05);
+      gap: 5px;
+      box-shadow: 0 3px 10px rgba(24, 24, 27, 0.05);
     }
 
     .pill-btn:active {
@@ -153,20 +154,22 @@
       background: linear-gradient(135deg, rgba(39, 39, 42, 0.94), rgba(63, 63, 70, 0.88));
       color: #ffffff;
       border-color: rgba(255, 255, 255, 0.28);
-      box-shadow: 0 10px 24px rgba(24, 24, 27, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+      box-shadow: 0 8px 20px rgba(24, 24, 27, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.35);
     }
 
     .pill-btn.danger-alert {
       background: rgba(220, 38, 38, 0.14);
       color: var(--danger-text);
       border-color: var(--danger-border);
+      padding: 6px 10px;
+      font-size: 0.78rem;
       animation: popInSoft 0.28s var(--ease-immersive);
     }
 
     .app-shell {
       max-width: 680px;
       margin: 0 auto;
-      padding: 16px;
+      padding: 14px;
       position: relative;
       perspective: 1100px;
     }
@@ -232,12 +235,12 @@
 
     .live-banner {
       border-radius: var(--oval);
-      padding: 14px 18px;
-      margin-bottom: 14px;
+      padding: 13px 16px;
+      margin-bottom: 12px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
+      gap: 10px;
       background: linear-gradient(135deg, rgba(255, 255, 255, 0.82), rgba(244, 244, 245, 0.62));
     }
 
@@ -252,20 +255,14 @@
     }
 
     @keyframes livePulse {
-      0% {
-        box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.55);
-      }
-      70% {
-        box-shadow: 0 0 0 8px rgba(22, 163, 74, 0);
-      }
-      100% {
-        box-shadow: 0 0 0 0 rgba(22, 163, 74, 0);
-      }
+      0% { box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.55); }
+      70% { box-shadow: 0 0 0 8px rgba(22, 163, 74, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(22, 163, 74, 0); }
     }
 
     .live-item-card {
-      border-radius: 30px;
-      padding: 13px 16px;
+      border-radius: 26px;
+      padding: 11px 14px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -279,14 +276,14 @@
     }
 
     .live-check-btn {
-      width: 34px;
-      height: 34px;
+      width: 32px;
+      height: 32px;
       border-radius: var(--pill);
       border: 1.5px solid var(--border-subtle);
       background: rgba(255, 255, 255, 0.92);
       color: var(--text-main);
       font-weight: 800;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       cursor: pointer;
       display: grid;
       place-items: center;
@@ -302,23 +299,23 @@
     }
 
     .live-footer-box {
-      border-radius: 34px;
-      padding: 18px;
-      margin-top: 16px;
+      border-radius: 30px;
+      padding: 16px;
+      margin-top: 14px;
       animation: zoomInImmersive 0.48s var(--ease-immersive) both;
     }
 
     .oval-grid {
       display: flex;
       flex-direction: column;
-      gap: 14px;
-      margin-top: 8px;
+      gap: 12px;
+      margin-top: 6px;
     }
 
     .oval-card {
       width: 100%;
       border-radius: 999px;
-      padding: 18px 24px;
+      padding: 16px 22px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -339,8 +336,8 @@
     }
 
     .bubble-icon {
-      width: 48px;
-      height: 48px;
+      width: 44px;
+      height: 44px;
       border-radius: var(--pill);
       background: rgba(255, 255, 255, 0.86);
       border: 1px solid var(--border-glass);
@@ -351,13 +348,13 @@
     }
 
     .oval-title {
-      font-size: 1.05rem;
+      font-size: 1.02rem;
       font-weight: 700;
       letter-spacing: -0.01em;
     }
 
     .oval-desc {
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       color: var(--text-muted);
       margin-top: 2px;
     }
@@ -373,15 +370,15 @@
 
     .bubble-box {
       border-radius: var(--oval);
-      padding: 16px;
-      margin-bottom: 14px;
+      padding: 14px;
+      margin-bottom: 12px;
     }
 
     .form-row {
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
 
     .form-row:last-child {
@@ -398,12 +395,12 @@
 
     .pill-input,
     .pill-select {
-      flex: 1 1 150px;
+      flex: 1 1 140px;
       min-width: 0;
       border-radius: var(--pill);
       border: 1px solid var(--border-subtle);
       background: rgba(255, 255, 255, 0.88);
-      padding: 11px 16px;
+      padding: 9px 14px;
       color: var(--text-main);
       outline: none;
       transition: border-color 0.18s ease, background 0.18s ease, box-shadow 0.18s ease;
@@ -419,12 +416,13 @@
     .item-stack {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 9px;
     }
 
+    /* CARD PRODOTTO COMPATTA E BEN BILANCIATA */
     .food-bubble {
-      border-radius: 32px;
-      padding: 14px 16px;
+      border-radius: 26px;
+      padding: 12px 14px;
       transition: transform 0.24s var(--ease-immersive), border-color 0.22s ease, background 0.22s ease, box-shadow 0.22s ease;
       animation: itemSlideIn 0.34s var(--ease-immersive) both;
     }
@@ -432,7 +430,7 @@
     @keyframes itemSlideIn {
       from {
         opacity: 0;
-        transform: scale(0.96) translateY(10px);
+        transform: scale(0.96) translateY(8px);
       }
       to {
         opacity: 1;
@@ -443,84 +441,94 @@
     .food-bubble.low-stock-red {
       background: linear-gradient(145deg, rgba(254, 226, 226, 0.84), rgba(255, 255, 255, 0.68));
       border: 1px solid var(--danger-border);
-      box-shadow: 0 12px 26px rgba(185, 28, 28, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.88);
+      box-shadow: 0 10px 22px rgba(185, 28, 28, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.88);
     }
 
     .food-top {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 10px;
+      gap: 8px;
     }
 
     .food-main {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
       min-width: 0;
+      flex: 1 1 auto;
+    }
+
+    .food-info-col {
+      min-width: 0;
+      flex: 1 1 auto;
     }
 
     .food-name {
       font-weight: 700;
-      font-size: 0.98rem;
+      font-size: 0.95rem;
+      line-height: 1.25;
       display: flex;
       flex-wrap: wrap;
       align-items: center;
-      gap: 6px;
+      gap: 5px;
     }
 
     .food-sub {
-      font-size: 0.78rem;
+      font-size: 0.74rem;
       color: var(--text-muted);
-      margin-top: 3px;
+      margin-top: 2px;
       display: flex;
       flex-wrap: wrap;
       align-items: center;
-      gap: 6px;
+      gap: 5px;
     }
 
     .qty-badge-inline {
       display: inline-block;
-      padding: 2px 9px;
+      padding: 1px 8px;
       border-radius: var(--pill);
       background: rgba(63, 63, 70, 0.11);
       color: var(--text-main);
-      font-size: 0.74rem;
+      font-size: 0.72rem;
       font-weight: 700;
+      white-space: nowrap;
     }
 
     .low-badge-red {
       display: inline-flex;
       align-items: center;
-      gap: 4px;
-      padding: 2px 9px;
+      gap: 3px;
+      padding: 1px 7px;
       border-radius: var(--pill);
       background: var(--danger-soft);
       border: 1px solid var(--danger-border);
       color: var(--danger-text);
-      font-size: 0.72rem;
+      font-size: 0.69rem;
       font-weight: 700;
+      white-space: nowrap;
     }
 
     .qty-controls {
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 5px;
       flex-shrink: 0;
     }
 
     .circle-btn {
-      width: 32px;
-      height: 32px;
+      width: 30px;
+      height: 30px;
       border-radius: var(--pill);
       border: 1px solid var(--border-subtle);
-      background: rgba(255, 255, 255, 0.9);
+      background: rgba(255, 255, 255, 0.92);
       color: var(--text-main);
       font-weight: 700;
       font-size: 0.95rem;
       cursor: pointer;
       display: grid;
       place-items: center;
+      flex-shrink: 0;
       transition: transform 0.18s var(--ease-immersive), background 0.18s ease;
     }
 
@@ -529,37 +537,40 @@
     }
 
     .qty-num {
-      min-width: 22px;
+      min-width: 18px;
       text-align: center;
       font-weight: 700;
-      font-size: 0.9rem;
+      font-size: 0.88rem;
     }
 
-    .units-row {
+    /* RIGA METADATI COMPATTA (QTÀ + SPOSTA AFFIANCATI) */
+    .meta-controls-row {
       display: flex;
-      flex-wrap: wrap;
       align-items: center;
-      gap: 8px;
-      margin-top: 12px;
-      padding-top: 10px;
+      gap: 6px;
+      margin-top: 9px;
+      padding-top: 8px;
       border-top: 1px solid var(--border-subtle);
     }
 
     .amount-editor {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: 4px;
       background: rgba(255, 255, 255, 0.84);
       border: 1px solid var(--border-subtle);
       border-radius: var(--pill);
-      padding: 4px 10px;
-      font-size: 0.8rem;
+      padding: 3px 10px;
+      font-size: 0.76rem;
+      flex: 1 1 42%;
+      min-width: 0;
     }
 
     .amount-editor input {
       border: none;
       background: transparent;
-      width: 88px;
+      width: 100%;
+      min-width: 0;
       font-size: 16px;
       font-weight: 600;
       color: var(--text-main);
@@ -571,29 +582,39 @@
       border-radius: var(--pill);
       border: 1px solid var(--border-subtle);
       background: rgba(255, 255, 255, 0.86);
-      padding: 5px 11px;
+      padding: 4px 10px;
       font-size: 16px;
       font-weight: 600;
       color: var(--text-main);
       outline: none;
       cursor: pointer;
+      flex: 1 1 58%;
+      min-width: 0;
+    }
+
+    /* GRIGLIA COMPATTA DELLE SINGOLE UNITÀ */
+    .units-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 7px;
     }
 
     .unit-chip {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      background: rgba(255, 255, 255, 0.78);
+      gap: 5px;
+      background: rgba(255, 255, 255, 0.8);
       border: 1px solid var(--border-subtle);
       border-radius: var(--pill);
-      padding: 5px 10px;
-      font-size: 0.78rem;
+      padding: 3px 9px;
+      font-size: 0.74rem;
       transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
     }
 
     .unit-status-dot {
-      width: 8px;
-      height: 8px;
+      width: 7px;
+      height: 7px;
       border-radius: 50%;
       background: #a1a1aa;
       flex-shrink: 0;
@@ -636,30 +657,30 @@
       color: inherit;
       font-family: inherit;
       padding: 0;
-      width: auto;
+      max-width: 112px;
     }
 
     .total-bubble {
       border-radius: var(--pill);
-      padding: 16px 22px;
+      padding: 14px 20px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 14px;
+      margin-bottom: 12px;
     }
 
     .total-amount {
-      font-size: 1.3rem;
+      font-size: 1.25rem;
       font-weight: 800;
       letter-spacing: -0.02em;
     }
 
     .empty-bubble {
       border-radius: var(--pill);
-      padding: 22px 18px;
+      padding: 20px 16px;
       text-align: center;
       color: var(--text-muted);
-      font-size: 0.88rem;
+      font-size: 0.85rem;
     }
 
     .dock-wrap {
@@ -668,7 +689,7 @@
       right: 0;
       bottom: calc(12px + env(safe-area-inset-bottom));
       z-index: 35;
-      padding: 0 16px;
+      padding: 0 14px;
       pointer-events: none;
     }
 
@@ -677,10 +698,10 @@
       max-width: 520px;
       margin: 0 auto;
       border-radius: var(--pill);
-      padding: 6px;
+      padding: 5px;
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 6px;
+      gap: 4px;
       box-shadow: var(--shadow-float);
     }
 
@@ -688,9 +709,10 @@
       border: none;
       background: transparent;
       border-radius: var(--pill);
-      padding: 10px 8px;
-      font-size: 0.85rem;
+      padding: 10px 6px;
+      font-size: 0.82rem;
       font-weight: 600;
+      white-space: nowrap;
       color: var(--text-muted);
       cursor: pointer;
       transition: all 0.28s var(--ease-immersive);
@@ -776,19 +798,19 @@
           <div style="display:flex;align-items:center;gap:10px;min-width:0;">
             <span class="live-pulse-dot" aria-hidden="true"></span>
             <div>
-              <div style="font-weight:700;font-size:0.95rem;">Spesa Live</div>
-              <div style="font-size:0.76rem;color:var(--text-muted);" id="liveSummaryBadge">Prepara il carrello e registra il totale</div>
+              <div style="font-weight:700;font-size:0.93rem;">Spesa Live</div>
+              <div style="font-size:0.75rem;color:var(--text-muted);" id="liveSummaryBadge">Prepara il carrello e registra il totale</div>
             </div>
           </div>
-          <button type="button" class="pill-btn live-trigger" id="openSpesaLiveBtn">⚡ Entra in Spesa Live</button>
+          <button type="button" class="pill-btn live-trigger" id="openSpesaLiveBtn">⚡ Spesa Live</button>
         </div>
 
         <div class="bubble-box glass">
           <form id="shoppingForm">
             <div class="form-row">
               <input type="text" id="shopName" class="pill-input" placeholder="Cosa comprare? (es. Uova, Latte, Pachini...)" required />
-              <input type="text" id="shopAmount" class="pill-input" style="max-width: 120px;" placeholder="Quantità (es. 500g)" />
-              <input type="number" id="shopQty" class="pill-input" style="max-width: 78px;" min="1" value="1" aria-label="Unità" title="Numero unità" />
+              <input type="text" id="shopAmount" class="pill-input" style="max-width: 115px;" placeholder="Quantità (es. 500g)" />
+              <input type="number" id="shopQty" class="pill-input" style="max-width: 74px;" min="1" value="1" aria-label="Unità" title="Numero unità" />
             </div>
             <div class="form-row">
               <select id="shopTargetSection" class="pill-select">
@@ -813,8 +835,8 @@
           <div style="display:flex;align-items:center;gap:10px;">
             <span class="live-pulse-dot" aria-hidden="true"></span>
             <div>
-              <div style="font-weight:700;font-size:0.95rem;">Carrello in corso</div>
-              <div style="font-size:0.76rem;color:var(--text-muted);" id="livePickedCount">0 articoli spuntati</div>
+              <div style="font-weight:700;font-size:0.93rem;">Carrello in corso</div>
+              <div style="font-size:0.75rem;color:var(--text-muted);" id="livePickedCount">0 articoli spuntati</div>
             </div>
           </div>
           <button type="button" class="pill-btn" id="toggleAllLiveBtn">Spunta tutti</button>
@@ -823,28 +845,28 @@
         <div id="liveItemsContainer" class="item-stack"></div>
 
         <div class="live-footer-box glass-strong">
-          <div style="font-weight:700;font-size:0.98rem;margin-bottom:4px;">Chiudi spesa e invia a Spese</div>
-          <div style="font-size:0.78rem;color:var(--text-muted);margin-bottom:12px;">
-            Inserisci l'importo totale della spesa: in fondo vedrai il totale e salvando passerà nella sezione <strong>Spese</strong> con costo e data di oggi.
+          <div style="font-weight:700;font-size:0.95rem;margin-bottom:4px;">Chiudi spesa e invia a Spese</div>
+          <div style="font-size:0.76rem;color:var(--text-muted);margin-bottom:10px;">
+            Inserisci il costo della spesa: in fondo vedrai il totale e salvando passerà nella sezione <strong>Spese</strong> con costo e data di oggi.
           </div>
 
           <div class="form-row">
             <input type="text" id="liveExpenseNote" class="pill-input" placeholder="Etichetta spesa (es. Spesa supermercato)" value="Spesa supermercato" />
-            <input type="number" id="liveExpenseInput" class="pill-input" style="max-width:140px;" step="0.01" min="0" placeholder="Costo (€)" />
+            <input type="number" id="liveExpenseInput" class="pill-input" style="max-width:130px;" step="0.01" min="0" placeholder="Costo (€)" />
             <button type="button" class="pill-btn" id="addLiveCostBtn">+ Somma</button>
           </div>
 
-          <div id="liveCostEntriesList" class="item-stack" style="margin-top:10px;"></div>
+          <div id="liveCostEntriesList" class="item-stack" style="margin-top:8px;"></div>
 
-          <div class="total-bubble glass" style="margin-top:14px;margin-bottom:14px;background:rgba(255,255,255,0.92);">
+          <div class="total-bubble glass" style="margin-top:12px;margin-bottom:12px;background:rgba(255,255,255,0.92);">
             <div>
-              <div style="font-size:0.78rem;color:var(--text-muted);">Totale spesa live</div>
-              <div style="font-size:0.75rem;color:var(--text-muted);" id="liveDatePreview"></div>
+              <div style="font-size:0.76rem;color:var(--text-muted);">Totale spesa live</div>
+              <div style="font-size:0.74rem;color:var(--text-muted);" id="liveDatePreview"></div>
             </div>
             <div class="total-amount" id="liveTotalDisplay">0,00 €</div>
           </div>
 
-          <button type="button" class="pill-btn dark" id="finishLiveShoppingBtn" style="width:100%;justify-content:center;padding:13px 18px;">
+          <button type="button" class="pill-btn dark" id="finishLiveShoppingBtn" style="width:100%;justify-content:center;padding:12px 16px;">
             ✓ Salva in Spese &amp; porta in Casa
           </button>
         </div>
@@ -891,7 +913,7 @@
       </div>
 
       <div id="storageDetailPanel" class="slide-right-panel">
-        <div class="form-row" style="align-items: center; margin-bottom: 12px;">
+        <div class="form-row" style="align-items: center; margin-bottom: 10px;">
           <button type="button" class="pill-btn" id="backToCasaBtn">← Casa</button>
           <span class="pill-btn glass-strong" id="currentStorageTitle" style="cursor: default;">Dispensa</span>
         </div>
@@ -908,18 +930,18 @@
               <input type="text" id="foodCustomName" class="pill-input" placeholder="Oppure scrivi alimento..." />
             </div>
             <div class="form-row">
-              <input type="text" id="foodAmountLabel" class="pill-input" style="max-width: 130px;" placeholder="Quantità (es. 500 g)" />
-              <input type="number" id="foodInitialQty" class="pill-input" style="max-width: 82px;" min="1" value="1" aria-label="Unità" title="Numero unità" />
+              <input type="text" id="foodAmountLabel" class="pill-input" style="max-width: 125px;" placeholder="Quantità (es. 500 g)" />
+              <input type="number" id="foodInitialQty" class="pill-input" style="max-width: 78px;" min="1" value="1" aria-label="Unità" title="Numero unità" />
               <input type="date" id="foodInitialExpiry" class="pill-input" aria-label="Scadenza iniziale" />
               <button type="submit" class="pill-btn dark">+ Inserisci</button>
             </div>
           </form>
         </div>
 
-        <div class="bubble-box glass" style="padding: 12px 14px;">
+        <div class="bubble-box glass" style="padding: 10px 12px;">
           <div class="form-row" style="align-items: center;">
             <input type="search" id="storageFilterInput" class="pill-input" placeholder="🔎 Cerca tra gli alimenti presenti qui..." />
-            <button type="button" class="pill-btn" id="clearStorageFilterBtn">Mostra tutti</button>
+            <button type="button" class="pill-btn" id="clearStorageFilterBtn">Tutti</button>
           </div>
         </div>
 
@@ -941,7 +963,7 @@
         <form id="expenseForm">
           <div class="form-row">
             <input type="text" id="expenseTitle" class="pill-input" placeholder="Elemento comprato (es. Spesa supermercato, Uova)" required />
-            <input type="number" id="expenseAmount" class="pill-input" style="max-width: 130px;" step="0.01" min="0.01" placeholder="Euro (€)" required />
+            <input type="number" id="expenseAmount" class="pill-input" style="max-width: 125px;" step="0.01" min="0.01" placeholder="Euro (€)" required />
           </div>
           <div class="form-row">
             <button type="submit" class="pill-btn dark" style="width: 100%; justify-content: center;">Registra spesa</button>
@@ -955,7 +977,7 @@
 
   <nav class="dock-wrap" aria-label="Navigazione principale">
     <div class="dock glass-strong">
-      <button type="button" class="dock-btn" data-nav="spesa">🛒 Lista Spesa</button>
+      <button type="button" class="dock-btn" data-nav="spesa">🛒 Spesa</button>
       <button type="button" class="dock-btn active" data-nav="casa">🏠 Casa</button>
       <button type="button" class="dock-btn" data-nav="spese">💳 Spese</button>
     </div>
@@ -1424,7 +1446,7 @@
       const exp = new Date(`${dateStr}T00:00:00`);
       const diffDays = Math.round((exp - today) / 86400000);
       if (diffDays < 0) return { cls: "expired", label: "Scaduta" };
-      if (diffDays <= 3) return { cls: "soon", label: diffDays === 0 ? "Scade oggi" : `Tra ${diffDays}g` };
+      if (diffDays <= 3) return { cls: "soon", label: diffDays === 0 ? "Oggi" : `${diffDays}g` };
       return { cls: "ok", label: "OK" };
     }
 
@@ -1467,14 +1489,14 @@
         const main = document.createElement("div");
         main.className = "food-main";
         main.innerHTML = `
-          <span class="bubble-icon" style="width:42px;height:42px;font-size:1.15rem;">${escapeHtml(getFoodIcon(item.name))}</span>
-          <div>
+          <span class="bubble-icon" style="width:38px;height:38px;font-size:1.08rem;">${escapeHtml(getFoodIcon(item.name))}</span>
+          <div class="food-info-col">
             <div class="food-name">
               <span>${escapeHtml(item.name)}</span>
               ${amountText ? `<span class="qty-badge-inline">${escapeHtml(amountText)}</span>` : ""}
-              ${isZeroOrOne ? `<span class="low-badge-red">● ${unitCount === 0 ? "0 unità" : "1 sola unità"}</span>` : ""}
+              ${isZeroOrOne ? `<span class="low-badge-red">● ${unitCount === 0 ? "0 un." : "1 un."}</span>` : ""}
             </div>
-            <div class="food-sub">${unitCount} ${unitCount === 1 ? "unità" : "unità"} • stato &amp; scadenza per unità</div>
+            <div class="food-sub">${unitCount} ${unitCount === 1 ? "unità" : "unità"}</div>
           </div>
         `;
 
@@ -1503,7 +1525,7 @@
           const shopBtn = document.createElement("button");
           shopBtn.type = "button";
           shopBtn.className = "pill-btn danger-alert";
-          shopBtn.textContent = "🛒 Lista Spesa";
+          shopBtn.textContent = "🛒 Spesa";
           shopBtn.title = "Aggiungi alla Lista Spesa";
           shopBtn.onclick = () => addToShoppingFromPantry(item.name, amountText, shopBtn);
           qtyBox.append(shopBtn);
@@ -1512,13 +1534,14 @@
         top.append(main, qtyBox);
         card.appendChild(top);
 
-        const unitsRow = document.createElement("div");
-        unitsRow.className = "units-row";
+        const metaRow = document.createElement("div");
+        metaRow.className = "meta-controls-row";
 
         const amountBox = document.createElement("div");
         amountBox.className = "amount-editor";
         const amountLabel = document.createElement("span");
         amountLabel.style.fontWeight = "600";
+        amountLabel.style.color = "var(--text-muted)";
         amountLabel.textContent = "Qtà:";
         const amountInput = document.createElement("input");
         amountInput.type = "text";
@@ -1526,7 +1549,6 @@
         amountInput.placeholder = "es. 500 g";
         amountInput.onchange = () => updateItemAmount(item.id, amountInput.value.trim());
         amountBox.append(amountLabel, amountInput);
-        unitsRow.appendChild(amountBox);
 
         const moveSelect = document.createElement("select");
         moveSelect.className = "move-select";
@@ -1538,42 +1560,45 @@
         ].forEach((optData) => {
           const opt = document.createElement("option");
           opt.value = optData.val;
-          opt.textContent = `Sposta: ${optData.txt}`;
+          opt.textContent = optData.txt;
           opt.selected = optData.val === item.section;
           moveSelect.appendChild(opt);
         });
         moveSelect.onchange = () => moveItemToSection(item.id, moveSelect.value);
-        unitsRow.appendChild(moveSelect);
 
-        units.forEach((u, idx) => {
-          const expInfo = getExpiryInfo(u.expiry);
-          const chip = document.createElement("div");
-          chip.className = `unit-chip ${expInfo.cls}`;
+        metaRow.append(amountBox, moveSelect);
+        card.appendChild(metaRow);
 
-          const dot = document.createElement("span");
-          dot.className = "unit-status-dot";
-          dot.title = expInfo.label;
+        if (units.length > 0) {
+          const unitsGrid = document.createElement("div");
+          unitsGrid.className = "units-grid";
 
-          const label = document.createElement("span");
-          label.style.fontWeight = "700";
-          label.textContent = `#${idx + 1}`;
+          units.forEach((u, idx) => {
+            const expInfo = getExpiryInfo(u.expiry);
+            const chip = document.createElement("div");
+            chip.className = `unit-chip ${expInfo.cls}`;
 
-          const dateInput = document.createElement("input");
-          dateInput.type = "date";
-          dateInput.value = u.expiry || "";
-          dateInput.title = `Scadenza unità ${idx + 1} (${expInfo.label})`;
-          dateInput.onchange = () => updateUnitExpiry(item, idx, dateInput.value);
+            const dot = document.createElement("span");
+            dot.className = "unit-status-dot";
+            dot.title = expInfo.label;
 
-          const stateTag = document.createElement("span");
-          stateTag.style.fontWeight = "600";
-          stateTag.style.fontSize = "0.72rem";
-          stateTag.textContent = expInfo.label;
+            const label = document.createElement("span");
+            label.style.fontWeight = "700";
+            label.textContent = `#${idx + 1}`;
 
-          chip.append(dot, label, dateInput, stateTag);
-          unitsRow.appendChild(chip);
-        });
+            const dateInput = document.createElement("input");
+            dateInput.type = "date";
+            dateInput.value = u.expiry || "";
+            dateInput.title = `Scadenza unità ${idx + 1} (${expInfo.label})`;
+            dateInput.onchange = () => updateUnitExpiry(item, idx, dateInput.value);
 
-        card.appendChild(unitsRow);
+            chip.append(dot, label, dateInput);
+            unitsGrid.appendChild(chip);
+          });
+
+          card.appendChild(unitsGrid);
+        }
+
         container.appendChild(card);
       });
     }
@@ -1675,7 +1700,7 @@
       });
       if (btnEl) {
         const oldText = btnEl.textContent;
-        btnEl.textContent = "Aggiunto ✓";
+        btnEl.textContent = "OK ✓";
         setTimeout(() => {
           btnEl.textContent = oldText;
         }, 1200);
@@ -1749,13 +1774,13 @@
         const main = document.createElement("div");
         main.className = "food-main";
         main.innerHTML = `
-          <span class="bubble-icon" style="width:42px;height:42px;font-size:1.15rem;">${escapeHtml(getFoodIcon(item.name))}</span>
-          <div>
+          <span class="bubble-icon" style="width:38px;height:38px;font-size:1.08rem;">${escapeHtml(getFoodIcon(item.name))}</span>
+          <div class="food-info-col">
             <div class="food-name">
               <span>${escapeHtml(item.name)}</span>
               ${amountText ? `<span class="qty-badge-inline">${escapeHtml(amountText)}</span>` : ""}
             </div>
-            <div class="food-sub">${currentQty} ${currentQty === 1 ? "unità" : "unità"} • Va in ${escapeHtml(item.targetSection || "dispensa")}</div>
+            <div class="food-sub">${currentQty} ${currentQty === 1 ? "unità" : "unità"} • ${escapeHtml(item.targetSection || "dispensa")}</div>
           </div>
         `;
 
@@ -1781,7 +1806,7 @@
         const boughtBtn = document.createElement("button");
         boughtBtn.type = "button";
         boughtBtn.className = "pill-btn dark";
-        boughtBtn.textContent = "Comprato";
+        boughtBtn.textContent = "Preso";
         boughtBtn.onclick = () => markBoughtAndMoveToCasa(item);
 
         const delBtn = document.createElement("button");
@@ -1820,15 +1845,15 @@
         liveCostEntries.forEach((entry, idx) => {
           const row = document.createElement("div");
           row.className = "live-item-card glass";
-          row.style.padding = "10px 14px";
+          row.style.padding = "9px 12px";
           row.innerHTML = `
             <div>
-              <div style="font-weight:700;font-size:0.88rem;">${escapeHtml(entry.label)}</div>
-              <div style="font-size:0.74rem;color:var(--text-muted);">${escapeHtml(entry.dateLabel)}</div>
+              <div style="font-weight:700;font-size:0.86rem;">${escapeHtml(entry.label)}</div>
+              <div style="font-size:0.72rem;color:var(--text-muted);">${escapeHtml(entry.dateLabel)}</div>
             </div>
             <div style="display:flex;align-items:center;gap:8px;">
-              <strong style="font-size:0.92rem;">${Number(entry.amount).toFixed(2).replace(".", ",")} €</strong>
-              <button type="button" class="circle-btn" style="width:28px;height:28px;" title="Rimuovi voce">✕</button>
+              <strong style="font-size:0.9rem;">${Number(entry.amount).toFixed(2).replace(".", ",")} €</strong>
+              <button type="button" class="circle-btn" style="width:26px;height:26px;" title="Rimuovi voce">✕</button>
             </div>
           `;
           row.querySelector("button").onclick = () => {
@@ -1907,8 +1932,8 @@
         left.className = "food-main";
         left.style.cursor = "pointer";
         left.innerHTML = `
-          <span class="bubble-icon" style="width:40px;height:40px;font-size:1.1rem;">${escapeHtml(getFoodIcon(item.name))}</span>
-          <div>
+          <span class="bubble-icon" style="width:38px;height:38px;font-size:1.05rem;">${escapeHtml(getFoodIcon(item.name))}</span>
+          <div class="food-info-col">
             <div class="food-name">
               <span>${escapeHtml(item.name)}</span>
               ${amountText ? `<span class="qty-badge-inline">${escapeHtml(amountText)}</span>` : ""}
@@ -2077,8 +2102,8 @@
         const main = document.createElement("div");
         main.className = "food-main";
         main.innerHTML = `
-          <span class="bubble-icon" style="width:42px;height:42px;font-size:1.1rem;">💶</span>
-          <div>
+          <span class="bubble-icon" style="width:38px;height:38px;font-size:1.05rem;">💶</span>
+          <div class="food-info-col">
             <div class="food-name">${escapeHtml(item.title)}</div>
             <div class="food-sub">
               <strong>${(Number(item.amount) || 0).toFixed(2).replace(".", ",")} €</strong>
