@@ -36,8 +36,8 @@
       --ok-text: #166534;
       --pill: 9999px;
       --oval: 32px;
-      --shadow-soft: 0 10px 24px rgba(24, 24, 27, 0.07), inset 0 1px 0 rgba(255, 255, 255, 0.85);
-      --shadow-float: 0 18px 38px rgba(24, 24, 27, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.85);
+      --shadow-soft: 0 10px 24px rgba(24, 24, 27, 0.07), inset 0 1px 0 rgba(255, 255, 255, 0.88);
+      --shadow-float: 0 18px 38px rgba(24, 24, 27, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.9);
       --ease-immersive: cubic-bezier(0.19, 1, 0.22, 1);
     }
 
@@ -60,6 +60,66 @@
       background: var(--bg-gradient);
       color: var(--text-main);
       padding-bottom: calc(108px + env(safe-area-inset-bottom));
+      position: relative;
+    }
+
+    /* SFONDO AMBIENTALE VIVO CON SFERE MORBIDE */
+    .ambient-layer {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .ambient-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(46px);
+      opacity: 0.65;
+      will-change: transform;
+    }
+
+    .orb-1 {
+      width: 280px;
+      height: 280px;
+      top: 6%;
+      left: -60px;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.95) 0%, rgba(228, 228, 231, 0.25) 70%, transparent 100%);
+      animation: driftOrbOne 16s ease-in-out infinite alternate;
+    }
+
+    .orb-2 {
+      width: 320px;
+      height: 320px;
+      top: 34%;
+      right: -90px;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.85) 0%, rgba(161, 161, 170, 0.28) 70%, transparent 100%);
+      animation: driftOrbTwo 20s ease-in-out infinite alternate;
+    }
+
+    .orb-3 {
+      width: 260px;
+      height: 260px;
+      bottom: 12%;
+      left: 18%;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.82) 0%, rgba(212, 212, 216, 0.22) 70%, transparent 100%);
+      animation: driftOrbThree 18s ease-in-out infinite alternate;
+    }
+
+    @keyframes driftOrbOne {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(44px, 28px) scale(1.08); }
+    }
+
+    @keyframes driftOrbTwo {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(-42px, -34px) scale(1.06); }
+    }
+
+    @keyframes driftOrbThree {
+      0% { transform: translate(0, 0) scale(0.96); }
+      100% { transform: translate(28px, -26px) scale(1.05); }
     }
 
     button, .dock, .oval-card, .pill-btn, .circle-btn {
@@ -68,20 +128,70 @@
       -webkit-touch-callout: none;
     }
 
-    .glass {
-      background: var(--glass);
+    .glass,
+    .glass-strong {
+      position: relative;
+      overflow: hidden;
       backdrop-filter: blur(24px) saturate(165%);
       -webkit-backdrop-filter: blur(24px) saturate(165%);
       border: 1px solid var(--border-glass);
       box-shadow: var(--shadow-soft);
     }
 
+    .glass {
+      background: var(--glass);
+    }
+
     .glass-strong {
       background: var(--glass-strong);
       backdrop-filter: blur(28px) saturate(175%);
       -webkit-backdrop-filter: blur(28px) saturate(175%);
-      border: 1px solid var(--border-glass);
-      box-shadow: var(--shadow-soft);
+    }
+
+    /* RIFLESSO DINAMICO SUL BORDO VETRO */
+    .glass::before,
+    .glass-strong::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        118deg,
+        rgba(255, 255, 255, 0.52) 0%,
+        rgba(255, 255, 255, 0.08) 36%,
+        transparent 62%,
+        rgba(255, 255, 255, 0.22) 100%
+      );
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .glass > *,
+    .glass-strong > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .svg-icon {
+      width: 16px;
+      height: 16px;
+      stroke: currentColor;
+      stroke-width: 1.9;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      fill: none;
+      flex-shrink: 0;
+    }
+
+    .dock-icon {
+      width: 16px;
+      height: 16px;
+      display: block;
+      margin: 0 auto 2px;
+      stroke: currentColor;
+      stroke-width: 1.85;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      fill: none;
     }
 
     .topbar {
@@ -171,6 +281,7 @@
       margin: 0 auto;
       padding: 14px;
       position: relative;
+      z-index: 1;
       perspective: 1100px;
     }
 
@@ -315,11 +426,11 @@
     .oval-card {
       width: 100%;
       border-radius: 999px;
-      padding: 16px 22px;
+      padding: 15px 20px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 14px;
+      gap: 12px;
       cursor: pointer;
       text-align: left;
       transition: transform 0.28s var(--ease-immersive), background 0.2s ease, box-shadow 0.2s ease;
@@ -332,7 +443,14 @@
     .oval-left {
       display: flex;
       align-items: center;
-      gap: 14px;
+      gap: 12px;
+      min-width: 0;
+      flex: 1 1 auto;
+    }
+
+    .oval-text-col {
+      min-width: 0;
+      flex: 1 1 auto;
     }
 
     .bubble-icon {
@@ -354,9 +472,49 @@
     }
 
     .oval-desc {
-      font-size: 0.78rem;
+      font-size: 0.77rem;
       color: var(--text-muted);
       margin-top: 2px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .oval-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    /* MINI-ANTEPRIMA ICONE DEGLI ALIMENTI PRESENTI NELLA SEZIONE */
+    .section-mini-stack {
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .mini-food-dot {
+      width: 24px;
+      height: 24px;
+      border-radius: var(--pill);
+      background: rgba(255, 255, 255, 0.94);
+      border: 1.5px solid rgba(255, 255, 255, 0.9);
+      box-shadow: 0 2px 6px rgba(24, 24, 27, 0.08);
+      display: grid;
+      place-items: center;
+      font-size: 0.74rem;
+      margin-left: -6px;
+    }
+
+    .mini-food-dot:first-child {
+      margin-left: 0;
+    }
+
+    .mini-food-more {
+      background: rgba(39, 39, 42, 0.12);
+      color: var(--text-main);
+      font-size: 0.65rem;
+      font-weight: 800;
     }
 
     .count-pill {
@@ -421,7 +579,7 @@
 
     .food-bubble {
       border-radius: 26px;
-      padding: 12px 14px;
+      padding: 11px 14px;
       transition: transform 0.24s var(--ease-immersive), border-color 0.22s ease, background 0.22s ease, box-shadow 0.22s ease;
       animation: itemSlideIn 0.34s var(--ease-immersive) both;
     }
@@ -521,6 +679,14 @@
       transform: scale(0.9);
     }
 
+    .expand-chevron {
+      transition: transform 0.26s var(--ease-immersive);
+    }
+
+    .food-bubble.expanded .expand-chevron {
+      transform: rotate(180deg);
+    }
+
     .qty-num {
       min-width: 18px;
       text-align: center;
@@ -528,13 +694,34 @@
       font-size: 0.88rem;
     }
 
+    /* ACCORDION PULITO ESPANDIBILE */
+    .accordion-drawer {
+      display: none;
+      margin-top: 9px;
+      padding-top: 8px;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .food-bubble.expanded .accordion-drawer {
+      display: block;
+      animation: accordionReveal 0.28s var(--ease-immersive) both;
+    }
+
+    @keyframes accordionReveal {
+      from {
+        opacity: 0;
+        transform: translateY(-4px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
     .meta-controls-row {
       display: flex;
       align-items: center;
       gap: 6px;
-      margin-top: 9px;
-      padding-top: 8px;
-      border-top: 1px solid var(--border-subtle);
     }
 
     .amount-editor {
@@ -692,13 +879,18 @@
       border: none;
       background: transparent;
       border-radius: var(--pill);
-      padding: 10px 6px;
-      font-size: 0.82rem;
+      padding: 8px 6px;
+      font-size: 0.78rem;
       font-weight: 600;
       white-space: nowrap;
       color: var(--text-muted);
       cursor: pointer;
       transition: all 0.28s var(--ease-immersive);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1px;
     }
 
     .dock-btn.active {
@@ -724,6 +916,11 @@
     .modal-bg.open {
       display: flex;
       animation: fadeInSoft 0.25s ease;
+    }
+
+    @keyframes fadeInSoft {
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
 
     .modal-card {
@@ -763,13 +960,24 @@
   </style>
 </head>
 <body>
+  <div class="ambient-layer" aria-hidden="true">
+    <span class="ambient-orb orb-1"></span>
+    <span class="ambient-orb orb-2"></span>
+    <span class="ambient-orb orb-3"></span>
+  </div>
+
   <header class="topbar">
     <div class="topbar-inner">
       <div>
         <h1 class="brand-title">Casa &amp; Spesa</h1>
         <div class="brand-sub" id="statusLabel">Pronto</div>
       </div>
-      <button class="pill-btn" id="roomBtn" type="button">🏠 Scegli Casa</button>
+      <button class="pill-btn" id="roomBtn" type="button">
+        <svg class="svg-icon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1v-9.5Z" />
+        </svg>
+        <span id="roomBtnText">Scegli Casa</span>
+      </button>
     </div>
   </header>
 
@@ -785,7 +993,12 @@
               <div style="font-size:0.75rem;color:var(--text-muted);" id="liveSummaryBadge">Prepara il carrello e registra il totale</div>
             </div>
           </div>
-          <button type="button" class="pill-btn live-trigger" id="openSpesaLiveBtn">⚡ Spesa Live</button>
+          <button type="button" class="pill-btn live-trigger" id="openSpesaLiveBtn">
+            <svg class="svg-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M13 2 4 14h7l-1 8 9-12h-7l1-8Z" />
+            </svg>
+            <span>Spesa Live</span>
+          </button>
         </div>
 
         <div class="bubble-box glass">
@@ -810,8 +1023,18 @@
 
       <div id="spesaLivePanel" class="slide-right-panel">
         <div class="form-row" style="align-items:center;justify-content:space-between;margin-bottom:12px;">
-          <button type="button" class="pill-btn" id="backFromLiveBtn">← Lista Spesa</button>
-          <span class="pill-btn glass-strong" style="cursor:default;">⚡ Spesa Live</span>
+          <button type="button" class="pill-btn" id="backFromLiveBtn">
+            <svg class="svg-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="m15 18-6-6 6-6" />
+            </svg>
+            <span>Lista Spesa</span>
+          </button>
+          <span class="pill-btn glass-strong" style="cursor:default;">
+            <svg class="svg-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M13 2 4 14h7l-1 8 9-12h-7l1-8Z" />
+            </svg>
+            <span>Spesa Live</span>
+          </span>
         </div>
 
         <div class="live-banner glass-strong">
@@ -862,49 +1085,84 @@
         <div class="oval-grid">
           <button type="button" class="oval-card glass" data-open-storage="dispensa">
             <div class="oval-left">
-              <span class="bubble-icon" aria-hidden="true">🫙</span>
-              <div>
+              <span class="bubble-icon" aria-hidden="true">
+                <svg class="svg-icon" viewBox="0 0 24 24">
+                  <rect x="6" y="7" width="12" height="14" rx="4" />
+                  <path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+                  <path d="M6 12h12" />
+                </svg>
+              </span>
+              <div class="oval-text-col">
                 <div class="oval-title">Dispensa</div>
-                <div class="oval-desc">Couscous, lattine, pasta, farina, legumi, conserve</div>
+                <div class="oval-desc">Couscous, lattine, pasta, farina, legumi</div>
               </div>
             </div>
-            <span class="count-pill" id="count-dispensa">0</span>
+            <div class="oval-right">
+              <span class="section-mini-stack" id="preview-dispensa"></span>
+              <span class="count-pill" id="count-dispensa">0</span>
+            </div>
           </button>
 
           <button type="button" class="oval-card glass" data-open-storage="frigorifero">
             <div class="oval-left">
-              <span class="bubble-icon" aria-hidden="true">🥛</span>
-              <div>
+              <span class="bubble-icon" aria-hidden="true">
+                <svg class="svg-icon" viewBox="0 0 24 24">
+                  <rect x="5" y="2.5" width="14" height="19" rx="3.5" />
+                  <path d="M5 10.5h14" />
+                  <path d="M9 6.5v1.5" />
+                  <path d="M9 13.5v2" />
+                </svg>
+              </span>
+              <div class="oval-text-col">
                 <div class="oval-title">Frigorifero</div>
-                <div class="oval-desc">Yogurt greco, succo di limone, uova, latte, verdure</div>
+                <div class="oval-desc">Yogurt greco, succo di limone, uova, latte</div>
               </div>
             </div>
-            <span class="count-pill" id="count-frigorifero">0</span>
+            <div class="oval-right">
+              <span class="section-mini-stack" id="preview-frigorifero"></span>
+              <span class="count-pill" id="count-frigorifero">0</span>
+            </div>
           </button>
 
           <button type="button" class="oval-card glass" data-open-storage="congelatore">
             <div class="oval-left">
-              <span class="bubble-icon" aria-hidden="true">🧊</span>
-              <div>
+              <span class="bubble-icon" aria-hidden="true">
+                <svg class="svg-icon" viewBox="0 0 24 24">
+                  <path d="M12 3v18" />
+                  <path d="m4.5 7.5 15 9" />
+                  <path d="m19.5 7.5-15 9" />
+                  <path d="M8.5 4.5 12 8l3.5-3.5" />
+                  <path d="m8.5 19.5 3.5-3.5 3.5 3.5" />
+                </svg>
+              </span>
+              <div class="oval-text-col">
                 <div class="oval-title">Congelatore</div>
-                <div class="oval-desc">Verdure congelate, carni, pesce, gelati, pane</div>
+                <div class="oval-desc">Verdure congelate, carni, pesce, gelati</div>
               </div>
             </div>
-            <span class="count-pill" id="count-congelatore">0</span>
+            <div class="oval-right">
+              <span class="section-mini-stack" id="preview-congelatore"></span>
+              <span class="count-pill" id="count-congelatore">0</span>
+            </div>
           </button>
         </div>
       </div>
 
       <div id="storageDetailPanel" class="slide-right-panel">
         <div class="form-row" style="align-items: center; margin-bottom: 10px;">
-          <button type="button" class="pill-btn" id="backToCasaBtn">← Casa</button>
+          <button type="button" class="pill-btn" id="backToCasaBtn">
+            <svg class="svg-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="m15 18-6-6 6-6" />
+            </svg>
+            <span>Casa</span>
+          </button>
           <span class="pill-btn glass-strong" id="currentStorageTitle" style="cursor: default;">Dispensa</span>
         </div>
 
         <div class="bubble-box glass">
           <form id="pantryForm">
             <div class="form-row">
-              <input type="search" id="catalogSearchInput" class="pill-input" placeholder="🔍 Filtra catalogo o cerca alimento..." />
+              <input type="search" id="catalogSearchInput" class="pill-input" placeholder="Filtra catalogo o cerca alimento..." />
             </div>
             <div class="form-row">
               <select id="foodPresetSelect" class="pill-select">
@@ -923,7 +1181,7 @@
 
         <div class="bubble-box glass" style="padding: 10px 12px;">
           <div class="form-row" style="align-items: center;">
-            <input type="search" id="storageFilterInput" class="pill-input" placeholder="🔎 Cerca tra gli alimenti presenti qui..." />
+            <input type="search" id="storageFilterInput" class="pill-input" placeholder="Cerca tra gli alimenti presenti qui..." />
             <button type="button" class="pill-btn" id="clearStorageFilterBtn">Tutti</button>
           </div>
         </div>
@@ -960,9 +1218,28 @@
 
   <nav class="dock-wrap" aria-label="Navigazione principale">
     <div class="dock glass-strong">
-      <button type="button" class="dock-btn" data-nav="spesa">🛒 Spesa</button>
-      <button type="button" class="dock-btn active" data-nav="casa">🏠 Casa</button>
-      <button type="button" class="dock-btn" data-nav="spese">💳 Spese</button>
+      <button type="button" class="dock-btn" data-nav="spesa">
+        <svg class="dock-icon" viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="9" cy="20" r="1.5" />
+          <circle cx="18" cy="20" r="1.5" />
+          <path d="M2.5 3h3l2.2 11.5a2 2 0 0 0 2 1.5h8.8a2 2 0 0 0 1.9-1.5L22 7H6" />
+        </svg>
+        <span>Spesa</span>
+      </button>
+      <button type="button" class="dock-btn active" data-nav="casa">
+        <svg class="dock-icon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1v-9.5Z" />
+        </svg>
+        <span>Casa</span>
+      </button>
+      <button type="button" class="dock-btn" data-nav="spese">
+        <svg class="dock-icon" viewBox="0 0 24 24" aria-hidden="true">
+          <rect x="2.5" y="5" width="19" height="14" rx="2.5" />
+          <path d="M2.5 10h19" />
+          <path d="M6.5 15h4" />
+        </svg>
+        <span>Spese</span>
+      </button>
     </div>
   </nav>
 
@@ -1020,7 +1297,7 @@
     const db = getFirestore(app);
 
     const ITALIAN_FOOD_CATALOG = [
-      { name: "Couscous", icon: " Couscous".trim() ? " couscous".trim() : "🍚" },
+      { name: "Couscous", icon: "🍚" },
       { name: "Yogurt greco", icon: "🥣" },
       { name: "Yogurt greco bianco", icon: "🥣" },
       { name: "Yogurt greco alla frutta", icon: "🍓" },
@@ -1202,8 +1479,6 @@
       { name: "Ghiaccio", icon: "🧊" }
     ];
 
-    ITALIAN_FOOD_CATALOG[0].icon = "🍚";
-
     function getFoodIcon(name = "") {
       const lower = name.toLowerCase().trim();
       if (lower.includes("in scatola") || lower.includes("scatola") || lower.includes("pelat") || lower.includes("lattina")) {
@@ -1229,6 +1504,7 @@
     let currentRoom = (localStorage.getItem(ROOM_STORAGE_KEY) || "").trim().toUpperCase();
     let activeNav = "casa";
     let activeStorageSection = null;
+    let expandedItemIds = new Set();
     let isSpesaLiveOpen = false;
     let livePickedIds = new Set();
     let liveCostEntries = [];
@@ -1298,6 +1574,7 @@
     }
 
     const statusLabel = document.getElementById("statusLabel");
+    const roomBtnText = document.getElementById("roomBtnText");
     const roomBtn = document.getElementById("roomBtn");
     const roomModal = document.getElementById("roomModal");
     const activeRoomBox = document.getElementById("activeRoomBox");
@@ -1310,12 +1587,12 @@
 
     function updateRoomBadge() {
       if (currentRoom) {
-        roomBtn.textContent = `🏠 ${currentRoom}`;
+        roomBtnText.textContent = currentRoom;
         activeRoomBox.classList.remove("hidden");
         activeRoomCode.textContent = currentRoom;
         closeRoomModalBtn.classList.remove("hidden");
       } else {
-        roomBtn.textContent = "🏠 Scegli Casa";
+        roomBtnText.textContent = "Scegli Casa";
         activeRoomBox.classList.add("hidden");
         closeRoomModalBtn.classList.add("hidden");
       }
@@ -1355,6 +1632,8 @@
         statusLabel.textContent = `Sincronizzato • ${currentRoom}`;
         pantryItems = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
         pantryItems.sort((a, b) => (a.name || "").localeCompare(b.name || "", "it"));
+        const validIds = new Set(pantryItems.map((i) => i.id));
+        expandedItemIds = new Set([...expandedItemIds].filter((id) => validIds.has(id)));
         renderCasaCounts();
         renderStorageDetail();
       }, (err) => {
@@ -1422,9 +1701,9 @@
     });
 
     const storageNames = {
-      dispensa: "🫙 Dispensa",
-      frigorifero: "🥛 Frigorifero",
-      congelatore: "🧊 Congelatore"
+      dispensa: "Dispensa",
+      frigorifero: "Frigorifero",
+      congelatore: "Congelatore"
     };
 
     document.querySelectorAll("[data-open-storage]").forEach((card) => {
@@ -1453,11 +1732,30 @@
 
     function renderCasaCounts() {
       ["dispensa", "frigorifero", "congelatore"].forEach((sec) => {
-        const totalUnits = pantryItems
-          .filter((i) => i.section === sec)
-          .reduce((acc, i) => acc + (Array.isArray(i.units) ? i.units.length : (i.qty || 0)), 0);
+        const secItems = pantryItems.filter((i) => i.section === sec);
+        const totalUnits = secItems.reduce(
+          (acc, i) => acc + (Array.isArray(i.units) ? i.units.length : (i.qty || 0)),
+          0
+        );
         const el = document.getElementById(`count-${sec}`);
         if (el) el.textContent = totalUnits;
+
+        const previewEl = document.getElementById(`preview-${sec}`);
+        if (previewEl) {
+          const activeFoods = secItems.filter((i) => {
+            const c = Array.isArray(i.units) ? i.units.length : (i.qty || 0);
+            return c > 0;
+          });
+          if (!activeFoods.length) {
+            previewEl.innerHTML = "";
+          } else {
+            const shown = activeFoods.slice(0, 4);
+            const extra = activeFoods.length - shown.length;
+            previewEl.innerHTML =
+              shown.map((f) => `<span class="mini-food-dot" aria-hidden="true">${escapeHtml(getFoodIcon(f.name))}</span>`).join("") +
+              (extra > 0 ? `<span class="mini-food-dot mini-food-more">+${extra}</span>` : "");
+          }
+        }
       });
     }
 
@@ -1500,16 +1798,18 @@
 
         const unitCount = units.length;
         const isOneLeft = unitCount <= 1;
+        const isExpanded = expandedItemIds.has(item.id);
         const amountText = (item.amount || "").trim();
 
         const card = document.createElement("div");
-        card.className = `food-bubble glass ${isOneLeft ? "low-stock-red" : ""}`;
+        card.className = `food-bubble glass ${isOneLeft ? "low-stock-red" : ""} ${isExpanded ? "expanded" : ""}`;
 
         const top = document.createElement("div");
         top.className = "food-top";
 
         const main = document.createElement("div");
         main.className = "food-main";
+        main.style.cursor = "pointer";
         main.innerHTML = `
           <span class="bubble-icon" style="width:38px;height:38px;font-size:1.08rem;">${escapeHtml(getFoodIcon(item.name))}</span>
           <div class="food-info-col">
@@ -1520,6 +1820,11 @@
             <div class="food-sub">${unitCount} ${unitCount === 1 ? "unità" : "unità"}</div>
           </div>
         `;
+        main.onclick = () => {
+          if (expandedItemIds.has(item.id)) expandedItemIds.delete(item.id);
+          else expandedItemIds.add(item.id);
+          renderStorageDetail();
+        };
 
         const qtyBox = document.createElement("div");
         qtyBox.className = "qty-controls";
@@ -1552,8 +1857,23 @@
           qtyBox.append(shopBtn);
         }
 
+        const expandBtn = document.createElement("button");
+        expandBtn.type = "button";
+        expandBtn.className = "circle-btn expand-chevron";
+        expandBtn.title = isExpanded ? "Chiudi dettagli" : "Apri dettagli e scadenze";
+        expandBtn.innerHTML = `<svg class="svg-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>`;
+        expandBtn.onclick = () => {
+          if (expandedItemIds.has(item.id)) expandedItemIds.delete(item.id);
+          else expandedItemIds.add(item.id);
+          renderStorageDetail();
+        };
+        qtyBox.append(expandBtn);
+
         top.append(main, qtyBox);
         card.appendChild(top);
+
+        const drawer = document.createElement("div");
+        drawer.className = "accordion-drawer";
 
         const metaRow = document.createElement("div");
         metaRow.className = "meta-controls-row";
@@ -1575,9 +1895,9 @@
         moveSelect.className = "move-select";
         moveSelect.title = "Sposta in un'altra sezione";
         [
-          { val: "dispensa", txt: "🫙 Dispensa" },
-          { val: "frigorifero", txt: "🥛 Frigo" },
-          { val: "congelatore", txt: "🧊 Congelatore" }
+          { val: "dispensa", txt: "Dispensa" },
+          { val: "frigorifero", txt: "Frigorifero" },
+          { val: "congelatore", txt: "Congelatore" }
         ].forEach((optData) => {
           const opt = document.createElement("option");
           opt.value = optData.val;
@@ -1588,7 +1908,7 @@
         moveSelect.onchange = () => moveItemToSection(item.id, moveSelect.value);
 
         metaRow.append(amountBox, moveSelect);
-        card.appendChild(metaRow);
+        drawer.appendChild(metaRow);
 
         if (units.length > 0) {
           const unitsGrid = document.createElement("div");
@@ -1617,9 +1937,10 @@
             unitsGrid.appendChild(chip);
           });
 
-          card.appendChild(unitsGrid);
+          drawer.appendChild(unitsGrid);
         }
 
+        card.appendChild(drawer);
         container.appendChild(card);
       });
     }
