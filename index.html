@@ -2,7 +2,7 @@
 <html lang="it">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="Casa &amp; Spesa" />
@@ -34,14 +34,26 @@
       -webkit-tap-highlight-color: transparent;
     }
 
-    body {
+    html, body {
       margin: 0;
-      min-height: 100vh;
+      width: 100%;
+      min-height: 100dvh;
+      overflow-x: clip;
+      overscroll-behavior: none;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body {
       font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", sans-serif;
       background: var(--bg-gradient);
       color: var(--text-main);
-      overflow-x: hidden;
       padding-bottom: calc(104px + env(safe-area-inset-bottom));
+    }
+
+    button, .dock, .oval-card, .pill-btn, .circle-btn {
+      user-select: none;
+      -webkit-user-select: none;
+      -webkit-touch-callout: none;
     }
 
     .glass {
@@ -101,7 +113,7 @@
       color: var(--text-main);
       border-radius: var(--pill);
       padding: 8px 14px;
-      font-size: 0.8rem;
+      font-size: 0.85rem;
       font-weight: 600;
       cursor: pointer;
       transition: transform 0.16s ease, background 0.16s ease;
@@ -240,6 +252,14 @@
     }
 
     .pill-input,
+    .pill-select,
+    input,
+    select,
+    textarea {
+      font-size: 16px;
+    }
+
+    .pill-input,
     .pill-select {
       flex: 1 1 150px;
       min-width: 0;
@@ -247,7 +267,6 @@
       border: 1px solid var(--border-subtle);
       background: rgba(255, 255, 255, 0.86);
       padding: 11px 16px;
-      font-size: 0.92rem;
       color: var(--text-main);
       outline: none;
     }
@@ -356,14 +375,14 @@
       border: 1px solid var(--border-subtle);
       border-radius: var(--pill);
       padding: 4px 10px;
-      font-size: 0.76rem;
+      font-size: 0.8rem;
     }
 
     .amount-editor input {
       border: none;
       background: transparent;
-      width: 82px;
-      font-size: 0.76rem;
+      width: 88px;
+      font-size: 16px;
       font-weight: 600;
       color: var(--text-main);
       outline: none;
@@ -378,7 +397,7 @@
       border: 1px solid var(--border-subtle);
       border-radius: var(--pill);
       padding: 5px 10px;
-      font-size: 0.76rem;
+      font-size: 0.78rem;
     }
 
     .unit-chip.expired {
@@ -396,7 +415,7 @@
     .unit-chip input[type="date"] {
       border: none;
       background: transparent;
-      font-size: 0.75rem;
+      font-size: 16px;
       color: inherit;
       font-family: inherit;
       padding: 0;
@@ -453,7 +472,7 @@
       background: transparent;
       border-radius: var(--pill);
       padding: 10px 8px;
-      font-size: 0.82rem;
+      font-size: 0.85rem;
       font-weight: 600;
       color: var(--text-muted);
       cursor: pointer;
@@ -1312,7 +1331,6 @@
       renderExpenses();
     }
 
-    // Collega subito i pulsanti Casa prima ancora della risposta di Firebase
     roomBtn.addEventListener("click", () => {
       updateRoomBadge();
       roomModal.classList.add("open");
@@ -1353,7 +1371,6 @@
         .replace(/"/g, "&quot;");
     }
 
-    // Inizializzazione immediata dell'interfaccia + Auth Firebase
     updateRoomBadge();
     renderAll();
     if (!currentRoom) {
