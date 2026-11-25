@@ -38,6 +38,7 @@
       --oval: 36px;
       --shadow-soft: 0 12px 28px rgba(24, 24, 27, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.85);
       --shadow-float: 0 18px 38px rgba(24, 24, 27, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.85);
+      --ease-immersive: cubic-bezier(0.19, 1, 0.22, 1);
     }
 
     * {
@@ -58,7 +59,7 @@
       font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", sans-serif;
       background: var(--bg-gradient);
       color: var(--text-main);
-      padding-bottom: calc(108px + env(safe-area-inset-bottom));
+      padding-bottom: calc(114px + env(safe-area-inset-bottom));
     }
 
     button, .dock, .oval-card, .pill-btn, .circle-btn {
@@ -127,7 +128,7 @@
       font-size: 0.85rem;
       font-weight: 600;
       cursor: pointer;
-      transition: transform 0.18s cubic-bezier(0.22, 1, 0.36, 1), background 0.18s ease, box-shadow 0.18s ease;
+      transition: transform 0.2s var(--ease-immersive), background 0.2s ease, box-shadow 0.2s ease;
       display: inline-flex;
       align-items: center;
       gap: 6px;
@@ -148,11 +149,18 @@
       background: var(--accent-hover);
     }
 
+    .pill-btn.live-trigger {
+      background: linear-gradient(135deg, rgba(39, 39, 42, 0.94), rgba(63, 63, 70, 0.88));
+      color: #ffffff;
+      border-color: rgba(255, 255, 255, 0.28);
+      box-shadow: 0 10px 24px rgba(24, 24, 27, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+    }
+
     .pill-btn.danger-alert {
       background: rgba(220, 38, 38, 0.14);
       color: var(--danger-text);
       border-color: var(--danger-border);
-      animation: popInSoft 0.24s cubic-bezier(0.22, 1, 0.36, 1);
+      animation: popInSoft 0.28s var(--ease-immersive);
     }
 
     .app-shell {
@@ -160,6 +168,7 @@
       margin: 0 auto;
       padding: 16px;
       position: relative;
+      perspective: 1100px;
     }
 
     .view {
@@ -168,17 +177,18 @@
 
     .view.active {
       display: block;
-      animation: sectionEnter 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+      animation: zoomInSection 0.52s var(--ease-immersive) both;
+      transform-origin: center center;
     }
 
-    @keyframes sectionEnter {
+    @keyframes zoomInSection {
       0% {
         opacity: 0;
-        transform: translateY(14px) scale(0.985);
+        transform: scale(0.92) translateY(14px);
       }
       100% {
         opacity: 1;
-        transform: translateY(0) scale(1);
+        transform: scale(1) translateY(0);
       }
     }
 
@@ -199,18 +209,103 @@
 
     .slide-right-panel.open {
       display: block;
-      animation: slideToRight 0.36s cubic-bezier(0.22, 1, 0.36, 1);
+      animation: zoomInImmersive 0.56s var(--ease-immersive) both;
+      transform-origin: center 35%;
     }
 
-    @keyframes slideToRight {
+    @keyframes zoomInImmersive {
       0% {
         opacity: 0;
-        transform: translateX(-44px) scale(0.98);
+        transform: scale(0.88) translateY(18px);
+        filter: blur(4px);
+      }
+      65% {
+        opacity: 1;
+        filter: blur(0);
       }
       100% {
         opacity: 1;
-        transform: translateX(0) scale(1);
+        transform: scale(1) translateY(0);
+        filter: blur(0);
       }
+    }
+
+    .live-banner {
+      border-radius: var(--oval);
+      padding: 14px 18px;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.82), rgba(244, 244, 245, 0.62));
+    }
+
+    .live-pulse-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #16a34a;
+      box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.55);
+      animation: livePulse 2s infinite;
+      flex-shrink: 0;
+    }
+
+    @keyframes livePulse {
+      0% {
+        box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.55);
+      }
+      70% {
+        box-shadow: 0 0 0 8px rgba(22, 163, 74, 0);
+      }
+      100% {
+        box-shadow: 0 0 0 0 rgba(22, 163, 74, 0);
+      }
+    }
+
+    .live-item-card {
+      border-radius: 30px;
+      padding: 13px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      transition: transform 0.24s var(--ease-immersive), background 0.24s ease, border-color 0.24s ease;
+    }
+
+    .live-item-card.picked {
+      background: linear-gradient(145deg, rgba(220, 252, 231, 0.78), rgba(255, 255, 255, 0.72));
+      border-color: var(--ok-border);
+    }
+
+    .live-check-btn {
+      width: 34px;
+      height: 34px;
+      border-radius: var(--pill);
+      border: 1.5px solid var(--border-subtle);
+      background: rgba(255, 255, 255, 0.92);
+      color: var(--text-main);
+      font-weight: 800;
+      font-size: 0.95rem;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+      transition: all 0.22s var(--ease-immersive);
+    }
+
+    .live-item-card.picked .live-check-btn {
+      background: #16a34a;
+      border-color: #16a34a;
+      color: #ffffff;
+      transform: scale(1.04);
+    }
+
+    .live-footer-box {
+      border-radius: 34px;
+      padding: 18px;
+      margin-top: 16px;
+      animation: zoomInImmersive 0.48s var(--ease-immersive) both;
     }
 
     .oval-grid {
@@ -230,7 +325,7 @@
       gap: 14px;
       cursor: pointer;
       text-align: left;
-      transition: transform 0.24s cubic-bezier(0.22, 1, 0.36, 1), background 0.2s ease, box-shadow 0.2s ease;
+      transition: transform 0.28s var(--ease-immersive), background 0.2s ease, box-shadow 0.2s ease;
     }
 
     .oval-card:active {
@@ -330,18 +425,18 @@
     .food-bubble {
       border-radius: 32px;
       padding: 14px 16px;
-      transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.22s ease, background 0.22s ease, box-shadow 0.22s ease;
-      animation: itemSlideIn 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+      transition: transform 0.24s var(--ease-immersive), border-color 0.22s ease, background 0.22s ease, box-shadow 0.22s ease;
+      animation: itemSlideIn 0.34s var(--ease-immersive) both;
     }
 
     @keyframes itemSlideIn {
       from {
         opacity: 0;
-        transform: translateY(8px) scale(0.99);
+        transform: scale(0.96) translateY(10px);
       }
       to {
         opacity: 1;
-        transform: translateY(0) scale(1);
+        transform: scale(1) translateY(0);
       }
     }
 
@@ -426,7 +521,7 @@
       cursor: pointer;
       display: grid;
       place-items: center;
-      transition: transform 0.16s ease, background 0.16s ease;
+      transition: transform 0.18s var(--ease-immersive), background 0.18s ease;
     }
 
     .circle-btn:active {
@@ -598,14 +693,14 @@
       font-weight: 600;
       color: var(--text-muted);
       cursor: pointer;
-      transition: all 0.24s cubic-bezier(0.22, 1, 0.36, 1);
+      transition: all 0.28s var(--ease-immersive);
     }
 
     .dock-btn.active {
       background: var(--accent);
       color: #ffffff;
       box-shadow: 0 6px 14px rgba(24, 24, 27, 0.22);
-      transform: translateY(-1px);
+      transform: translateY(-1px) scale(1.02);
     }
 
     .modal-bg {
@@ -623,7 +718,7 @@
 
     .modal-bg.open {
       display: flex;
-      animation: fadeInSoft 0.2s ease;
+      animation: fadeInSoft 0.25s ease;
     }
 
     .modal-card {
@@ -631,7 +726,7 @@
       max-width: 410px;
       border-radius: 34px;
       padding: 22px;
-      animation: sectionEnter 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+      animation: zoomInImmersive 0.44s var(--ease-immersive) both;
     }
 
     .modal-card h2 {
@@ -674,26 +769,86 @@
   </header>
 
   <main class="app-shell">
-    <!-- MACRO SEZIONE 1: LISTA DELLA SPESA -->
+    <!-- MACRO SEZIONE 1: LISTA DELLA SPESA + SOTTOSEZIONE SPESA LIVE -->
     <section id="view-spesa" class="view">
-      <div class="bubble-box glass">
-        <form id="shoppingForm">
-          <div class="form-row">
-            <input type="text" id="shopName" class="pill-input" placeholder="Cosa comprare? (es. Uova, Latte, Pachini...)" required />
-            <input type="text" id="shopAmount" class="pill-input" style="max-width: 120px;" placeholder="Quantità (es. 500g)" />
-            <input type="number" id="shopQty" class="pill-input" style="max-width: 78px;" min="1" value="1" aria-label="Unità" title="Numero unità" />
+      <div id="spesaMainPanel">
+        <div class="live-banner glass-strong">
+          <div style="display:flex;align-items:center;gap:10px;min-width:0;">
+            <span class="live-pulse-dot" aria-hidden="true"></span>
+            <div>
+              <div style="font-weight:700;font-size:0.95rem;">Spesa Live</div>
+              <div style="font-size:0.76rem;color:var(--text-muted);" id="liveSummaryBadge">Prepara il carrello e registra il totale</div>
+            </div>
           </div>
-          <div class="form-row">
-            <select id="shopTargetSection" class="pill-select">
-              <option value="dispensa">Destinazione: Dispensa</option>
-              <option value="frigorifero">Destinazione: Frigorifero</option>
-              <option value="congelatore">Destinazione: Congelatore</option>
-            </select>
-            <button type="submit" class="pill-btn dark">Aggiungi</button>
-          </div>
-        </form>
+          <button type="button" class="pill-btn live-trigger" id="openSpesaLiveBtn">⚡ Entra in Spesa Live</button>
+        </div>
+
+        <div class="bubble-box glass">
+          <form id="shoppingForm">
+            <div class="form-row">
+              <input type="text" id="shopName" class="pill-input" placeholder="Cosa comprare? (es. Uova, Latte, Pachini...)" required />
+              <input type="text" id="shopAmount" class="pill-input" style="max-width: 120px;" placeholder="Quantità (es. 500g)" />
+              <input type="number" id="shopQty" class="pill-input" style="max-width: 78px;" min="1" value="1" aria-label="Unità" title="Numero unità" />
+            </div>
+            <div class="form-row">
+              <select id="shopTargetSection" class="pill-select">
+                <option value="dispensa">Destinazione: Dispensa</option>
+                <option value="frigorifero">Destinazione: Frigorifero</option>
+                <option value="congelatore">Destinazione: Congelatore</option>
+              </select>
+              <button type="submit" class="pill-btn dark">Aggiungi</button>
+            </div>
+          </form>
+        </div>
+        <div id="shoppingListContainer" class="item-stack"></div>
       </div>
-      <div id="shoppingListContainer" class="item-stack"></div>
+
+      <div id="spesaLivePanel" class="slide-right-panel">
+        <div class="form-row" style="align-items:center;justify-content:space-between;margin-bottom:12px;">
+          <button type="button" class="pill-btn" id="backFromLiveBtn">← Lista Spesa</button>
+          <span class="pill-btn glass-strong" style="cursor:default;">⚡ Spesa Live</span>
+        </div>
+
+        <div class="live-banner glass-strong">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <span class="live-pulse-dot" aria-hidden="true"></span>
+            <div>
+              <div style="font-weight:700;font-size:0.95rem;">Carrello in corso</div>
+              <div style="font-size:0.76rem;color:var(--text-muted);" id="livePickedCount">0 articoli spuntati</div>
+            </div>
+          </div>
+          <button type="button" class="pill-btn" id="toggleAllLiveBtn">Spunta tutti</button>
+        </div>
+
+        <div id="liveItemsContainer" class="item-stack"></div>
+
+        <div class="live-footer-box glass-strong">
+          <div style="font-weight:700;font-size:0.98rem;margin-bottom:4px;">Chiudi spesa e invia a Spese</div>
+          <div style="font-size:0.78rem;color:var(--text-muted);margin-bottom:12px;">
+            Inserisci l'importo totale della spesa: in fondo vedrai il totale e salvando passerà nella sezione <strong>Spese</strong> con costo e data di oggi.
+          </div>
+
+          <div class="form-row">
+            <input type="text" id="liveExpenseNote" class="pill-input" placeholder="Etichetta spesa (es. Spesa supermercato)" value="Spesa supermercato" />
+            <input type="number" id="liveExpenseInput" class="pill-input" style="max-width:140px;" step="0.01" min="0" placeholder="Costo (€)" />
+            <button type="button" class="pill-btn" id="addLiveCostBtn">+ Somma</button>
+          </div>
+
+          <div id="liveCostEntriesList" class="item-stack" style="margin-top:10px;"></div>
+
+          <div class="total-bubble glass" style="margin-top:14px;margin-bottom:14px;background:rgba(255,255,255,0.92);">
+            <div>
+              <div style="font-size:0.78rem;color:var(--text-muted);">Totale spesa live</div>
+              <div style="font-size:0.75rem;color:var(--text-muted);" id="liveDatePreview"></div>
+            </div>
+            <div class="total-amount" id="liveTotalDisplay">0,00 €</div>
+          </div>
+
+          <button type="button" class="pill-btn dark" id="finishLiveShoppingBtn" style="width:100%;justify-content:center;padding:13px 18px;">
+            ✓ Salva in Spese &amp; porta in Casa
+          </button>
+        </div>
+      </div>
     </section>
 
     <!-- MACRO SEZIONE 2: CASA (APERTURA PREDEFINITA) -->
@@ -1030,6 +1185,10 @@
     let currentRoom = (localStorage.getItem(ROOM_STORAGE_KEY) || "").trim().toUpperCase();
     let activeNav = "casa";
     let activeStorageSection = null;
+    let isSpesaLiveOpen = false;
+    let livePickedIds = new Set();
+    let liveCostEntries = [];
+
     let pantryItems = [];
     let shoppingItems = [];
     let expenseItems = [];
@@ -1079,6 +1238,20 @@
       storageFilterInput.value = "";
       renderStorageDetail();
     });
+
+    function formatNowDateTime() {
+      const now = new Date();
+      const dateStr = now.toLocaleDateString("it-IT", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric"
+      });
+      const timeStr = now.toLocaleTimeString("it-IT", {
+        hour: "2-digit",
+        minute: "2-digit"
+      });
+      return `${dateStr} • ${timeStr}`;
+    }
 
     const statusLabel = document.getElementById("statusLabel");
     const roomBtn = document.getElementById("roomBtn");
@@ -1147,7 +1320,10 @@
       const qShopping = query(collection(db, "shoppingItems"), where("roomCode", "==", currentRoom));
       unsubShopping = onSnapshot(qShopping, (snap) => {
         shoppingItems = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+        const validIds = new Set(shoppingItems.map((i) => i.id));
+        livePickedIds = new Set([...livePickedIds].filter((id) => validIds.has(id)));
         renderShopping();
+        renderSpesaLive();
       });
 
       const qExpenses = query(collection(db, "expenses"), where("roomCode", "==", currentRoom));
@@ -1170,7 +1346,35 @@
           document.getElementById("storageDetailPanel").classList.remove("open");
           document.getElementById("casaMenu").classList.remove("hidden");
         }
+        if (activeNav !== "spesa") {
+          isSpesaLiveOpen = false;
+          document.getElementById("spesaLivePanel").classList.remove("open");
+          document.getElementById("spesaMainPanel").classList.remove("hidden");
+        }
       });
+    });
+
+    const openSpesaLiveBtn = document.getElementById("openSpesaLiveBtn");
+    const backFromLiveBtn = document.getElementById("backFromLiveBtn");
+    const spesaMainPanel = document.getElementById("spesaMainPanel");
+    const spesaLivePanel = document.getElementById("spesaLivePanel");
+
+    openSpesaLiveBtn.addEventListener("click", () => {
+      if (!currentRoom) return roomModal.classList.add("open");
+      isSpesaLiveOpen = true;
+      spesaMainPanel.classList.add("hidden");
+      spesaLivePanel.classList.remove("open");
+      void spesaLivePanel.offsetWidth;
+      spesaLivePanel.classList.add("open");
+      renderSpesaLive();
+    });
+
+    backFromLiveBtn.addEventListener("click", () => {
+      isSpesaLiveOpen = false;
+      spesaLivePanel.classList.remove("open");
+      spesaMainPanel.classList.remove("hidden");
+      void spesaMainPanel.offsetWidth;
+      spesaMainPanel.style.animation = "zoomInSection 0.44s var(--ease-immersive) both";
     });
 
     const storageNames = {
@@ -1200,7 +1404,7 @@
       const menu = document.getElementById("casaMenu");
       menu.classList.remove("hidden");
       void menu.offsetWidth;
-      menu.style.animation = "sectionEnter 0.28s cubic-bezier(0.22, 1, 0.36, 1)";
+      menu.style.animation = "zoomInSection 0.44s var(--ease-immersive) both";
     });
 
     function renderCasaCounts() {
@@ -1515,6 +1719,14 @@
 
     function renderShopping() {
       const container = document.getElementById("shoppingListContainer");
+      const summaryBadge = document.getElementById("liveSummaryBadge");
+
+      if (summaryBadge) {
+        summaryBadge.textContent = shoppingItems.length
+          ? `${shoppingItems.length} ${shoppingItems.length === 1 ? "articolo in lista" : "articoli in lista"} • ${livePickedIds.size} spuntati`
+          : "Prepara il carrello e registra il totale";
+      }
+
       if (!currentRoom) {
         container.innerHTML = `<div class="empty-bubble glass">Crea o entra in una Casa per gestire la Lista della Spesa.</div>`;
         return;
@@ -1585,6 +1797,208 @@
       });
     }
 
+    function getLiveTotalAmount() {
+      const entriesSum = liveCostEntries.reduce((acc, e) => acc + (Number(e.amount) || 0), 0);
+      const rawInputVal = parseFloat(document.getElementById("liveExpenseInput")?.value || "0");
+      const currentInputAdd = !Number.isNaN(rawInputVal) && rawInputVal > 0 ? rawInputVal : 0;
+      return entriesSum + currentInputAdd;
+    }
+
+    function updateLiveTotalDisplay() {
+      const totalEl = document.getElementById("liveTotalDisplay");
+      const dateEl = document.getElementById("liveDatePreview");
+      const entriesListEl = document.getElementById("liveCostEntriesList");
+
+      if (dateEl) {
+        dateEl.textContent = `Data: ${formatNowDateTime()}`;
+      }
+      if (totalEl) {
+        totalEl.textContent = `${getLiveTotalAmount().toFixed(2).replace(".", ",")} €`;
+      }
+      if (entriesListEl) {
+        entriesListEl.innerHTML = "";
+        liveCostEntries.forEach((entry, idx) => {
+          const row = document.createElement("div");
+          row.className = "live-item-card glass";
+          row.style.padding = "10px 14px";
+          row.innerHTML = `
+            <div>
+              <div style="font-weight:700;font-size:0.88rem;">${escapeHtml(entry.label)}</div>
+              <div style="font-size:0.74rem;color:var(--text-muted);">${escapeHtml(entry.dateLabel)}</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;">
+              <strong style="font-size:0.92rem;">${Number(entry.amount).toFixed(2).replace(".", ",")} €</strong>
+              <button type="button" class="circle-btn" style="width:28px;height:28px;" title="Rimuovi voce">✕</button>
+            </div>
+          `;
+          row.querySelector("button").onclick = () => {
+            liveCostEntries.splice(idx, 1);
+            updateLiveTotalDisplay();
+          };
+          entriesListEl.appendChild(row);
+        });
+      }
+    }
+
+    document.getElementById("liveExpenseInput").addEventListener("input", updateLiveTotalDisplay);
+
+    document.getElementById("addLiveCostBtn").addEventListener("click", () => {
+      const noteInput = document.getElementById("liveExpenseNote");
+      const amtInput = document.getElementById("liveExpenseInput");
+      const amount = parseFloat(amtInput.value);
+      if (Number.isNaN(amount) || amount <= 0) return;
+      const label = (noteInput.value || "").trim() || "Spesa supermercato";
+
+      liveCostEntries.push({
+        label,
+        amount,
+        dateLabel: formatNowDateTime()
+      });
+
+      amtInput.value = "";
+      noteInput.value = "Spesa supermercato";
+      updateLiveTotalDisplay();
+    });
+
+    document.getElementById("toggleAllLiveBtn").addEventListener("click", () => {
+      if (!shoppingItems.length) return;
+      const allPicked = shoppingItems.every((item) => livePickedIds.has(item.id));
+      if (allPicked) {
+        livePickedIds.clear();
+      } else {
+        shoppingItems.forEach((item) => livePickedIds.add(item.id));
+      }
+      renderSpesaLive();
+      renderShopping();
+    });
+
+    function renderSpesaLive() {
+      const container = document.getElementById("liveItemsContainer");
+      const pickedCountEl = document.getElementById("livePickedCount");
+      const toggleAllBtn = document.getElementById("toggleAllLiveBtn");
+
+      updateLiveTotalDisplay();
+
+      if (pickedCountEl) {
+        pickedCountEl.textContent = `${livePickedIds.size} su ${shoppingItems.length} ${shoppingItems.length === 1 ? "articolo spuntato" : "articoli spuntati"}`;
+      }
+
+      if (toggleAllBtn) {
+        const allPicked = shoppingItems.length > 0 && shoppingItems.every((i) => livePickedIds.has(i.id));
+        toggleAllBtn.textContent = allPicked ? "Deseleziona tutti" : "Spunta tutti";
+      }
+
+      if (!container) return;
+      if (!shoppingItems.length) {
+        container.innerHTML = `<div class="empty-bubble glass">Nessun articolo nella lista. Puoi comunque inserire qui sotto il costo della spesa di oggi!</div>`;
+        return;
+      }
+
+      container.innerHTML = "";
+      shoppingItems.forEach((item) => {
+        const picked = livePickedIds.has(item.id);
+        const qty = item.qty || 1;
+        const amountText = (item.amount || "").trim();
+
+        const card = document.createElement("div");
+        card.className = `live-item-card glass ${picked ? "picked" : ""}`;
+
+        const left = document.createElement("div");
+        left.className = "food-main";
+        left.style.cursor = "pointer";
+        left.innerHTML = `
+          <span class="bubble-icon" style="width:40px;height:40px;font-size:1.1rem;">${escapeHtml(getFoodIcon(item.name))}</span>
+          <div>
+            <div class="food-name">
+              <span>${escapeHtml(item.name)}</span>
+              ${amountText ? `<span class="qty-badge-inline">${escapeHtml(amountText)}</span>` : ""}
+            </div>
+            <div class="food-sub">${qty} ${qty === 1 ? "unità" : "unità"} • ${escapeHtml(item.targetSection || "dispensa")}</div>
+          </div>
+        `;
+        left.onclick = () => {
+          if (livePickedIds.has(item.id)) livePickedIds.delete(item.id);
+          else livePickedIds.add(item.id);
+          renderSpesaLive();
+          renderShopping();
+        };
+
+        const checkBtn = document.createElement("button");
+        checkBtn.type = "button";
+        checkBtn.className = "live-check-btn";
+        checkBtn.textContent = picked ? "✓" : "";
+        checkBtn.title = picked ? "Rimuovi dalla spunta" : "Spunta come preso";
+        checkBtn.onclick = () => {
+          if (livePickedIds.has(item.id)) livePickedIds.delete(item.id);
+          else livePickedIds.add(item.id);
+          renderSpesaLive();
+          renderShopping();
+        };
+
+        card.append(left, checkBtn);
+        container.appendChild(card);
+      });
+    }
+
+    document.getElementById("finishLiveShoppingBtn").addEventListener("click", async () => {
+      if (!currentRoom) return roomModal.classList.add("open");
+
+      const totalToSave = getLiveTotalAmount();
+      const noteInput = document.getElementById("liveExpenseNote");
+      const amtInput = document.getElementById("liveExpenseInput");
+      const dateStr = formatNowDateTime();
+
+      const itemsToMove = shoppingItems.filter((item) =>
+        livePickedIds.size > 0 ? livePickedIds.has(item.id) : true
+      );
+
+      for (const shopItem of itemsToMove) {
+        const qty = Math.max(1, shopItem.qty || 1);
+        const section = shopItem.targetSection || "dispensa";
+        const amount = (shopItem.amount || "").trim();
+        const units = Array.from({ length: qty }, () => ({ expiry: "" }));
+
+        await addDoc(collection(db, "pantryItems"), {
+          roomCode: currentRoom,
+          section,
+          name: shopItem.name,
+          amount,
+          qty,
+          units,
+          updatedAt: serverTimestamp()
+        });
+
+        await deleteDoc(doc(db, "shoppingItems", shopItem.id));
+      }
+
+      if (totalToSave > 0) {
+        const customTitle = (noteInput.value || "").trim() || (liveCostEntries[0]?.label || "Spesa Live");
+        const countLabel = itemsToMove.length > 0 ? ` (${itemsToMove.length} art.)` : "";
+        await addDoc(collection(db, "expenses"), {
+          roomCode: currentRoom,
+          title: `${customTitle}${countLabel}`,
+          amount: totalToSave,
+          dateLabel: dateStr,
+          createdAt: serverTimestamp()
+        });
+      }
+
+      livePickedIds.clear();
+      liveCostEntries = [];
+      amtInput.value = "";
+      noteInput.value = "Spesa supermercato";
+      updateLiveTotalDisplay();
+
+      isSpesaLiveOpen = false;
+      spesaLivePanel.classList.remove("open");
+      spesaMainPanel.classList.remove("hidden");
+
+      if (totalToSave > 0) {
+        const speseBtn = document.querySelector('.dock-btn[data-nav="spese"]');
+        if (speseBtn) speseBtn.click();
+      }
+    });
+
     async function markBoughtAndMoveToCasa(shopItem) {
       const qty = Math.max(1, shopItem.qty || 1);
       const section = shopItem.targetSection || "dispensa";
@@ -1619,9 +2033,19 @@
         roomCode: currentRoom,
         title,
         amount,
+        dateLabel: formatNowDateTime(),
         createdAt: serverTimestamp()
       });
     });
+
+    function formatExpenseDate(item) {
+      if (item.dateLabel) return item.dateLabel;
+      if (item.createdAt && typeof item.createdAt.toDate === "function") {
+        const d = item.createdAt.toDate();
+        return `${d.toLocaleDateString("it-IT")} • ${d.toLocaleTimeString("it-IT", { hour: "2-digit", minute: "2-digit" })}`;
+      }
+      return "";
+    }
 
     function renderExpenses() {
       const container = document.getElementById("expensesListContainer");
@@ -1649,13 +2073,17 @@
         const top = document.createElement("div");
         top.className = "food-top";
 
+        const dateMeta = formatExpenseDate(item);
         const main = document.createElement("div");
         main.className = "food-main";
         main.innerHTML = `
           <span class="bubble-icon" style="width:42px;height:42px;font-size:1.1rem;">💶</span>
           <div>
             <div class="food-name">${escapeHtml(item.title)}</div>
-            <div class="food-sub">${(Number(item.amount) || 0).toFixed(2).replace(".", ",")} €</div>
+            <div class="food-sub">
+              <strong>${(Number(item.amount) || 0).toFixed(2).replace(".", ",")} €</strong>
+              ${dateMeta ? `<span>• ${escapeHtml(dateMeta)}</span>` : ""}
+            </div>
           </div>
         `;
 
@@ -1675,6 +2103,7 @@
       renderCasaCounts();
       renderStorageDetail();
       renderShopping();
+      renderSpesaLive();
       renderExpenses();
     }
 
