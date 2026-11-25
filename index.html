@@ -10,10 +10,9 @@
   <title>Casa &amp; Spesa</title>
   <style>
     :root {
-      --bg-base: #e4e4e7;
       --bg-gradient: radial-gradient(circle at 15% 10%, #f4f4f5 0%, #e4e4e7 45%, #d4d4d8 100%);
       --glass: rgba(255, 255, 255, 0.58);
-      --glass-strong: rgba(255, 255, 255, 0.78);
+      --glass-strong: rgba(255, 255, 255, 0.86);
       --border-glass: rgba(255, 255, 255, 0.72);
       --border-subtle: rgba(113, 113, 122, 0.22);
       --text-main: #18181b;
@@ -66,7 +65,7 @@
       top: 0;
       z-index: 30;
       padding: calc(12px + env(safe-area-inset-top)) 16px 12px;
-      background: rgba(244, 244, 245, 0.68);
+      background: rgba(244, 244, 245, 0.72);
       backdrop-filter: blur(24px) saturate(170%);
       -webkit-backdrop-filter: blur(24px) saturate(170%);
       border-bottom: 1px solid var(--border-subtle);
@@ -96,7 +95,7 @@
 
     .pill-btn {
       border: 1px solid var(--border-glass);
-      background: rgba(255, 255, 255, 0.72);
+      background: rgba(255, 255, 255, 0.78);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       color: var(--text-main);
@@ -156,14 +155,8 @@
     }
 
     @keyframes slideToRight {
-      0% {
-        opacity: 0;
-        transform: translateX(-48px) scale(0.98);
-      }
-      100% {
-        opacity: 1;
-        transform: translateX(0) scale(1);
-      }
+      0% { opacity: 0; transform: translateX(-48px) scale(0.98); }
+      100% { opacity: 1; transform: translateX(0) scale(1); }
     }
 
     .oval-grid {
@@ -200,7 +193,7 @@
       width: 48px;
       height: 48px;
       border-radius: var(--pill);
-      background: rgba(255, 255, 255, 0.82);
+      background: rgba(255, 255, 255, 0.84);
       border: 1px solid var(--border-glass);
       display: grid;
       place-items: center;
@@ -252,9 +245,7 @@
       min-width: 0;
       border-radius: var(--pill);
       border: 1px solid var(--border-subtle);
-      background: rgba(255, 255, 255, 0.82);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+      background: rgba(255, 255, 255, 0.86);
       padding: 11px 16px;
       font-size: 0.92rem;
       color: var(--text-main);
@@ -327,7 +318,7 @@
       height: 32px;
       border-radius: var(--pill);
       border: 1px solid var(--border-subtle);
-      background: rgba(255, 255, 255, 0.85);
+      background: rgba(255, 255, 255, 0.88);
       color: var(--text-main);
       font-weight: 700;
       font-size: 0.95rem;
@@ -361,7 +352,7 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      background: rgba(255, 255, 255, 0.78);
+      background: rgba(255, 255, 255, 0.8);
       border: 1px solid var(--border-subtle);
       border-radius: var(--pill);
       padding: 4px 10px;
@@ -383,7 +374,7 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      background: rgba(255, 255, 255, 0.72);
+      background: rgba(255, 255, 255, 0.75);
       border: 1px solid var(--border-subtle);
       border-radius: var(--pill);
       padding: 5px 10px;
@@ -478,8 +469,8 @@
     .modal-bg {
       position: fixed;
       inset: 0;
-      z-index: 60;
-      background: rgba(24, 24, 27, 0.36);
+      z-index: 90;
+      background: rgba(24, 24, 27, 0.42);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
       display: none;
@@ -513,7 +504,7 @@
 
     .code-pill {
       border-radius: var(--pill);
-      background: rgba(255, 255, 255, 0.85);
+      background: rgba(255, 255, 255, 0.9);
       border: 1px dashed rgba(63, 63, 70, 0.35);
       padding: 11px 16px;
       text-align: center;
@@ -532,20 +523,19 @@
     <div class="topbar-inner">
       <div>
         <h1 class="brand-title">Casa &amp; Spesa</h1>
-        <div class="brand-sub" id="statusLabel">Connessione al cloud...</div>
+        <div class="brand-sub" id="statusLabel">Pronto</div>
       </div>
-      <button class="pill-btn" id="roomBtn" type="button">🏠 Casa: ---</button>
+      <button class="pill-btn" id="roomBtn" type="button">🏠 Scegli Casa</button>
     </div>
   </header>
 
   <main class="app-shell">
-    <!-- MACRO SEZIONE 1: LISTA DELLA SPESA -->
     <section id="view-spesa" class="view active">
       <div class="bubble-box glass">
         <form id="shoppingForm">
           <div class="form-row">
             <input type="text" id="shopName" class="pill-input" placeholder="Cosa comprare? (es. Uova, Latte, Pasta...)" required />
-            <input type="text" id="shopAmount" class="pill-input" style="max-width: 120px;" placeholder="Quantità (es. 500g, 1L)" />
+            <input type="text" id="shopAmount" class="pill-input" style="max-width: 120px;" placeholder="Quantità (es. 500g)" />
             <input type="number" id="shopQty" class="pill-input" style="max-width: 78px;" min="1" value="1" aria-label="Unità" title="Numero unità" />
           </div>
           <div class="form-row">
@@ -558,11 +548,9 @@
           </div>
         </form>
       </div>
-
       <div id="shoppingListContainer" class="item-stack"></div>
     </section>
 
-    <!-- MACRO SEZIONE 2: CASA -->
     <section id="view-casa" class="view">
       <div id="casaMenu">
         <div class="oval-grid">
@@ -616,7 +604,7 @@
               <input type="text" id="foodCustomName" class="pill-input" placeholder="Oppure scrivi alimento..." />
             </div>
             <div class="form-row">
-              <input type="text" id="foodAmountLabel" class="pill-input" style="max-width: 130px;" placeholder="Quantità (es. 500 g, 1 L)" />
+              <input type="text" id="foodAmountLabel" class="pill-input" style="max-width: 130px;" placeholder="Quantità (es. 500 g)" />
               <input type="number" id="foodInitialQty" class="pill-input" style="max-width: 82px;" min="1" value="1" aria-label="Unità" title="Numero unità" />
               <input type="date" id="foodInitialExpiry" class="pill-input" aria-label="Scadenza iniziale" />
               <button type="submit" class="pill-btn dark">+ Inserisci</button>
@@ -628,9 +616,761 @@
       </div>
     </section>
 
-    <!-- MACRO SEZIONE 3: SPESE -->
     <section id="view-spese" class="view">
       <div class="total-bubble glass-strong">
         <div>
           <div style="font-size: 0.78rem; color: var(--text-muted);">Totale speso</div>
-          <div style="font-size: 0.75rem; color: var(--text-
+          <div style="font-size: 0.75rem; color: var(--text-muted);" id="expensesCountLabel">0 voci registrate</div>
+        </div>
+        <div class="total-amount" id="totalExpensesAmount">0,00 €</div>
+      </div>
+
+      <div class="bubble-box glass">
+        <form id="expenseForm">
+          <div class="form-row">
+            <input type="text" id="expenseTitle" class="pill-input" placeholder="Elemento comprato (es. Spesa supermercato, Uova)" required />
+            <input type="number" id="expenseAmount" class="pill-input" style="max-width: 130px;" step="0.01" min="0.01" placeholder="Euro (€)" required />
+          </div>
+          <div class="form-row">
+            <button type="submit" class="pill-btn dark" style="width: 100%; justify-content: center;">Registra spesa</button>
+          </div>
+        </form>
+      </div>
+
+      <div id="expensesListContainer" class="item-stack"></div>
+    </section>
+  </main>
+
+  <nav class="dock-wrap" aria-label="Navigazione principale">
+    <div class="dock glass-strong">
+      <button type="button" class="dock-btn active" data-nav="spesa">🛒 Lista Spesa</button>
+      <button type="button" class="dock-btn" data-nav="casa">🏠 Casa</button>
+      <button type="button" class="dock-btn" data-nav="spese">💳 Spese</button>
+    </div>
+  </nav>
+
+  <div class="modal-bg" id="roomModal">
+    <div class="modal-card glass-strong">
+      <h2>La tua Casa condivisa</h2>
+      <p>Crea una nuova Casa per te e la tua famiglia oppure inserisci un codice condiviso per sincronizzare tutto in tempo reale.</p>
+
+      <div id="activeRoomBox" class="hidden">
+        <div class="code-pill" id="activeRoomCode"></div>
+        <button type="button" class="pill-btn" id="copyRoomCodeBtn" style="width: 100%; justify-content: center; margin-bottom: 12px;">Copia codice Casa</button>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 10px;">
+        <button type="button" class="pill-btn dark" id="createRoomBtn" style="width: 100%; justify-content: center; padding: 12px 16px;">+ Crea nuova Casa</button>
+
+        <div style="display: flex; gap: 8px;">
+          <input type="text" id="joinRoomInput" class="pill-input" placeholder="Codice (es. CASA-4920)" style="text-transform: uppercase;" />
+          <button type="button" class="pill-btn" id="joinRoomBtn">Entra</button>
+        </div>
+
+        <button type="button" class="pill-btn hidden" id="closeRoomModalBtn" style="width: 100%; justify-content: center; margin-top: 4px;">Chiudi</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-app.js";
+    import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-auth.js";
+    import {
+      getFirestore,
+      collection,
+      doc,
+      addDoc,
+      updateDoc,
+      deleteDoc,
+      onSnapshot,
+      query,
+      where,
+      serverTimestamp
+    } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyC3dKtKUA23mlFGYI-aBoYtdJt2gJgLXco",
+      authDomain: "dispensa-spesa.firebaseapp.com",
+      projectId: "dispensa-spesa",
+      storageBucket: "dispensa-spesa.firebasestorage.app",
+      messagingSenderId: "988990942142",
+      appId: "1:988990942142:web:cfdbd3344783b8dfb4e7ef",
+      measurementId: "G-RP36RHS7SV"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    const ITALIAN_FOOD_CATALOG = [
+      { name: "Uova", icon: "🥚" },
+      { name: "Latte", icon: "🥛" },
+      { name: "Cioccolata", icon: "🍫" },
+      { name: "Pasta", icon: "🍝" },
+      { name: "Riso", icon: "🍚" },
+      { name: "Farina", icon: "🌾" },
+      { name: "Pane", icon: "🍞" },
+      { name: "Fette biscottate", icon: "🥖" },
+      { name: "Biscotti", icon: "🍪" },
+      { name: "Formaggio", icon: "🧀" },
+      { name: "Mozzarella", icon: "🧀" },
+      { name: "Ricotta", icon: "🥣" },
+      { name: "Burro", icon: "🧈" },
+      { name: "Yogurt", icon: "🥣" },
+      { name: "Panna", icon: "🥛" },
+      { name: "Pollo", icon: "🍗" },
+      { name: "Tacchino", icon: "🍗" },
+      { name: "Manzo", icon: "🥩" },
+      { name: "Maiale", icon: "🥩" },
+      { name: "Salsiccia", icon: "🌭" },
+      { name: "Prosciutto", icon: "🥓" },
+      { name: "Salame", icon: "🥓" },
+      { name: "Tonno", icon: "🐟" },
+      { name: "Salmone", icon: "🐟" },
+      { name: "Merluzzo", icon: "🐟" },
+      { name: "Gamberi", icon: "🍤" },
+      { name: "Pomodori", icon: "🍅" },
+      { name: "Passata di pomodoro", icon: "🍅" },
+      { name: "Patate", icon: "🥔" },
+      { name: "Cipolle", icon: "🧅" },
+      { name: "Aglio", icon: "🧄" },
+      { name: "Carote", icon: "🥕" },
+      { name: "Zucchine", icon: "🥒" },
+      { name: "Melanzane", icon: "🍆" },
+      { name: "Peperoni", icon: "🫑" },
+      { name: "Insalata", icon: "🥬" },
+      { name: "Spinaci", icon: "🥬" },
+      { name: "Broccoli", icon: "🥦" },
+      { name: "Funghi", icon: "🍄" },
+      { name: "Mele", icon: "🍎" },
+      { name: "Pere", icon: "🍐" },
+      { name: "Banane", icon: "🍌" },
+      { name: "Arance", icon: "🍊" },
+      { name: "Limoni", icon: "🍋" },
+      { name: "Fragole", icon: "🍓" },
+      { name: "Uva", icon: "🍇" },
+      { name: "Fagioli", icon: "🫘" },
+      { name: "Ceci", icon: "🫘" },
+      { name: "Lenticchie", icon: "🫘" },
+      { name: "Olio d'oliva", icon: "🫗" },
+      { name: "Aceto", icon: "🫙" },
+      { name: "Sale", icon: "🧂" },
+      { name: "Zucchero", icon: "🍬" },
+      { name: "Miele", icon: "🍯" },
+      { name: "Marmellata", icon: "🍓" },
+      { name: "Caffè", icon: "☕" },
+      { name: "Tè", icon: "🫖" },
+      { name: "Acqua", icon: "💧" },
+      { name: "Succo di frutta", icon: "🧃" },
+      { name: "Vino", icon: "🍷" },
+      { name: "Birra", icon: "🍺" },
+      { name: "Lievito", icon: "🧁" },
+      { name: "Sugo pronto", icon: "🍝" },
+      { name: "Pizza surgelata", icon: "🍕" },
+      { name: "Verdure surgelate", icon: "❄️" },
+      { name: "Gelato", icon: "🍨" },
+      { name: "Ghiaccio", icon: "🧊" }
+    ];
+
+    function getFoodIcon(name = "") {
+      const lower = name.toLowerCase().trim();
+      const found = ITALIAN_FOOD_CATALOG.find(
+        (item) => lower === item.name.toLowerCase() || lower.includes(item.name.toLowerCase())
+      );
+      if (found) return found.icon;
+      if (lower.includes("formagg") || lower.includes("parmigian") || lower.includes("grana")) return "🧀";
+      if (lower.includes("frutt")) return "🍎";
+      if (lower.includes("verdur")) return "🥦";
+      if (lower.includes("surgel")) return "❄️";
+      if (lower.includes("dolc") || lower.includes("torta")) return "🍰";
+      return "🍽️";
+    }
+
+    const ROOM_STORAGE_KEY = "casa_spesa_room_code";
+    let currentRoom = (localStorage.getItem(ROOM_STORAGE_KEY) || "").trim().toUpperCase();
+    let activeNav = "spesa";
+    let activeStorageSection = null;
+    let pantryItems = [];
+    let shoppingItems = [];
+    let expenseItems = [];
+    let unsubPantry = null;
+    let unsubShopping = null;
+    let unsubExpenses = null;
+
+    const foodPresetSelect = document.getElementById("foodPresetSelect");
+    ITALIAN_FOOD_CATALOG.forEach((f) => {
+      const opt = document.createElement("option");
+      opt.value = f.name;
+      opt.textContent = `${f.icon} ${f.name}`;
+      foodPresetSelect.appendChild(opt);
+    });
+
+    const statusLabel = document.getElementById("statusLabel");
+    const roomBtn = document.getElementById("roomBtn");
+    const roomModal = document.getElementById("roomModal");
+    const activeRoomBox = document.getElementById("activeRoomBox");
+    const activeRoomCode = document.getElementById("activeRoomCode");
+    const copyRoomCodeBtn = document.getElementById("copyRoomCodeBtn");
+    const createRoomBtn = document.getElementById("createRoomBtn");
+    const joinRoomBtn = document.getElementById("joinRoomBtn");
+    const joinRoomInput = document.getElementById("joinRoomInput");
+    const closeRoomModalBtn = document.getElementById("closeRoomModalBtn");
+
+    function updateRoomBadge() {
+      if (currentRoom) {
+        roomBtn.textContent = `🏠 ${currentRoom}`;
+        activeRoomBox.classList.remove("hidden");
+        activeRoomCode.textContent = currentRoom;
+        closeRoomModalBtn.classList.remove("hidden");
+      } else {
+        roomBtn.textContent = "🏠 Scegli Casa";
+        activeRoomBox.classList.add("hidden");
+        closeRoomModalBtn.classList.add("hidden");
+      }
+    }
+
+    function setActiveRoom(code) {
+      const clean = (code || "").trim().toUpperCase();
+      if (!clean) return;
+      currentRoom = clean;
+      localStorage.setItem(ROOM_STORAGE_KEY, currentRoom);
+      updateRoomBadge();
+      roomModal.classList.remove("open");
+      startListeners();
+    }
+
+    function clearListeners() {
+      [unsubPantry, unsubShopping, unsubExpenses].forEach((fn) => {
+        if (typeof fn === "function") fn();
+      });
+      unsubPantry = null;
+      unsubShopping = null;
+      unsubExpenses = null;
+    }
+
+    function startListeners() {
+      clearListeners();
+      if (!currentRoom) {
+        statusLabel.textContent = "Scegli o crea una Casa";
+        renderAll();
+        return;
+      }
+
+      statusLabel.textContent = `Connessione a ${currentRoom}...`;
+
+      const qPantry = query(collection(db, "pantryItems"), where("roomCode", "==", currentRoom));
+      unsubPantry = onSnapshot(qPantry, (snap) => {
+        statusLabel.textContent = `Sincronizzato • ${currentRoom}`;
+        pantryItems = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+        pantryItems.sort((a, b) => (a.name || "").localeCompare(b.name || "", "it"));
+        renderCasaCounts();
+        renderStorageDetail();
+      }, (err) => {
+        statusLabel.textContent = `Errore Firebase: ${err.code || "controlla Auth Anonimo"}`;
+      });
+
+      const qShopping = query(collection(db, "shoppingItems"), where("roomCode", "==", currentRoom));
+      unsubShopping = onSnapshot(qShopping, (snap) => {
+        shoppingItems = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+        renderShopping();
+      });
+
+      const qExpenses = query(collection(db, "expenses"), where("roomCode", "==", currentRoom));
+      unsubExpenses = onSnapshot(qExpenses, (snap) => {
+        expenseItems = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+        renderExpenses();
+      });
+    }
+
+    document.querySelectorAll(".dock-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        activeNav = btn.dataset.nav;
+        document.querySelectorAll(".dock-btn").forEach((b) => b.classList.toggle("active", b === btn));
+        document.querySelectorAll(".view").forEach((v) => v.classList.remove("active"));
+        document.getElementById(`view-${activeNav}`).classList.add("active");
+        if (activeNav !== "casa") {
+          activeStorageSection = null;
+          document.getElementById("storageDetailPanel").classList.remove("open");
+          document.getElementById("casaMenu").classList.remove("hidden");
+        }
+      });
+    });
+
+    const storageNames = {
+      dispensa: "🫙 Dispensa",
+      frigorifero: "🥛 Frigorifero",
+      congelatore: "🧊 Congelatore"
+    };
+
+    document.querySelectorAll("[data-open-storage]").forEach((card) => {
+      card.addEventListener("click", () => {
+        activeStorageSection = card.dataset.openStorage;
+        document.getElementById("currentStorageTitle").textContent = storageNames[activeStorageSection];
+        document.getElementById("casaMenu").classList.add("hidden");
+        const panel = document.getElementById("storageDetailPanel");
+        panel.classList.remove("open");
+        void panel.offsetWidth;
+        panel.classList.add("open");
+        renderStorageDetail();
+      });
+    });
+
+    document.getElementById("backToCasaBtn").addEventListener("click", () => {
+      activeStorageSection = null;
+      document.getElementById("storageDetailPanel").classList.remove("open");
+      document.getElementById("casaMenu").classList.remove("hidden");
+    });
+
+    function renderCasaCounts() {
+      ["dispensa", "frigorifero", "congelatore"].forEach((sec) => {
+        const totalUnits = pantryItems
+          .filter((i) => i.section === sec)
+          .reduce((acc, i) => acc + (Array.isArray(i.units) ? i.units.length : (i.qty || 1)), 0);
+        const el = document.getElementById(`count-${sec}`);
+        if (el) el.textContent = totalUnits;
+      });
+    }
+
+    function getExpiryClass(dateStr) {
+      if (!dateStr) return "";
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      const exp = new Date(`${dateStr}T00:00:00`);
+      const diffDays = Math.round((exp - today) / 86400000);
+      if (diffDays < 0) return "expired";
+      if (diffDays <= 3) return "soon";
+      return "";
+    }
+
+    function renderStorageDetail() {
+      const container = document.getElementById("storageItemsContainer");
+      if (!activeStorageSection) return;
+      if (!currentRoom) {
+        container.innerHTML = `<div class="empty-bubble glass">Crea o entra in una Casa per aggiungere alimenti.</div>`;
+        return;
+      }
+
+      const list = pantryItems.filter((i) => i.section === activeStorageSection);
+      if (!list.length) {
+        container.innerHTML = `<div class="empty-bubble glass">Nessun alimento presente qui. Aggiungine uno sopra!</div>`;
+        return;
+      }
+
+      container.innerHTML = "";
+      list.forEach((item) => {
+        const units = Array.isArray(item.units) && item.units.length
+          ? item.units
+          : Array.from({ length: Math.max(1, item.qty || 1) }, () => ({ expiry: "" }));
+
+        const amountText = (item.amount || "").trim();
+
+        const card = document.createElement("div");
+        card.className = "food-bubble glass";
+
+        const top = document.createElement("div");
+        top.className = "food-top";
+
+        const main = document.createElement("div");
+        main.className = "food-main";
+        main.innerHTML = `
+          <span class="bubble-icon" style="width:42px;height:42px;font-size:1.15rem;">${escapeHtml(getFoodIcon(item.name))}</span>
+          <div>
+            <div class="food-name">
+              ${escapeHtml(item.name)}
+              ${amountText ? `<span class="qty-badge-inline">${escapeHtml(amountText)}</span>` : ""}
+            </div>
+            <div class="food-sub">${units.length} unità • scadenza per unità</div>
+          </div>
+        `;
+
+        const qtyBox = document.createElement("div");
+        qtyBox.className = "qty-controls";
+
+        const minusBtn = document.createElement("button");
+        minusBtn.type = "button";
+        minusBtn.className = "circle-btn";
+        minusBtn.textContent = "−";
+        minusBtn.onclick = () => changeUnitCount(item, -1);
+
+        const numSpan = document.createElement("span");
+        numSpan.className = "qty-num";
+        numSpan.textContent = units.length;
+
+        const plusBtn = document.createElement("button");
+        plusBtn.type = "button";
+        plusBtn.className = "circle-btn";
+        plusBtn.textContent = "+";
+        plusBtn.onclick = () => changeUnitCount(item, +1);
+
+        const shopBtn = document.createElement("button");
+        shopBtn.type = "button";
+        shopBtn.className = "pill-btn";
+        shopBtn.textContent = "🛒";
+        shopBtn.title = "Aggiungi alla Lista Spesa";
+        shopBtn.onclick = () => addToShoppingFromPantry(item.name, amountText);
+
+        qtyBox.append(minusBtn, numSpan, plusBtn, shopBtn);
+        top.append(main, qtyBox);
+        card.appendChild(top);
+
+        const unitsRow = document.createElement("div");
+        unitsRow.className = "units-row";
+
+        const amountBox = document.createElement("div");
+        amountBox.className = "amount-editor";
+        const amountLabel = document.createElement("span");
+        amountLabel.style.fontWeight = "600";
+        amountLabel.textContent = "Qtà:";
+        const amountInput = document.createElement("input");
+        amountInput.type = "text";
+        amountInput.value = amountText;
+        amountInput.placeholder = "es. 500 g";
+        amountInput.onchange = () => updateItemAmount(item.id, amountInput.value.trim());
+        amountBox.append(amountLabel, amountInput);
+        unitsRow.appendChild(amountBox);
+
+        units.forEach((u, idx) => {
+          const chip = document.createElement("div");
+          chip.className = `unit-chip ${getExpiryClass(u.expiry)}`;
+
+          const label = document.createElement("span");
+          label.style.fontWeight = "600";
+          label.textContent = `#${idx + 1}`;
+
+          const dateInput = document.createElement("input");
+          dateInput.type = "date";
+          dateInput.value = u.expiry || "";
+          dateInput.title = `Scadenza unità ${idx + 1}`;
+          dateInput.onchange = () => updateUnitExpiry(item, idx, dateInput.value);
+
+          chip.append(label, dateInput);
+          unitsRow.appendChild(chip);
+        });
+
+        card.appendChild(unitsRow);
+        container.appendChild(card);
+      });
+    }
+
+    document.getElementById("pantryForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      if (!currentRoom) return roomModal.classList.add("open");
+      if (!activeStorageSection) return;
+
+      const typed = document.getElementById("foodCustomName").value.trim();
+      const selected = foodPresetSelect.value.trim();
+      const name = typed || selected;
+      if (!name) return;
+
+      const amount = document.getElementById("foodAmountLabel").value.trim();
+      const qty = Math.max(1, parseInt(document.getElementById("foodInitialQty").value, 10) || 1);
+      const expiry = document.getElementById("foodInitialExpiry").value || "";
+      const units = Array.from({ length: qty }, () => ({ expiry }));
+
+      document.getElementById("foodCustomName").value = "";
+      foodPresetSelect.value = "";
+      document.getElementById("foodAmountLabel").value = "";
+      document.getElementById("foodInitialQty").value = "1";
+      document.getElementById("foodInitialExpiry").value = "";
+
+      await addDoc(collection(db, "pantryItems"), {
+        roomCode: currentRoom,
+        section: activeStorageSection,
+        name,
+        amount,
+        qty,
+        units,
+        updatedAt: serverTimestamp()
+      });
+    });
+
+    async function updateItemAmount(id, newAmount) {
+      await updateDoc(doc(db, "pantryItems", id), {
+        amount: newAmount,
+        updatedAt: serverTimestamp()
+      });
+    }
+
+    async function changeUnitCount(item, delta) {
+      const currentUnits = Array.isArray(item.units) && item.units.length
+        ? [...item.units]
+        : Array.from({ length: Math.max(1, item.qty || 1) }, () => ({ expiry: "" }));
+
+      if (delta > 0) {
+        currentUnits.push({ expiry: "" });
+      } else {
+        currentUnits.pop();
+      }
+
+      if (currentUnits.length <= 0) {
+        await deleteDoc(doc(db, "pantryItems", item.id));
+        return;
+      }
+
+      await updateDoc(doc(db, "pantryItems", item.id), {
+        qty: currentUnits.length,
+        units: currentUnits,
+        updatedAt: serverTimestamp()
+      });
+    }
+
+    async function updateUnitExpiry(item, index, newExpiry) {
+      const currentUnits = Array.isArray(item.units) && item.units.length
+        ? item.units.map((u) => ({ expiry: u.expiry || "" }))
+        : Array.from({ length: Math.max(1, item.qty || 1) }, () => ({ expiry: "" }));
+
+      if (!currentUnits[index]) return;
+      currentUnits[index].expiry = newExpiry || "";
+
+      await updateDoc(doc(db, "pantryItems", item.id), {
+        units: currentUnits,
+        updatedAt: serverTimestamp()
+      });
+    }
+
+    async function addToShoppingFromPantry(name, amount = "") {
+      if (!currentRoom) return;
+      await addDoc(collection(db, "shoppingItems"), {
+        roomCode: currentRoom,
+        name,
+        amount,
+        qty: 1,
+        targetSection: activeStorageSection || "dispensa",
+        createdAt: serverTimestamp()
+      });
+    }
+
+    document.getElementById("shoppingForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      if (!currentRoom) return roomModal.classList.add("open");
+
+      const name = document.getElementById("shopName").value.trim();
+      if (!name) return;
+      const amount = document.getElementById("shopAmount").value.trim();
+      const qty = Math.max(1, parseInt(document.getElementById("shopQty").value, 10) || 1);
+      const targetSection = document.getElementById("shopTargetSection").value;
+
+      document.getElementById("shopName").value = "";
+      document.getElementById("shopAmount").value = "";
+      document.getElementById("shopQty").value = "1";
+
+      await addDoc(collection(db, "shoppingItems"), {
+        roomCode: currentRoom,
+        name,
+        amount,
+        qty,
+        targetSection,
+        createdAt: serverTimestamp()
+      });
+    });
+
+    function renderShopping() {
+      const container = document.getElementById("shoppingListContainer");
+      if (!currentRoom) {
+        container.innerHTML = `<div class="empty-bubble glass">Crea o entra in una Casa per gestire la Lista della Spesa.</div>`;
+        return;
+      }
+      if (!shoppingItems.length) {
+        container.innerHTML = `<div class="empty-bubble glass">La lista della spesa è vuota.</div>`;
+        return;
+      }
+
+      container.innerHTML = "";
+      shoppingItems.forEach((item) => {
+        const card = document.createElement("div");
+        card.className = "food-bubble glass";
+
+        const top = document.createElement("div");
+        top.className = "food-top";
+
+        const amountText = (item.amount || "").trim();
+        const main = document.createElement("div");
+        main.className = "food-main";
+        main.innerHTML = `
+          <span class="bubble-icon" style="width:42px;height:42px;font-size:1.15rem;">${escapeHtml(getFoodIcon(item.name))}</span>
+          <div>
+            <div class="food-name">
+              ${escapeHtml(item.name)}
+              ${amountText ? `<span class="qty-badge-inline">${escapeHtml(amountText)}</span>` : ""}
+            </div>
+            <div class="food-sub">Unità: ${item.qty || 1} • Va in ${escapeHtml(item.targetSection || "dispensa")}</div>
+          </div>
+        `;
+
+        const actions = document.createElement("div");
+        actions.className = "qty-controls";
+
+        const boughtBtn = document.createElement("button");
+        boughtBtn.type = "button";
+        boughtBtn.className = "pill-btn dark";
+        boughtBtn.textContent = "Comprato";
+        boughtBtn.onclick = () => markBoughtAndMoveToCasa(item);
+
+        const delBtn = document.createElement("button");
+        delBtn.type = "button";
+        delBtn.className = "circle-btn";
+        delBtn.textContent = "✕";
+        delBtn.onclick = () => deleteDoc(doc(db, "shoppingItems", item.id));
+
+        actions.append(boughtBtn, delBtn);
+        top.append(main, actions);
+        card.appendChild(top);
+        container.appendChild(card);
+      });
+    }
+
+    async function markBoughtAndMoveToCasa(shopItem) {
+      const qty = Math.max(1, shopItem.qty || 1);
+      const section = shopItem.targetSection || "dispensa";
+      const amount = (shopItem.amount || "").trim();
+      const units = Array.from({ length: qty }, () => ({ expiry: "" }));
+
+      await addDoc(collection(db, "pantryItems"), {
+        roomCode: currentRoom,
+        section,
+        name: shopItem.name,
+        amount,
+        qty,
+        units,
+        updatedAt: serverTimestamp()
+      });
+
+      await deleteDoc(doc(db, "shoppingItems", shopItem.id));
+    }
+
+    document.getElementById("expenseForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      if (!currentRoom) return roomModal.classList.add("open");
+
+      const title = document.getElementById("expenseTitle").value.trim();
+      const amount = parseFloat(document.getElementById("expenseAmount").value);
+      if (!title || Number.isNaN(amount) || amount <= 0) return;
+
+      document.getElementById("expenseTitle").value = "";
+      document.getElementById("expenseAmount").value = "";
+
+      await addDoc(collection(db, "expenses"), {
+        roomCode: currentRoom,
+        title,
+        amount,
+        createdAt: serverTimestamp()
+      });
+    });
+
+    function renderExpenses() {
+      const container = document.getElementById("expensesListContainer");
+      const totalEl = document.getElementById("totalExpensesAmount");
+      const countEl = document.getElementById("expensesCountLabel");
+
+      const sum = expenseItems.reduce((acc, item) => acc + (Number(item.amount) || 0), 0);
+      totalEl.textContent = `${sum.toFixed(2).replace(".", ",")} €`;
+      countEl.textContent = `${expenseItems.length} ${expenseItems.length === 1 ? "voce registrata" : "voci registrate"}`;
+
+      if (!currentRoom) {
+        container.innerHTML = `<div class="empty-bubble glass">Crea o entra in una Casa per vedere le spese.</div>`;
+        return;
+      }
+      if (!expenseItems.length) {
+        container.innerHTML = `<div class="empty-bubble glass">Nessuna spesa registrata finora.</div>`;
+        return;
+      }
+
+      container.innerHTML = "";
+      expenseItems.forEach((item) => {
+        const card = document.createElement("div");
+        card.className = "food-bubble glass";
+
+        const top = document.createElement("div");
+        top.className = "food-top";
+
+        const main = document.createElement("div");
+        main.className = "food-main";
+        main.innerHTML = `
+          <span class="bubble-icon" style="width:42px;height:42px;font-size:1.1rem;">💶</span>
+          <div>
+            <div class="food-name">${escapeHtml(item.title)}</div>
+            <div class="food-sub">${(Number(item.amount) || 0).toFixed(2).replace(".", ",")} €</div>
+          </div>
+        `;
+
+        const delBtn = document.createElement("button");
+        delBtn.type = "button";
+        delBtn.className = "circle-btn";
+        delBtn.textContent = "✕";
+        delBtn.onclick = () => deleteDoc(doc(db, "expenses", item.id));
+
+        top.append(main, delBtn);
+        card.appendChild(top);
+        container.appendChild(card);
+      });
+    }
+
+    function renderAll() {
+      renderCasaCounts();
+      renderStorageDetail();
+      renderShopping();
+      renderExpenses();
+    }
+
+    // Collega subito i pulsanti Casa prima ancora della risposta di Firebase
+    roomBtn.addEventListener("click", () => {
+      updateRoomBadge();
+      roomModal.classList.add("open");
+    });
+
+    closeRoomModalBtn.addEventListener("click", () => {
+      roomModal.classList.remove("open");
+    });
+
+    createRoomBtn.addEventListener("click", () => {
+      const code = `CASA-${Math.floor(1000 + Math.random() * 9000)}`;
+      setActiveRoom(code);
+    });
+
+    joinRoomBtn.addEventListener("click", () => {
+      const val = joinRoomInput.value.trim();
+      if (!val) return;
+      joinRoomInput.value = "";
+      setActiveRoom(val);
+    });
+
+    copyRoomCodeBtn.addEventListener("click", async () => {
+      if (!currentRoom) return;
+      try {
+        await navigator.clipboard.writeText(currentRoom);
+        copyRoomCodeBtn.textContent = "Codice copiato ✓";
+        setTimeout(() => (copyRoomCodeBtn.textContent = "Copia codice Casa"), 1500);
+      } catch {
+        alert(`Codice Casa: ${currentRoom}`);
+      }
+    });
+
+    function escapeHtml(str) {
+      return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+    }
+
+    // Inizializzazione immediata dell'interfaccia + Auth Firebase
+    updateRoomBadge();
+    renderAll();
+    if (!currentRoom) {
+      roomModal.classList.add("open");
+    } else {
+      startListeners();
+    }
+
+    signInAnonymously(auth).catch((err) => {
+      statusLabel.textContent = `Attiva Anonimo su Firebase (${err.code || "auth"})`;
+    });
+
+    onAuthStateChanged(auth, (user) => {
+      if (user && currentRoom) {
+        startListeners();
+      }
+    });
+  </script>
+</body>
+</html>
