@@ -419,7 +419,6 @@
       gap: 9px;
     }
 
-    /* CARD PRODOTTO COMPATTA E BEN BILANCIATA */
     .food-bubble {
       border-radius: 26px;
       padding: 12px 14px;
@@ -439,9 +438,9 @@
     }
 
     .food-bubble.low-stock-red {
-      background: linear-gradient(145deg, rgba(254, 226, 226, 0.84), rgba(255, 255, 255, 0.68));
+      background: linear-gradient(145deg, rgba(254, 202, 202, 0.86), rgba(254, 226, 226, 0.68));
       border: 1px solid var(--danger-border);
-      box-shadow: 0 10px 22px rgba(185, 28, 28, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.88);
+      box-shadow: 0 10px 22px rgba(185, 28, 28, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.88);
     }
 
     .food-top {
@@ -495,20 +494,6 @@
       white-space: nowrap;
     }
 
-    .low-badge-red {
-      display: inline-flex;
-      align-items: center;
-      gap: 3px;
-      padding: 1px 7px;
-      border-radius: var(--pill);
-      background: var(--danger-soft);
-      border: 1px solid var(--danger-border);
-      color: var(--danger-text);
-      font-size: 0.69rem;
-      font-weight: 700;
-      white-space: nowrap;
-    }
-
     .qty-controls {
       display: flex;
       align-items: center;
@@ -543,7 +528,6 @@
       font-size: 0.88rem;
     }
 
-    /* RIGA METADATI COMPATTA (QTÀ + SPOSTA AFFIANCATI) */
     .meta-controls-row {
       display: flex;
       align-items: center;
@@ -592,7 +576,6 @@
       min-width: 0;
     }
 
-    /* GRIGLIA COMPATTA DELLE SINGOLE UNITÀ */
     .units-grid {
       display: flex;
       flex-wrap: wrap;
@@ -607,7 +590,7 @@
       background: rgba(255, 255, 255, 0.8);
       border: 1px solid var(--border-subtle);
       border-radius: var(--pill);
-      padding: 3px 9px;
+      padding: 3px 8px;
       font-size: 0.74rem;
       transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
     }
@@ -653,11 +636,11 @@
     .unit-chip input[type="date"] {
       border: none;
       background: transparent;
-      font-size: 16px;
+      font-size: 14px;
       color: inherit;
       font-family: inherit;
       padding: 0;
-      max-width: 112px;
+      max-width: 102px;
     }
 
     .total-bubble {
@@ -808,7 +791,7 @@
         <div class="bubble-box glass">
           <form id="shoppingForm">
             <div class="form-row">
-              <input type="text" id="shopName" class="pill-input" placeholder="Cosa comprare? (es. Uova, Latte, Pachini...)" required />
+              <input type="text" id="shopName" class="pill-input" placeholder="Cosa comprare? (es. Couscous, Yogurt greco, Mais in scatola...)" required />
               <input type="text" id="shopAmount" class="pill-input" style="max-width: 115px;" placeholder="Quantità (es. 500g)" />
               <input type="number" id="shopQty" class="pill-input" style="max-width: 74px;" min="1" value="1" aria-label="Unità" title="Numero unità" />
             </div>
@@ -882,7 +865,7 @@
               <span class="bubble-icon" aria-hidden="true">🫙</span>
               <div>
                 <div class="oval-title">Dispensa</div>
-                <div class="oval-desc">Pasta, farina, cioccolata, legumi, conserve</div>
+                <div class="oval-desc">Couscous, lattine, pasta, farina, legumi, conserve</div>
               </div>
             </div>
             <span class="count-pill" id="count-dispensa">0</span>
@@ -893,7 +876,7 @@
               <span class="bubble-icon" aria-hidden="true">🥛</span>
               <div>
                 <div class="oval-title">Frigorifero</div>
-                <div class="oval-desc">Uova, latte, formaggi, pachini, verdure fresche</div>
+                <div class="oval-desc">Yogurt greco, succo di limone, uova, latte, verdure</div>
               </div>
             </div>
             <span class="count-pill" id="count-frigorifero">0</span>
@@ -925,7 +908,7 @@
             </div>
             <div class="form-row">
               <select id="foodPresetSelect" class="pill-select">
-                <option value="">Catalogo alimenti italiani...</option>
+                <option value="">Catalogo alimenti...</option>
               </select>
               <input type="text" id="foodCustomName" class="pill-input" placeholder="Oppure scrivi alimento..." />
             </div>
@@ -962,7 +945,7 @@
       <div class="bubble-box glass">
         <form id="expenseForm">
           <div class="form-row">
-            <input type="text" id="expenseTitle" class="pill-input" placeholder="Elemento comprato (es. Spesa supermercato, Uova)" required />
+            <input type="text" id="expenseTitle" class="pill-input" placeholder="Elemento comprato (es. Spesa supermercato, Couscous)" required />
             <input type="number" id="expenseAmount" class="pill-input" style="max-width: 125px;" step="0.01" min="0.01" placeholder="Euro (€)" required />
           </div>
           <div class="form-row">
@@ -1037,8 +1020,42 @@
     const db = getFirestore(app);
 
     const ITALIAN_FOOD_CATALOG = [
+      { name: "Couscous", icon: " Couscous".trim() ? " couscous".trim() : "🍚" },
+      { name: "Yogurt greco", icon: "🥣" },
+      { name: "Yogurt greco bianco", icon: "🥣" },
+      { name: "Yogurt greco alla frutta", icon: "🍓" },
+      { name: "Yogurt greco con miele", icon: "🍯" },
+      { name: "Yogurt greco magro / 0%", icon: "🥣" },
+      { name: "Yogurt bianco", icon: "🥣" },
+      { name: "Yogurt alla frutta", icon: "🍓" },
+      { name: "Yogurt da bere / Kefir", icon: "🥛" },
+      { name: "Succo di limone", icon: "🍋" },
+      { name: "Limoni", icon: "🍋" },
+
+      { name: "Mais in scatola", icon: "🥫" },
+      { name: "Tonno in scatola", icon: "🥫" },
+      { name: "Sgombro in scatola", icon: "🥫" },
+      { name: "Ceci in scatola", icon: "🥫" },
+      { name: "Fagioli in scatola", icon: "🥫" },
+      { name: "Fagioli borlotti in scatola", icon: "🥫" },
+      { name: "Fagioli cannellini in scatola", icon: "🥫" },
+      { name: "Fagioli neri in scatola", icon: "🥫" },
+      { name: "Piselli in scatola", icon: "🥫" },
+      { name: "Lenticchie in scatola", icon: "🥫" },
+      { name: "Pomodori pelati in scatola", icon: "🥫" },
+      { name: "Polpa di pomodoro in scatola", icon: "🥫" },
+      { name: "Carciofi in scatola", icon: "🥫" },
+      { name: "Funghi in scatola", icon: "🥫" },
+      { name: "Asparagi in scatola", icon: "🥫" },
+      { name: "Barbabietole in scatola", icon: "🥫" },
+      { name: "Patate in scatola", icon: "🥫" },
+      { name: "Olive in scatola / barattolo", icon: "🥫" },
+      { name: "Verdure miste in scatola", icon: "🥫" },
+      { name: "Giardiniera in scatola / barattolo", icon: "🥫" },
+
       { name: "Uova", icon: "🥚" },
       { name: "Latte", icon: "🥛" },
+      { name: "Latte vegetale (avena / mandorla / soia)", icon: "🥛" },
       { name: "Cioccolata", icon: "🍫" },
       { name: "Pasta", icon: "🍝" },
       { name: "Riso", icon: "🍚" },
@@ -1064,13 +1081,11 @@
       { name: "Ricotta", icon: "🥣" },
       { name: "Mascarpone", icon: "🥣" },
       { name: "Burro", icon: "🧈" },
-      { name: "Yogurt", icon: "🥣" },
       { name: "Panna", icon: "🥛" },
 
       { name: "Pachini / Pomodorini", icon: "🍅" },
       { name: "Pomodori", icon: "🍅" },
       { name: "Passata di pomodoro", icon: "🍅" },
-      { name: "Pelati", icon: "🥫" },
       { name: "Patate", icon: "🥔" },
       { name: "Cipolle", icon: "🧅" },
       { name: "Aglio", icon: "🧄" },
@@ -1125,7 +1140,6 @@
       { name: "Banane", icon: "🍌" },
       { name: "Arance", icon: "🍊" },
       { name: "Mandarini / Clementine", icon: "🍊" },
-      { name: "Limoni", icon: "🍋" },
       { name: "Fragole", icon: "🍓" },
       { name: "Frutti di bosco", icon: "🫐" },
       { name: "Frutti di bosco congelati", icon: "❄️🫐" },
@@ -1188,12 +1202,20 @@
       { name: "Ghiaccio", icon: "🧊" }
     ];
 
+    ITALIAN_FOOD_CATALOG[0].icon = "🍚";
+
     function getFoodIcon(name = "") {
       const lower = name.toLowerCase().trim();
+      if (lower.includes("in scatola") || lower.includes("scatola") || lower.includes("pelat") || lower.includes("lattina")) {
+        return "🥫";
+      }
       const found = ITALIAN_FOOD_CATALOG.find(
         (item) => lower === item.name.toLowerCase() || lower.includes(item.name.toLowerCase())
       );
       if (found) return found.icon;
+      if (lower.includes("couscous")) return "🍚";
+      if (lower.includes("yogurt")) return "🥣";
+      if (lower.includes("limone")) return "🍋";
       if (lower.includes("pachin") || lower.includes("pomodor")) return "🍅";
       if (lower.includes("congel") || lower.includes("surgel")) return "❄️";
       if (lower.includes("formagg") || lower.includes("parmigian") || lower.includes("grana")) return "🧀";
@@ -1226,7 +1248,7 @@
     function populatePresetOptions(filterText = "") {
       const q = filterText.trim().toLowerCase();
       const previousVal = foodPresetSelect.value;
-      foodPresetSelect.innerHTML = `<option value="">Catalogo alimenti italiani...</option>`;
+      foodPresetSelect.innerHTML = `<option value="">Catalogo alimenti...</option>`;
 
       const matches = ITALIAN_FOOD_CATALOG.filter(
         (f) => !q || f.name.toLowerCase().includes(q)
@@ -1477,11 +1499,11 @@
           : Array.from({ length: Math.max(0, item.qty ?? 1) }, () => ({ expiry: "" }));
 
         const unitCount = units.length;
-        const isZeroOrOne = unitCount <= 1;
+        const isOneLeft = unitCount <= 1;
         const amountText = (item.amount || "").trim();
 
         const card = document.createElement("div");
-        card.className = `food-bubble glass ${isZeroOrOne ? "low-stock-red" : ""}`;
+        card.className = `food-bubble glass ${isOneLeft ? "low-stock-red" : ""}`;
 
         const top = document.createElement("div");
         top.className = "food-top";
@@ -1494,7 +1516,6 @@
             <div class="food-name">
               <span>${escapeHtml(item.name)}</span>
               ${amountText ? `<span class="qty-badge-inline">${escapeHtml(amountText)}</span>` : ""}
-              ${isZeroOrOne ? `<span class="low-badge-red">● ${unitCount === 0 ? "0 un." : "1 un."}</span>` : ""}
             </div>
             <div class="food-sub">${unitCount} ${unitCount === 1 ? "unità" : "unità"}</div>
           </div>
@@ -1521,7 +1542,7 @@
 
         qtyBox.append(minusBtn, numSpan, plusBtn);
 
-        if (isZeroOrOne) {
+        if (isOneLeft) {
           const shopBtn = document.createElement("button");
           shopBtn.type = "button";
           shopBtn.className = "pill-btn danger-alert";
