@@ -12,23 +12,32 @@
   <link rel="icon" type="image/png" href="LogoCasa.png" />
   <style>
     :root {
-      --bg-gradient: radial-gradient(circle at 15% 10%, #f4f4f5 0%, #e4e4e7 45%, #d4d4d8 100%);
-      --glass: rgba(255, 255, 255, 0.58);
-      --glass-strong: rgba(255, 255, 255, 0.86);
-      --border-glass: rgba(255, 255, 255, 0.72);
-      --border-subtle: rgba(113, 113, 122, 0.22);
+      --bg-gradient:
+        radial-gradient(circle at 12% 8%, rgba(255, 255, 255, 0.92) 0%, rgba(244, 244, 245, 0.45) 36%, transparent 62%),
+        radial-gradient(circle at 88% 18%, rgba(228, 228, 231, 0.85) 0%, transparent 52%),
+        radial-gradient(circle at 50% 100%, rgba(161, 161, 170, 0.35) 0%, transparent 58%),
+        linear-gradient(165deg, #f4f4f5 0%, #e4e4e7 52%, #d4d4d8 100%);
+      --glass: rgba(255, 255, 255, 0.62);
+      --glass-strong: rgba(255, 255, 255, 0.88);
+      --border-glass: rgba(255, 255, 255, 0.82);
+      --border-subtle: rgba(113, 113, 122, 0.2);
       --text-main: #18181b;
       --text-muted: #52525b;
-      --accent: #3f3f46;
-      --accent-hover: #27272a;
-      --danger-soft: rgba(185, 28, 28, 0.12);
+      --accent: #27272a;
+      --accent-hover: #18181b;
+      --danger-soft: rgba(220, 38, 38, 0.14);
+      --danger-border: rgba(220, 38, 38, 0.34);
       --danger-text: #991b1b;
-      --warn-soft: rgba(161, 98, 7, 0.14);
+      --warn-soft: rgba(202, 138, 4, 0.15);
+      --warn-border: rgba(202, 138, 4, 0.32);
       --warn-text: #854d0e;
+      --ok-soft: rgba(22, 163, 74, 0.12);
+      --ok-border: rgba(22, 163, 74, 0.26);
+      --ok-text: #166534;
       --pill: 9999px;
       --oval: 36px;
-      --shadow-soft: 0 10px 30px rgba(24, 24, 27, 0.08);
-      --shadow-float: 0 14px 34px rgba(24, 24, 27, 0.14);
+      --shadow-soft: 0 12px 28px rgba(24, 24, 27, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.85);
+      --shadow-float: 0 18px 38px rgba(24, 24, 27, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.85);
     }
 
     * {
@@ -49,7 +58,7 @@
       font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", sans-serif;
       background: var(--bg-gradient);
       color: var(--text-main);
-      padding-bottom: calc(104px + env(safe-area-inset-bottom));
+      padding-bottom: calc(108px + env(safe-area-inset-bottom));
     }
 
     button, .dock, .oval-card, .pill-btn, .circle-btn {
@@ -60,16 +69,16 @@
 
     .glass {
       background: var(--glass);
-      backdrop-filter: blur(22px) saturate(160%);
-      -webkit-backdrop-filter: blur(22px) saturate(160%);
+      backdrop-filter: blur(24px) saturate(165%);
+      -webkit-backdrop-filter: blur(24px) saturate(165%);
       border: 1px solid var(--border-glass);
       box-shadow: var(--shadow-soft);
     }
 
     .glass-strong {
       background: var(--glass-strong);
-      backdrop-filter: blur(26px) saturate(170%);
-      -webkit-backdrop-filter: blur(26px) saturate(170%);
+      backdrop-filter: blur(28px) saturate(175%);
+      -webkit-backdrop-filter: blur(28px) saturate(175%);
       border: 1px solid var(--border-glass);
       box-shadow: var(--shadow-soft);
     }
@@ -79,9 +88,9 @@
       top: 0;
       z-index: 30;
       padding: calc(12px + env(safe-area-inset-top)) 16px 12px;
-      background: rgba(244, 244, 245, 0.72);
-      backdrop-filter: blur(24px) saturate(170%);
-      -webkit-backdrop-filter: blur(24px) saturate(170%);
+      background: rgba(244, 244, 245, 0.74);
+      backdrop-filter: blur(26px) saturate(175%);
+      -webkit-backdrop-filter: blur(26px) saturate(175%);
       border-bottom: 1px solid var(--border-subtle);
     }
 
@@ -109,33 +118,41 @@
 
     .pill-btn {
       border: 1px solid var(--border-glass);
-      background: rgba(255, 255, 255, 0.78);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
       color: var(--text-main);
       border-radius: var(--pill);
       padding: 8px 14px;
       font-size: 0.85rem;
       font-weight: 600;
       cursor: pointer;
-      transition: transform 0.16s ease, background 0.16s ease;
+      transition: transform 0.18s cubic-bezier(0.22, 1, 0.36, 1), background 0.18s ease, box-shadow 0.18s ease;
       display: inline-flex;
       align-items: center;
       gap: 6px;
+      box-shadow: 0 4px 12px rgba(24, 24, 27, 0.05);
     }
 
     .pill-btn:active {
-      transform: scale(0.96);
+      transform: scale(0.95);
     }
 
     .pill-btn.dark {
       background: var(--accent);
       color: #fafafa;
-      border-color: rgba(255, 255, 255, 0.2);
+      border-color: rgba(255, 255, 255, 0.22);
     }
 
     .pill-btn.dark:hover {
       background: var(--accent-hover);
+    }
+
+    .pill-btn.danger-alert {
+      background: rgba(220, 38, 38, 0.14);
+      color: var(--danger-text);
+      border-color: var(--danger-border);
+      animation: popInSoft 0.24s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
     .app-shell {
@@ -151,12 +168,29 @@
 
     .view.active {
       display: block;
-      animation: fadeInSoft 0.24s ease;
+      animation: sectionEnter 0.32s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
-    @keyframes fadeInSoft {
-      from { opacity: 0; transform: translateY(8px); }
-      to { opacity: 1; transform: translateY(0); }
+    @keyframes sectionEnter {
+      0% {
+        opacity: 0;
+        transform: translateY(14px) scale(0.985);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @keyframes popInSoft {
+      0% {
+        opacity: 0;
+        transform: scale(0.92);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
     }
 
     .slide-right-panel {
@@ -165,12 +199,18 @@
 
     .slide-right-panel.open {
       display: block;
-      animation: slideToRight 0.34s cubic-bezier(0.22, 1, 0.36, 1);
+      animation: slideToRight 0.36s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
     @keyframes slideToRight {
-      0% { opacity: 0; transform: translateX(-48px) scale(0.98); }
-      100% { opacity: 1; transform: translateX(0) scale(1); }
+      0% {
+        opacity: 0;
+        transform: translateX(-44px) scale(0.98);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+      }
     }
 
     .oval-grid {
@@ -190,11 +230,11 @@
       gap: 14px;
       cursor: pointer;
       text-align: left;
-      transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1), background 0.2s ease;
+      transition: transform 0.24s cubic-bezier(0.22, 1, 0.36, 1), background 0.2s ease, box-shadow 0.2s ease;
     }
 
     .oval-card:active {
-      transform: scale(0.98);
+      transform: scale(0.975);
     }
 
     .oval-left {
@@ -207,12 +247,12 @@
       width: 48px;
       height: 48px;
       border-radius: var(--pill);
-      background: rgba(255, 255, 255, 0.84);
+      background: rgba(255, 255, 255, 0.86);
       border: 1px solid var(--border-glass);
       display: grid;
       place-items: center;
       flex-shrink: 0;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.9);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.92), 0 4px 10px rgba(24, 24, 27, 0.06);
     }
 
     .oval-title {
@@ -267,16 +307,18 @@
       min-width: 0;
       border-radius: var(--pill);
       border: 1px solid var(--border-subtle);
-      background: rgba(255, 255, 255, 0.86);
+      background: rgba(255, 255, 255, 0.88);
       padding: 11px 16px;
       color: var(--text-main);
       outline: none;
+      transition: border-color 0.18s ease, background 0.18s ease, box-shadow 0.18s ease;
     }
 
     .pill-input:focus,
     .pill-select:focus {
       border-color: var(--accent);
       background: #ffffff;
+      box-shadow: 0 0 0 3px rgba(39, 39, 42, 0.08);
     }
 
     .item-stack {
@@ -288,6 +330,25 @@
     .food-bubble {
       border-radius: 32px;
       padding: 14px 16px;
+      transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.22s ease, background 0.22s ease, box-shadow 0.22s ease;
+      animation: itemSlideIn 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    @keyframes itemSlideIn {
+      from {
+        opacity: 0;
+        transform: translateY(8px) scale(0.99);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .food-bubble.low-stock-red {
+      background: linear-gradient(145deg, rgba(254, 226, 226, 0.84), rgba(255, 255, 255, 0.68));
+      border: 1px solid var(--danger-border);
+      box-shadow: 0 12px 26px rgba(185, 28, 28, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.88);
     }
 
     .food-top {
@@ -307,24 +368,43 @@
     .food-name {
       font-weight: 700;
       font-size: 0.98rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px;
     }
 
     .food-sub {
       font-size: 0.78rem;
       color: var(--text-muted);
-      margin-top: 2px;
+      margin-top: 3px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px;
     }
 
     .qty-badge-inline {
       display: inline-block;
-      margin-left: 6px;
       padding: 2px 9px;
       border-radius: var(--pill);
       background: rgba(63, 63, 70, 0.11);
       color: var(--text-main);
-      font-size: 0.75rem;
+      font-size: 0.74rem;
       font-weight: 700;
-      vertical-align: middle;
+    }
+
+    .low-badge-red {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 2px 9px;
+      border-radius: var(--pill);
+      background: var(--danger-soft);
+      border: 1px solid var(--danger-border);
+      color: var(--danger-text);
+      font-size: 0.72rem;
+      font-weight: 700;
     }
 
     .qty-controls {
@@ -339,17 +419,18 @@
       height: 32px;
       border-radius: var(--pill);
       border: 1px solid var(--border-subtle);
-      background: rgba(255, 255, 255, 0.88);
+      background: rgba(255, 255, 255, 0.9);
       color: var(--text-main);
       font-weight: 700;
       font-size: 0.95rem;
       cursor: pointer;
       display: grid;
       place-items: center;
+      transition: transform 0.16s ease, background 0.16s ease;
     }
 
     .circle-btn:active {
-      transform: scale(0.92);
+      transform: scale(0.9);
     }
 
     .qty-num {
@@ -373,7 +454,7 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      background: rgba(255, 255, 255, 0.8);
+      background: rgba(255, 255, 255, 0.84);
       border: 1px solid var(--border-subtle);
       border-radius: var(--pill);
       padding: 4px 10px;
@@ -391,27 +472,66 @@
       font-family: inherit;
     }
 
+    .move-select {
+      border-radius: var(--pill);
+      border: 1px solid var(--border-subtle);
+      background: rgba(255, 255, 255, 0.86);
+      padding: 5px 11px;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-main);
+      outline: none;
+      cursor: pointer;
+    }
+
     .unit-chip {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      background: rgba(255, 255, 255, 0.75);
+      background: rgba(255, 255, 255, 0.78);
       border: 1px solid var(--border-subtle);
       border-radius: var(--pill);
       padding: 5px 10px;
       font-size: 0.78rem;
+      transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+    }
+
+    .unit-status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #a1a1aa;
+      flex-shrink: 0;
+    }
+
+    .unit-chip.ok {
+      background: var(--ok-soft);
+      color: var(--ok-text);
+      border-color: var(--ok-border);
+    }
+
+    .unit-chip.ok .unit-status-dot {
+      background: #16a34a;
     }
 
     .unit-chip.expired {
       background: var(--danger-soft);
       color: var(--danger-text);
-      border-color: rgba(185, 28, 28, 0.25);
+      border-color: var(--danger-border);
+    }
+
+    .unit-chip.expired .unit-status-dot {
+      background: #dc2626;
     }
 
     .unit-chip.soon {
       background: var(--warn-soft);
       color: var(--warn-text);
-      border-color: rgba(161, 98, 7, 0.25);
+      border-color: var(--warn-border);
+    }
+
+    .unit-chip.soon .unit-status-dot {
+      background: #ca8a04;
     }
 
     .unit-chip input[type="date"] {
@@ -478,22 +598,23 @@
       font-weight: 600;
       color: var(--text-muted);
       cursor: pointer;
-      transition: all 0.2s ease;
+      transition: all 0.24s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
     .dock-btn.active {
       background: var(--accent);
       color: #ffffff;
-      box-shadow: 0 4px 12px rgba(24, 24, 27, 0.2);
+      box-shadow: 0 6px 14px rgba(24, 24, 27, 0.22);
+      transform: translateY(-1px);
     }
 
     .modal-bg {
       position: fixed;
       inset: 0;
       z-index: 90;
-      background: rgba(24, 24, 27, 0.42);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
+      background: rgba(24, 24, 27, 0.44);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       display: none;
       align-items: center;
       justify-content: center;
@@ -502,6 +623,7 @@
 
     .modal-bg.open {
       display: flex;
+      animation: fadeInSoft 0.2s ease;
     }
 
     .modal-card {
@@ -509,6 +631,7 @@
       max-width: 410px;
       border-radius: 34px;
       padding: 22px;
+      animation: sectionEnter 0.28s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
     .modal-card h2 {
@@ -525,7 +648,7 @@
 
     .code-pill {
       border-radius: var(--pill);
-      background: rgba(255, 255, 255, 0.9);
+      background: rgba(255, 255, 255, 0.92);
       border: 1px dashed rgba(63, 63, 70, 0.35);
       padding: 11px 16px;
       text-align: center;
@@ -621,6 +744,9 @@
         <div class="bubble-box glass">
           <form id="pantryForm">
             <div class="form-row">
+              <input type="search" id="catalogSearchInput" class="pill-input" placeholder="🔍 Filtra catalogo o cerca alimento..." />
+            </div>
+            <div class="form-row">
               <select id="foodPresetSelect" class="pill-select">
                 <option value="">Catalogo alimenti italiani...</option>
               </select>
@@ -633,6 +759,13 @@
               <button type="submit" class="pill-btn dark">+ Inserisci</button>
             </div>
           </form>
+        </div>
+
+        <div class="bubble-box glass" style="padding: 12px 14px;">
+          <div class="form-row" style="align-items: center;">
+            <input type="search" id="storageFilterInput" class="pill-input" placeholder="🔎 Cerca tra gli alimenti presenti qui..." />
+            <button type="button" class="pill-btn" id="clearStorageFilterBtn">Mostra tutti</button>
+          </div>
         </div>
 
         <div id="storageItemsContainer" class="item-stack"></div>
@@ -727,7 +860,6 @@
     const db = getFirestore(app);
 
     const ITALIAN_FOOD_CATALOG = [
-      // Base dispensa, colazione e forno
       { name: "Uova", icon: "🥚" },
       { name: "Latte", icon: "🥛" },
       { name: "Cioccolata", icon: "🍫" },
@@ -746,7 +878,6 @@
       { name: "Miele", icon: "🍯" },
       { name: "Crema spalmabile", icon: "🍫" },
 
-      // Latticini e formaggi
       { name: "Formaggio", icon: "🧀" },
       { name: "Parmigiano / Grana", icon: "🧀" },
       { name: "Pecorino", icon: "🧀" },
@@ -759,7 +890,6 @@
       { name: "Yogurt", icon: "🥣" },
       { name: "Panna", icon: "🥛" },
 
-      // Verdure fresche e varietà locali
       { name: "Pachini / Pomodorini", icon: "🍅" },
       { name: "Pomodori", icon: "🍅" },
       { name: "Passata di pomodoro", icon: "🍅" },
@@ -792,7 +922,6 @@
       { name: "Fagiolini", icon: "🫛" },
       { name: "Fave", icon: "🫛" },
 
-      // Verdure congelate / surgelate (per ogni verdura principale)
       { name: "Zucchine congelate", icon: "❄️🥒" },
       { name: "Carote congelate", icon: "❄️🥕" },
       { name: "Cipolle congelate", icon: "❄️🧅" },
@@ -814,7 +943,6 @@
       { name: "Minestrone / Misto verdure congelate", icon: "❄️🥗" },
       { name: "Patate congelate", icon: "❄️🥔" },
 
-      // Frutta
       { name: "Mele", icon: "🍎" },
       { name: "Pere", icon: "🍐" },
       { name: "Banane", icon: "🍌" },
@@ -833,7 +961,6 @@
       { name: "Melone", icon: "🍈" },
       { name: "Frutta secca / Noci", icon: "🥜" },
 
-      // Carne, salumi e pesce
       { name: "Pollo", icon: "🍗" },
       { name: "Tacchino", icon: "🍗" },
       { name: "Manzo", icon: "🥩" },
@@ -858,7 +985,6 @@
       { name: "Calamari / Seppie", icon: "🦑" },
       { name: "Bastoncini di pesce", icon: "❄️🐟" },
 
-      // Legumi, condimenti, bevande e vari
       { name: "Fagioli", icon: "🫘" },
       { name: "Ceci", icon: "🫘" },
       { name: "Lenticchie", icon: "🫘" },
@@ -912,11 +1038,46 @@
     let unsubExpenses = null;
 
     const foodPresetSelect = document.getElementById("foodPresetSelect");
-    ITALIAN_FOOD_CATALOG.forEach((f) => {
-      const opt = document.createElement("option");
-      opt.value = f.name;
-      opt.textContent = `${f.icon} ${f.name}`;
-      foodPresetSelect.appendChild(opt);
+    const catalogSearchInput = document.getElementById("catalogSearchInput");
+    const storageFilterInput = document.getElementById("storageFilterInput");
+    const clearStorageFilterBtn = document.getElementById("clearStorageFilterBtn");
+
+    function populatePresetOptions(filterText = "") {
+      const q = filterText.trim().toLowerCase();
+      const previousVal = foodPresetSelect.value;
+      foodPresetSelect.innerHTML = `<option value="">Catalogo alimenti italiani...</option>`;
+
+      const matches = ITALIAN_FOOD_CATALOG.filter(
+        (f) => !q || f.name.toLowerCase().includes(q)
+      );
+
+      matches.forEach((f) => {
+        const opt = document.createElement("option");
+        opt.value = f.name;
+        opt.textContent = `${f.icon} ${f.name}`;
+        foodPresetSelect.appendChild(opt);
+      });
+
+      if (previousVal && matches.some((m) => m.name === previousVal)) {
+        foodPresetSelect.value = previousVal;
+      } else if (q && matches.length === 1) {
+        foodPresetSelect.value = matches[0].name;
+      }
+    }
+
+    populatePresetOptions();
+
+    catalogSearchInput.addEventListener("input", () => {
+      populatePresetOptions(catalogSearchInput.value);
+    });
+
+    storageFilterInput.addEventListener("input", () => {
+      renderStorageDetail();
+    });
+
+    clearStorageFilterBtn.addEventListener("click", () => {
+      storageFilterInput.value = "";
+      renderStorageDetail();
     });
 
     const statusLabel = document.getElementById("statusLabel");
@@ -1001,7 +1162,9 @@
         activeNav = btn.dataset.nav;
         document.querySelectorAll(".dock-btn").forEach((b) => b.classList.toggle("active", b === btn));
         document.querySelectorAll(".view").forEach((v) => v.classList.remove("active"));
-        document.getElementById(`view-${activeNav}`).classList.add("active");
+        const targetView = document.getElementById(`view-${activeNav}`);
+        void targetView.offsetWidth;
+        targetView.classList.add("active");
         if (activeNav !== "casa") {
           activeStorageSection = null;
           document.getElementById("storageDetailPanel").classList.remove("open");
@@ -1019,6 +1182,7 @@
     document.querySelectorAll("[data-open-storage]").forEach((card) => {
       card.addEventListener("click", () => {
         activeStorageSection = card.dataset.openStorage;
+        storageFilterInput.value = "";
         document.getElementById("currentStorageTitle").textContent = storageNames[activeStorageSection];
         document.getElementById("casaMenu").classList.add("hidden");
         const panel = document.getElementById("storageDetailPanel");
@@ -1031,29 +1195,33 @@
 
     document.getElementById("backToCasaBtn").addEventListener("click", () => {
       activeStorageSection = null;
+      storageFilterInput.value = "";
       document.getElementById("storageDetailPanel").classList.remove("open");
-      document.getElementById("casaMenu").classList.remove("hidden");
+      const menu = document.getElementById("casaMenu");
+      menu.classList.remove("hidden");
+      void menu.offsetWidth;
+      menu.style.animation = "sectionEnter 0.28s cubic-bezier(0.22, 1, 0.36, 1)";
     });
 
     function renderCasaCounts() {
       ["dispensa", "frigorifero", "congelatore"].forEach((sec) => {
         const totalUnits = pantryItems
           .filter((i) => i.section === sec)
-          .reduce((acc, i) => acc + (Array.isArray(i.units) ? i.units.length : (i.qty || 1)), 0);
+          .reduce((acc, i) => acc + (Array.isArray(i.units) ? i.units.length : (i.qty || 0)), 0);
         const el = document.getElementById(`count-${sec}`);
         if (el) el.textContent = totalUnits;
       });
     }
 
-    function getExpiryClass(dateStr) {
-      if (!dateStr) return "";
+    function getExpiryInfo(dateStr) {
+      if (!dateStr) return { cls: "", label: "Senza data" };
       const today = new Date();
       today.setHours(0, 0, 0, 0);
       const exp = new Date(`${dateStr}T00:00:00`);
       const diffDays = Math.round((exp - today) / 86400000);
-      if (diffDays < 0) return "expired";
-      if (diffDays <= 3) return "soon";
-      return "";
+      if (diffDays < 0) return { cls: "expired", label: "Scaduta" };
+      if (diffDays <= 3) return { cls: "soon", label: diffDays === 0 ? "Scade oggi" : `Tra ${diffDays}g` };
+      return { cls: "ok", label: "OK" };
     }
 
     function renderStorageDetail() {
@@ -1064,22 +1232,30 @@
         return;
       }
 
-      const list = pantryItems.filter((i) => i.section === activeStorageSection);
+      const filterQuery = (storageFilterInput.value || "").trim().toLowerCase();
+      const list = pantryItems.filter(
+        (i) => i.section === activeStorageSection && (!filterQuery || (i.name || "").toLowerCase().includes(filterQuery))
+      );
+
       if (!list.length) {
-        container.innerHTML = `<div class="empty-bubble glass">Nessun alimento presente qui. Aggiungine uno sopra!</div>`;
+        container.innerHTML = filterQuery
+          ? `<div class="empty-bubble glass">Nessun alimento trovato per "${escapeHtml(storageFilterInput.value.trim())}".</div>`
+          : `<div class="empty-bubble glass">Nessun alimento presente qui. Aggiungine uno sopra!</div>`;
         return;
       }
 
       container.innerHTML = "";
       list.forEach((item) => {
-        const units = Array.isArray(item.units) && item.units.length
+        const units = Array.isArray(item.units)
           ? item.units
-          : Array.from({ length: Math.max(1, item.qty || 1) }, () => ({ expiry: "" }));
+          : Array.from({ length: Math.max(0, item.qty ?? 1) }, () => ({ expiry: "" }));
 
+        const unitCount = units.length;
+        const isZeroOrOne = unitCount <= 1;
         const amountText = (item.amount || "").trim();
 
         const card = document.createElement("div");
-        card.className = "food-bubble glass";
+        card.className = `food-bubble glass ${isZeroOrOne ? "low-stock-red" : ""}`;
 
         const top = document.createElement("div");
         top.className = "food-top";
@@ -1090,10 +1266,11 @@
           <span class="bubble-icon" style="width:42px;height:42px;font-size:1.15rem;">${escapeHtml(getFoodIcon(item.name))}</span>
           <div>
             <div class="food-name">
-              ${escapeHtml(item.name)}
+              <span>${escapeHtml(item.name)}</span>
               ${amountText ? `<span class="qty-badge-inline">${escapeHtml(amountText)}</span>` : ""}
+              ${isZeroOrOne ? `<span class="low-badge-red">● ${unitCount === 0 ? "0 unità" : "1 sola unità"}</span>` : ""}
             </div>
-            <div class="food-sub">${units.length} unità • scadenza per unità</div>
+            <div class="food-sub">${unitCount} ${unitCount === 1 ? "unità" : "unità"} • stato &amp; scadenza per unità</div>
           </div>
         `;
 
@@ -1108,7 +1285,7 @@
 
         const numSpan = document.createElement("span");
         numSpan.className = "qty-num";
-        numSpan.textContent = units.length;
+        numSpan.textContent = unitCount;
 
         const plusBtn = document.createElement("button");
         plusBtn.type = "button";
@@ -1116,14 +1293,18 @@
         plusBtn.textContent = "+";
         plusBtn.onclick = () => changeUnitCount(item, +1);
 
-        const shopBtn = document.createElement("button");
-        shopBtn.type = "button";
-        shopBtn.className = "pill-btn";
-        shopBtn.textContent = "🛒";
-        shopBtn.title = "Aggiungi alla Lista Spesa";
-        shopBtn.onclick = () => addToShoppingFromPantry(item.name, amountText);
+        qtyBox.append(minusBtn, numSpan, plusBtn);
 
-        qtyBox.append(minusBtn, numSpan, plusBtn, shopBtn);
+        if (isZeroOrOne) {
+          const shopBtn = document.createElement("button");
+          shopBtn.type = "button";
+          shopBtn.className = "pill-btn danger-alert";
+          shopBtn.textContent = "🛒 Lista Spesa";
+          shopBtn.title = "Aggiungi alla Lista Spesa";
+          shopBtn.onclick = () => addToShoppingFromPantry(item.name, amountText, shopBtn);
+          qtyBox.append(shopBtn);
+        }
+
         top.append(main, qtyBox);
         card.appendChild(top);
 
@@ -1143,21 +1324,48 @@
         amountBox.append(amountLabel, amountInput);
         unitsRow.appendChild(amountBox);
 
+        const moveSelect = document.createElement("select");
+        moveSelect.className = "move-select";
+        moveSelect.title = "Sposta in un'altra sezione";
+        [
+          { val: "dispensa", txt: "🫙 Dispensa" },
+          { val: "frigorifero", txt: "🥛 Frigo" },
+          { val: "congelatore", txt: "🧊 Congelatore" }
+        ].forEach((optData) => {
+          const opt = document.createElement("option");
+          opt.value = optData.val;
+          opt.textContent = `Sposta: ${optData.txt}`;
+          opt.selected = optData.val === item.section;
+          moveSelect.appendChild(opt);
+        });
+        moveSelect.onchange = () => moveItemToSection(item.id, moveSelect.value);
+        unitsRow.appendChild(moveSelect);
+
         units.forEach((u, idx) => {
+          const expInfo = getExpiryInfo(u.expiry);
           const chip = document.createElement("div");
-          chip.className = `unit-chip ${getExpiryClass(u.expiry)}`;
+          chip.className = `unit-chip ${expInfo.cls}`;
+
+          const dot = document.createElement("span");
+          dot.className = "unit-status-dot";
+          dot.title = expInfo.label;
 
           const label = document.createElement("span");
-          label.style.fontWeight = "600";
+          label.style.fontWeight = "700";
           label.textContent = `#${idx + 1}`;
 
           const dateInput = document.createElement("input");
           dateInput.type = "date";
           dateInput.value = u.expiry || "";
-          dateInput.title = `Scadenza unità ${idx + 1}`;
+          dateInput.title = `Scadenza unità ${idx + 1} (${expInfo.label})`;
           dateInput.onchange = () => updateUnitExpiry(item, idx, dateInput.value);
 
-          chip.append(label, dateInput);
+          const stateTag = document.createElement("span");
+          stateTag.style.fontWeight = "600";
+          stateTag.style.fontSize = "0.72rem";
+          stateTag.textContent = expInfo.label;
+
+          chip.append(dot, label, dateInput, stateTag);
           unitsRow.appendChild(chip);
         });
 
@@ -1182,6 +1390,8 @@
       const units = Array.from({ length: qty }, () => ({ expiry }));
 
       document.getElementById("foodCustomName").value = "";
+      catalogSearchInput.value = "";
+      populatePresetOptions("");
       foodPresetSelect.value = "";
       document.getElementById("foodAmountLabel").value = "";
       document.getElementById("foodInitialQty").value = "1";
@@ -1205,20 +1415,27 @@
       });
     }
 
+    async function moveItemToSection(id, newSection) {
+      if (!newSection) return;
+      await updateDoc(doc(db, "pantryItems", id), {
+        section: newSection,
+        updatedAt: serverTimestamp()
+      });
+    }
+
     async function changeUnitCount(item, delta) {
-      const currentUnits = Array.isArray(item.units) && item.units.length
+      const currentUnits = Array.isArray(item.units)
         ? [...item.units]
-        : Array.from({ length: Math.max(1, item.qty || 1) }, () => ({ expiry: "" }));
+        : Array.from({ length: Math.max(0, item.qty ?? 1) }, () => ({ expiry: "" }));
 
       if (delta > 0) {
         currentUnits.push({ expiry: "" });
       } else {
+        if (currentUnits.length <= 0) {
+          await deleteDoc(doc(db, "pantryItems", item.id));
+          return;
+        }
         currentUnits.pop();
-      }
-
-      if (currentUnits.length <= 0) {
-        await deleteDoc(doc(db, "pantryItems", item.id));
-        return;
       }
 
       await updateDoc(doc(db, "pantryItems", item.id), {
@@ -1229,9 +1446,9 @@
     }
 
     async function updateUnitExpiry(item, index, newExpiry) {
-      const currentUnits = Array.isArray(item.units) && item.units.length
+      const currentUnits = Array.isArray(item.units)
         ? item.units.map((u) => ({ expiry: u.expiry || "" }))
-        : Array.from({ length: Math.max(1, item.qty || 1) }, () => ({ expiry: "" }));
+        : Array.from({ length: Math.max(0, item.qty ?? 1) }, () => ({ expiry: "" }));
 
       if (!currentUnits[index]) return;
       currentUnits[index].expiry = newExpiry || "";
@@ -1242,7 +1459,7 @@
       });
     }
 
-    async function addToShoppingFromPantry(name, amount = "") {
+    async function addToShoppingFromPantry(name, amount = "", btnEl = null) {
       if (!currentRoom) return;
       await addDoc(collection(db, "shoppingItems"), {
         roomCode: currentRoom,
@@ -1252,6 +1469,13 @@
         targetSection: activeStorageSection || "dispensa",
         createdAt: serverTimestamp()
       });
+      if (btnEl) {
+        const oldText = btnEl.textContent;
+        btnEl.textContent = "Aggiunto ✓";
+        setTimeout(() => {
+          btnEl.textContent = oldText;
+        }, 1200);
+      }
     }
 
     document.getElementById("shoppingForm").addEventListener("submit", async (e) => {
@@ -1278,6 +1502,17 @@
       });
     });
 
+    async function changeShoppingQty(item, delta) {
+      const nextQty = (item.qty || 1) + delta;
+      if (nextQty <= 0) {
+        await deleteDoc(doc(db, "shoppingItems", item.id));
+        return;
+      }
+      await updateDoc(doc(db, "shoppingItems", item.id), {
+        qty: nextQty
+      });
+    }
+
     function renderShopping() {
       const container = document.getElementById("shoppingListContainer");
       if (!currentRoom) {
@@ -1291,6 +1526,7 @@
 
       container.innerHTML = "";
       shoppingItems.forEach((item) => {
+        const currentQty = item.qty || 1;
         const card = document.createElement("div");
         card.className = "food-bubble glass";
 
@@ -1304,15 +1540,31 @@
           <span class="bubble-icon" style="width:42px;height:42px;font-size:1.15rem;">${escapeHtml(getFoodIcon(item.name))}</span>
           <div>
             <div class="food-name">
-              ${escapeHtml(item.name)}
+              <span>${escapeHtml(item.name)}</span>
               ${amountText ? `<span class="qty-badge-inline">${escapeHtml(amountText)}</span>` : ""}
             </div>
-            <div class="food-sub">Unità: ${item.qty || 1} • Va in ${escapeHtml(item.targetSection || "dispensa")}</div>
+            <div class="food-sub">${currentQty} ${currentQty === 1 ? "unità" : "unità"} • Va in ${escapeHtml(item.targetSection || "dispensa")}</div>
           </div>
         `;
 
         const actions = document.createElement("div");
         actions.className = "qty-controls";
+
+        const minusShopBtn = document.createElement("button");
+        minusShopBtn.type = "button";
+        minusShopBtn.className = "circle-btn";
+        minusShopBtn.textContent = "−";
+        minusShopBtn.onclick = () => changeShoppingQty(item, -1);
+
+        const shopQtySpan = document.createElement("span");
+        shopQtySpan.className = "qty-num";
+        shopQtySpan.textContent = currentQty;
+
+        const plusShopBtn = document.createElement("button");
+        plusShopBtn.type = "button";
+        plusShopBtn.className = "circle-btn";
+        plusShopBtn.textContent = "+";
+        plusShopBtn.onclick = () => changeShoppingQty(item, +1);
 
         const boughtBtn = document.createElement("button");
         boughtBtn.type = "button";
@@ -1326,7 +1578,7 @@
         delBtn.textContent = "✕";
         delBtn.onclick = () => deleteDoc(doc(db, "shoppingItems", item.id));
 
-        actions.append(boughtBtn, delBtn);
+        actions.append(minusShopBtn, shopQtySpan, plusShopBtn, boughtBtn, delBtn);
         top.append(main, actions);
         card.appendChild(top);
         container.appendChild(card);
