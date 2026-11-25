@@ -8,6 +8,8 @@
   <meta name="apple-mobile-web-app-title" content="Casa &amp; Spesa" />
   <meta name="theme-color" content="#d4d4d8" />
   <title>Casa &amp; Spesa</title>
+  <link rel="apple-touch-icon" sizes="180x180" href="LogoCasa.png" />
+  <link rel="icon" type="image/png" href="LogoCasa.png" />
   <style>
     :root {
       --bg-gradient: radial-gradient(circle at 15% 10%, #f4f4f5 0%, #e4e4e7 45%, #d4d4d8 100%);
@@ -549,11 +551,12 @@
   </header>
 
   <main class="app-shell">
-    <section id="view-spesa" class="view active">
+    <!-- MACRO SEZIONE 1: LISTA DELLA SPESA -->
+    <section id="view-spesa" class="view">
       <div class="bubble-box glass">
         <form id="shoppingForm">
           <div class="form-row">
-            <input type="text" id="shopName" class="pill-input" placeholder="Cosa comprare? (es. Uova, Latte, Pasta...)" required />
+            <input type="text" id="shopName" class="pill-input" placeholder="Cosa comprare? (es. Uova, Latte, Pachini...)" required />
             <input type="text" id="shopAmount" class="pill-input" style="max-width: 120px;" placeholder="Quantità (es. 500g)" />
             <input type="number" id="shopQty" class="pill-input" style="max-width: 78px;" min="1" value="1" aria-label="Unità" title="Numero unità" />
           </div>
@@ -570,7 +573,8 @@
       <div id="shoppingListContainer" class="item-stack"></div>
     </section>
 
-    <section id="view-casa" class="view">
+    <!-- MACRO SEZIONE 2: CASA (APERTURA PREDEFINITA) -->
+    <section id="view-casa" class="view active">
       <div id="casaMenu">
         <div class="oval-grid">
           <button type="button" class="oval-card glass" data-open-storage="dispensa">
@@ -589,7 +593,7 @@
               <span class="bubble-icon" aria-hidden="true">🥛</span>
               <div>
                 <div class="oval-title">Frigorifero</div>
-                <div class="oval-desc">Uova, latte, formaggi, affettati, verdure</div>
+                <div class="oval-desc">Uova, latte, formaggi, pachini, verdure fresche</div>
               </div>
             </div>
             <span class="count-pill" id="count-frigorifero">0</span>
@@ -600,7 +604,7 @@
               <span class="bubble-icon" aria-hidden="true">🧊</span>
               <div>
                 <div class="oval-title">Congelatore</div>
-                <div class="oval-desc">Carni, pesce, surgelati, gelati, pane</div>
+                <div class="oval-desc">Verdure congelate, carni, pesce, gelati, pane</div>
               </div>
             </div>
             <span class="count-pill" id="count-congelatore">0</span>
@@ -635,6 +639,7 @@
       </div>
     </section>
 
+    <!-- MACRO SEZIONE 3: SPESE -->
     <section id="view-spese" class="view">
       <div class="total-bubble glass-strong">
         <div>
@@ -662,8 +667,8 @@
 
   <nav class="dock-wrap" aria-label="Navigazione principale">
     <div class="dock glass-strong">
-      <button type="button" class="dock-btn active" data-nav="spesa">🛒 Lista Spesa</button>
-      <button type="button" class="dock-btn" data-nav="casa">🏠 Casa</button>
+      <button type="button" class="dock-btn" data-nav="spesa">🛒 Lista Spesa</button>
+      <button type="button" class="dock-btn active" data-nav="casa">🏠 Casa</button>
       <button type="button" class="dock-btn" data-nav="spese">💳 Spese</button>
     </div>
   </nav>
@@ -722,71 +727,160 @@
     const db = getFirestore(app);
 
     const ITALIAN_FOOD_CATALOG = [
+      // Base dispensa, colazione e forno
       { name: "Uova", icon: "🥚" },
       { name: "Latte", icon: "🥛" },
       { name: "Cioccolata", icon: "🍫" },
       { name: "Pasta", icon: "🍝" },
       { name: "Riso", icon: "🍚" },
       { name: "Farina", icon: "🌾" },
+      { name: "Pangrattato", icon: "🌾" },
       { name: "Pane", icon: "🍞" },
+      { name: "Pane congelato", icon: "❄️🍞" },
       { name: "Fette biscottate", icon: "🥖" },
+      { name: "Grissini", icon: "🥖" },
+      { name: "Cracker", icon: "🍘" },
       { name: "Biscotti", icon: "🍪" },
+      { name: "Cereali", icon: "🥣" },
+      { name: "Marmellata", icon: "🍓" },
+      { name: "Miele", icon: "🍯" },
+      { name: "Crema spalmabile", icon: "🍫" },
+
+      // Latticini e formaggi
       { name: "Formaggio", icon: "🧀" },
+      { name: "Parmigiano / Grana", icon: "🧀" },
+      { name: "Pecorino", icon: "🧀" },
       { name: "Mozzarella", icon: "🧀" },
+      { name: "Scamorza / Provola", icon: "🧀" },
+      { name: "Stracchino", icon: "🧀" },
       { name: "Ricotta", icon: "🥣" },
+      { name: "Mascarpone", icon: "🥣" },
       { name: "Burro", icon: "🧈" },
       { name: "Yogurt", icon: "🥣" },
       { name: "Panna", icon: "🥛" },
-      { name: "Pollo", icon: "🍗" },
-      { name: "Tacchino", icon: "🍗" },
-      { name: "Manzo", icon: "🥩" },
-      { name: "Maiale", icon: "🥩" },
-      { name: "Salsiccia", icon: "🌭" },
-      { name: "Prosciutto", icon: "🥓" },
-      { name: "Salame", icon: "🥓" },
-      { name: "Tonno", icon: "🐟" },
-      { name: "Salmone", icon: "🐟" },
-      { name: "Merluzzo", icon: "🐟" },
-      { name: "Gamberi", icon: "🍤" },
+
+      // Verdure fresche e varietà locali
+      { name: "Pachini / Pomodorini", icon: "🍅" },
       { name: "Pomodori", icon: "🍅" },
       { name: "Passata di pomodoro", icon: "🍅" },
+      { name: "Pelati", icon: "🥫" },
       { name: "Patate", icon: "🥔" },
       { name: "Cipolle", icon: "🧅" },
       { name: "Aglio", icon: "🧄" },
       { name: "Carote", icon: "🥕" },
       { name: "Zucchine", icon: "🥒" },
-      { name: "Melanzane", icon: "🍆" },
-      { name: "Peperoni", icon: "🫑" },
-      { name: "Insalata", icon: "🥬" },
+      { name: "Cicoria", icon: "🥬" },
+      { name: "Bietole", icon: "🥬" },
+      { name: "Barbabietole", icon: "🫜" },
       { name: "Spinaci", icon: "🥬" },
       { name: "Broccoli", icon: "🥦" },
+      { name: "Cavolfiore", icon: "🥦" },
+      { name: "Cavolo cappuccio / Verza", icon: "🥬" },
+      { name: "Melanzane", icon: "🍆" },
+      { name: "Peperoni", icon: "🫑" },
+      { name: "Cetrioli", icon: "🥒" },
+      { name: "Finocchi", icon: "🥬" },
+      { name: "Sedano", icon: "🥬" },
+      { name: "Carciofi", icon: "🌿" },
+      { name: "Asparagi", icon: "🌿" },
+      { name: "Insalata / Lattuga", icon: "🥬" },
+      { name: "Rucola", icon: "🥬" },
+      { name: "Radicchio", icon: "🥬" },
       { name: "Funghi", icon: "🍄" },
+      { name: "Zucca", icon: "🎃" },
+      { name: "Piselli", icon: "🫛" },
+      { name: "Fagiolini", icon: "🫛" },
+      { name: "Fave", icon: "🫛" },
+
+      // Verdure congelate / surgelate (per ogni verdura principale)
+      { name: "Zucchine congelate", icon: "❄️🥒" },
+      { name: "Carote congelate", icon: "❄️🥕" },
+      { name: "Cipolle congelate", icon: "❄️🧅" },
+      { name: "Cicoria congelata", icon: "❄️🥬" },
+      { name: "Bietole congelate", icon: "❄️🥬" },
+      { name: "Barbabietole congelate", icon: "❄️🫜" },
+      { name: "Broccoli congelati", icon: "❄️🥦" },
+      { name: "Cavolfiore congelato", icon: "❄️🥦" },
+      { name: "Spinaci congelati", icon: "❄️🥬" },
+      { name: "Melanzane congelate", icon: "❄️🍆" },
+      { name: "Peperoni congelati", icon: "❄️🫑" },
+      { name: "Carciofi congelati", icon: "❄️🌿" },
+      { name: "Asparagi congelati", icon: "❄️🌿" },
+      { name: "Funghi congelati", icon: "❄️🍄" },
+      { name: "Zucca congelata", icon: "❄️🎃" },
+      { name: "Piselli congelati", icon: "❄️🫛" },
+      { name: "Fagiolini congelati", icon: "❄️🫛" },
+      { name: "Fave congelate", icon: "❄️🫛" },
+      { name: "Minestrone / Misto verdure congelate", icon: "❄️🥗" },
+      { name: "Patate congelate", icon: "❄️🥔" },
+
+      // Frutta
       { name: "Mele", icon: "🍎" },
       { name: "Pere", icon: "🍐" },
       { name: "Banane", icon: "🍌" },
       { name: "Arance", icon: "🍊" },
+      { name: "Mandarini / Clementine", icon: "🍊" },
       { name: "Limoni", icon: "🍋" },
       { name: "Fragole", icon: "🍓" },
+      { name: "Frutti di bosco", icon: "🫐" },
+      { name: "Frutti di bosco congelati", icon: "❄️🫐" },
       { name: "Uva", icon: "🍇" },
+      { name: "Pesche", icon: "🍑" },
+      { name: "Albicocche", icon: "🍑" },
+      { name: "Ciliegie", icon: "🍒" },
+      { name: "Kiwi", icon: "🥝" },
+      { name: "Anguria", icon: "🍉" },
+      { name: "Melone", icon: "🍈" },
+      { name: "Frutta secca / Noci", icon: "🥜" },
+
+      // Carne, salumi e pesce
+      { name: "Pollo", icon: "🍗" },
+      { name: "Tacchino", icon: "🍗" },
+      { name: "Manzo", icon: "🥩" },
+      { name: "Vitello", icon: "🥩" },
+      { name: "Maiale", icon: "🥩" },
+      { name: "Macinato", icon: "🥩" },
+      { name: "Hamburger", icon: "🍔" },
+      { name: "Salsiccia", icon: "🌭" },
+      { name: "Wurstel", icon: "🌭" },
+      { name: "Prosciutto cotto", icon: "🥓" },
+      { name: "Prosciutto crudo", icon: "🥓" },
+      { name: "Salame", icon: "🥓" },
+      { name: "Mortadella", icon: "🥓" },
+      { name: "Bresaola", icon: "🥓" },
+      { name: "Pancetta / Guanciale", icon: "🥓" },
+      { name: "Tonno", icon: "🐟" },
+      { name: "Salmone", icon: "🐟" },
+      { name: "Merluzzo", icon: "🐟" },
+      { name: "Orata / Spigola", icon: "🐟" },
+      { name: "Sgombro / Alici", icon: "🐟" },
+      { name: "Gamberi", icon: "🍤" },
+      { name: "Calamari / Seppie", icon: "🦑" },
+      { name: "Bastoncini di pesce", icon: "❄️🐟" },
+
+      // Legumi, condimenti, bevande e vari
       { name: "Fagioli", icon: "🫘" },
       { name: "Ceci", icon: "🫘" },
       { name: "Lenticchie", icon: "🫘" },
       { name: "Olio d'oliva", icon: "🫗" },
+      { name: "Olio di semi", icon: "🫗" },
       { name: "Aceto", icon: "🫙" },
       { name: "Sale", icon: "🧂" },
+      { name: "Pepe / Spezie", icon: "🌿" },
       { name: "Zucchero", icon: "🍬" },
-      { name: "Miele", icon: "🍯" },
-      { name: "Marmellata", icon: "🍓" },
+      { name: "Lievito", icon: "🧁" },
+      { name: "Dado / Brodo", icon: "🍲" },
+      { name: "Sugo pronto / Pesto", icon: "🍝" },
+      { name: "Olive", icon: "🫒" },
+      { name: "Capperi / Sottaceti", icon: "🫙" },
+      { name: "Maionese / Salse", icon: "🥫" },
       { name: "Caffè", icon: "☕" },
-      { name: "Tè", icon: "🫖" },
+      { name: "Tè / Tisane", icon: "🫖" },
       { name: "Acqua", icon: "💧" },
       { name: "Succo di frutta", icon: "🧃" },
       { name: "Vino", icon: "🍷" },
       { name: "Birra", icon: "🍺" },
-      { name: "Lievito", icon: "🧁" },
-      { name: "Sugo pronto", icon: "🍝" },
       { name: "Pizza surgelata", icon: "🍕" },
-      { name: "Verdure surgelate", icon: "❄️" },
       { name: "Gelato", icon: "🍨" },
       { name: "Ghiaccio", icon: "🧊" }
     ];
@@ -797,17 +891,18 @@
         (item) => lower === item.name.toLowerCase() || lower.includes(item.name.toLowerCase())
       );
       if (found) return found.icon;
+      if (lower.includes("pachin") || lower.includes("pomodor")) return "🍅";
+      if (lower.includes("congel") || lower.includes("surgel")) return "❄️";
       if (lower.includes("formagg") || lower.includes("parmigian") || lower.includes("grana")) return "🧀";
       if (lower.includes("frutt")) return "🍎";
-      if (lower.includes("verdur")) return "🥦";
-      if (lower.includes("surgel")) return "❄️";
+      if (lower.includes("verdur") || lower.includes("cicor") || lower.includes("bietol")) return "🥬";
       if (lower.includes("dolc") || lower.includes("torta")) return "🍰";
       return "🍽️";
     }
 
     const ROOM_STORAGE_KEY = "casa_spesa_room_code";
     let currentRoom = (localStorage.getItem(ROOM_STORAGE_KEY) || "").trim().toUpperCase();
-    let activeNav = "spesa";
+    let activeNav = "casa";
     let activeStorageSection = null;
     let pantryItems = [];
     let shoppingItems = [];
